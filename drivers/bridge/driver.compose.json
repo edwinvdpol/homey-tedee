@@ -1,0 +1,14 @@
+{
+  "id": "bridge",
+  "name": {
+    "en": "Bridge"
+  },
+  "class": "other",
+  "capabilities": [
+    "connected",
+    "update_available"
+  ],
+  "$extends": [
+    "defaults"
+  ]
+}

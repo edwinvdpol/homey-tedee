@@ -1,0 +1,9 @@
+{
+  "title": {
+    "en": "Update available"
+  },
+  "type": "boolean",
+  "getable": true,
+  "setable": true,
+  "uiComponent": null
+}

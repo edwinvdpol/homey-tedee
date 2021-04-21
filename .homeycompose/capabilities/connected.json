@@ -1,0 +1,9 @@
+{
+  "title": {
+    "en": "Connected"
+  },
+  "type": "boolean",
+  "getable": true,
+  "setable": true,
+  "uiComponent": null
+}

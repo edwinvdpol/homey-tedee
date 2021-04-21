@@ -1,0 +1,61 @@
+{
+  "id": "com.tedee",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "brandColor": "#3BD5FD",
+  "name": {
+    "en": "tedee"
+  },
+  "description": {
+    "en": "Unlock your door with Homey",
+    "nl": "Open je deur met Homey"
+  },
+  "category": [
+    "security"
+  ],
+  "tags": {
+    "en": [
+      "tedee",
+      "smart",
+      "door",
+      "lock",
+      "home",
+      "security"
+    ],
+    "nl": [
+      "tedee",
+      "slim",
+      "deur",
+      "slot",
+      "thuis",
+      "beveiliging"
+    ]
+  },
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Edwin van de Pol",
+    "email": "developer@edwinvandepol.nl"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Edwin van de Pol",
+        "email": "developer@edwinvandepol.nl"
+      }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "edwinvdpol"
+      }
+    }
+  },
+  "homepage": "https://tedee.com"
+}

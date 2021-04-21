@@ -1,0 +1,539 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "com.tedee",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "brandColor": "#3BD5FD",
+  "name": {
+    "en": "tedee"
+  },
+  "description": {
+    "en": "Unlock your door with Homey",
+    "nl": "Open je deur met Homey"
+  },
+  "category": [
+    "security"
+  ],
+  "tags": {
+    "en": [
+      "tedee",
+      "smart",
+      "door",
+      "lock",
+      "home",
+      "security"
+    ],
+    "nl": [
+      "tedee",
+      "slim",
+      "deur",
+      "slot",
+      "thuis",
+      "beveiliging"
+    ]
+  },
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Edwin van de Pol",
+    "email": "developer@edwinvandepol.nl"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Edwin van de Pol",
+        "email": "developer@edwinvandepol.nl"
+      }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "edwinvdpol"
+      }
+    }
+  },
+  "homepage": "https://tedee.com",
+  "flow": {
+    "triggers": [
+      {
+        "id": "connected_false",
+        "title": {
+          "en": "The connection was lost",
+          "nl": "De verbinding werd verbroken"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=bridge"
+          }
+        ]
+      },
+      {
+        "id": "connected_true",
+        "title": {
+          "en": "The connection was restored",
+          "nl": "De verbinding werd hersteld"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=bridge"
+          }
+        ]
+      },
+      {
+        "id": "update_available_true",
+        "title": {
+          "en": "An update is available",
+          "nl": "Een update is beschikbaar"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=bridge"
+          }
+        ]
+      },
+      {
+        "id": "opened",
+        "title": {
+          "en": "A lock just opened",
+          "nl": "Een slot werd geopend"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lock"
+          }
+        ]
+      },
+      {
+        "id": "charging_false",
+        "title": {
+          "en": "A lock is charged",
+          "nl": "Een slot is opgeladen"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lock"
+          }
+        ]
+      },
+      {
+        "id": "charging_true",
+        "title": {
+          "en": "A lock just charged",
+          "nl": "Een slot werd opgeladen"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lock"
+          }
+        ]
+      },
+      {
+        "id": "connected_false",
+        "title": {
+          "en": "The connection was lost",
+          "nl": "De verbinding werd verbroken"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lock"
+          }
+        ]
+      },
+      {
+        "id": "connected_true",
+        "title": {
+          "en": "The connection was restored",
+          "nl": "De verbinding werd hersteld"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lock"
+          }
+        ]
+      },
+      {
+        "id": "update_available_true",
+        "title": {
+          "en": "An update is available",
+          "nl": "Een update is beschikbaar"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lock"
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "is_connected",
+        "title": {
+          "en": "!{{Is|Is not}} connected",
+          "nl": "!{{Is|Is niet}} verbonden"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=bridge"
+          }
+        ]
+      },
+      {
+        "id": "is_update_available",
+        "title": {
+          "en": "An update !{{is|is not}} available",
+          "nl": "Een update !{{is|is niet}} beschikbaar"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=bridge"
+          }
+        ]
+      },
+      {
+        "id": "is_charging",
+        "title": {
+          "en": "A lock !{{is|is not}} charging",
+          "nl": "Een slot !{{is|is niet}} aan het opladen"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lock"
+          }
+        ]
+      },
+      {
+        "id": "is_connected",
+        "title": {
+          "en": "!{{Is|Is not}} connected",
+          "nl": "!{{Is|Is niet}} verbonden"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lock"
+          }
+        ]
+      },
+      {
+        "id": "is_update_available",
+        "title": {
+          "en": "An update !{{is|is not}} available",
+          "nl": "Een update !{{is|is niet}} beschikbaar"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lock"
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "open",
+        "title": {
+          "en": "Open"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=lock"
+          }
+        ]
+      }
+    ]
+  },
+  "drivers": [
+    {
+      "images": {
+        "small": "/drivers/bridge/assets/images/small.png",
+        "large": "/drivers/bridge/assets/images/large.png",
+        "xlarge": "/drivers/bridge/assets/images/xlarge.png"
+      },
+      "icon": "/drivers/bridge/assets/icon.svg",
+      "pair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "id": "bridge",
+      "name": {
+        "en": "Bridge"
+      },
+      "class": "other",
+      "capabilities": [
+        "connected",
+        "update_available"
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "General",
+            "nl": "Algemeen"
+          },
+          "children": [
+            {
+              "id": "status",
+              "type": "label",
+              "label": {
+                "en": "Status",
+                "nl": "Status"
+              },
+              "value": "-"
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Information",
+            "nl": "Informatie"
+          },
+          "children": [
+            {
+              "id": "tedee_id",
+              "type": "label",
+              "label": {
+                "en": "Device ID",
+                "nl": "Apparaat-ID"
+              },
+              "value": "-"
+            },
+            {
+              "id": "firmware_version",
+              "type": "label",
+              "label": {
+                "en": "Firmware Version",
+                "nl": "Firmwareversie"
+              },
+              "value": "-"
+            },
+            {
+              "id": "serial_number",
+              "type": "label",
+              "label": {
+                "en": "Serial Number",
+                "nl": "Serienummer"
+              },
+              "value": "-"
+            },
+            {
+              "id": "mac_address",
+              "type": "label",
+              "label": {
+                "en": "MAC"
+              },
+              "value": "-"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "images": {
+        "small": "/drivers/lock/assets/images/small.png",
+        "large": "/drivers/lock/assets/images/large.png",
+        "xlarge": "/drivers/lock/assets/images/xlarge.png"
+      },
+      "icon": "/drivers/lock/assets/icon.svg",
+      "pair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "id": "lock",
+      "name": {
+        "en": "Lock",
+        "nl": "Slot"
+      },
+      "class": "lock",
+      "capabilities": [
+        "locked",
+        "open",
+        "charging",
+        "connected",
+        "update_available",
+        "measure_battery"
+      ],
+      "energy": {
+        "batteries": [
+          "INTERNAL"
+        ]
+      },
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "General",
+            "nl": "Algemeen"
+          },
+          "children": [
+            {
+              "id": "status",
+              "type": "label",
+              "label": {
+                "en": "Status",
+                "nl": "Status"
+              },
+              "value": "-"
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Information",
+            "nl": "Informatie"
+          },
+          "children": [
+            {
+              "id": "tedee_id",
+              "type": "label",
+              "label": {
+                "en": "Device ID",
+                "nl": "Apparaat-ID"
+              },
+              "value": "-"
+            },
+            {
+              "id": "firmware_version",
+              "type": "label",
+              "label": {
+                "en": "Firmware Version",
+                "nl": "Firmwareversie"
+              },
+              "value": "-"
+            },
+            {
+              "id": "serial_number",
+              "type": "label",
+              "label": {
+                "en": "Serial Number",
+                "nl": "Serienummer"
+              },
+              "value": "-"
+            },
+            {
+              "id": "mac_address",
+              "type": "label",
+              "label": {
+                "en": "MAC"
+              },
+              "value": "-"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "capabilities": {
+    "charging": {
+      "title": {
+        "en": "Charging"
+      },
+      "type": "boolean",
+      "getable": true,
+      "setable": true,
+      "uiComponent": null
+    },
+    "connected": {
+      "title": {
+        "en": "Connected"
+      },
+      "type": "boolean",
+      "getable": true,
+      "setable": true,
+      "uiComponent": null
+    },
+    "open": {
+      "title": {
+        "en": "Open lock",
+        "nl": "Slot openen"
+      },
+      "type": "boolean",
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": true
+    },
+    "update_available": {
+      "title": {
+        "en": "Update available"
+      },
+      "type": "boolean",
+      "getable": true,
+      "setable": true,
+      "uiComponent": null
+    }
+  }
+}

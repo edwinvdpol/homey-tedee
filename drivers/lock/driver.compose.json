@@ -1,0 +1,24 @@
+{
+  "id": "lock",
+  "name": {
+    "en": "Lock",
+    "nl": "Slot"
+  },
+  "class": "lock",
+  "capabilities": [
+    "locked",
+    "open",
+    "charging",
+    "connected",
+    "update_available",
+    "measure_battery"
+  ],
+  "energy": {
+    "batteries": [
+      "INTERNAL"
+    ]
+  },
+  "$extends": [
+    "defaults"
+  ]
+}

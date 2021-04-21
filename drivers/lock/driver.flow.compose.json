@@ -1,0 +1,38 @@
+{
+  "triggers": [
+    {
+      "$extends": "opened"
+    },
+    {
+      "$extends": "charging_false"
+    },
+    {
+      "$extends": "charging_true"
+    },
+    {
+      "$extends": "connected_false"
+    },
+    {
+      "$extends": "connected_true"
+    },
+    {
+      "$extends": "update_available_true"
+    }
+  ],
+  "conditions": [
+    {
+      "$extends": "is_charging"
+    },
+    {
+      "$extends": "is_connected"
+    },
+    {
+      "$extends": "is_update_available"
+    }
+  ],
+  "actions": [
+    {
+      "$extends": "open"
+    }
+  ]
+}

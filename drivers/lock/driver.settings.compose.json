@@ -1,0 +1,35 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "General",
+      "nl": "Algemeen"
+    },
+    "children": [
+      {
+        "$extends": "status"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Information",
+      "nl": "Informatie"
+    },
+    "children": [
+      {
+        "$extends": "tedee_id"
+      },
+      {
+        "$extends": "firmware_version"
+      },
+      {
+        "$extends": "serial_number"
+      },
+      {
+        "$extends": "mac_address"
+      }
+    ]
+  }
+]

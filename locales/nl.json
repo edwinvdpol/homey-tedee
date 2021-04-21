@@ -1,0 +1,26 @@
+{
+  "accessLevels": {
+    "Guest": "Gast",
+    "Admin": "Beheerder",
+    "Owner": "Eigenaar",
+    "None": "Geen"
+  },
+  "connected": "Verbonden",
+  "disconnected": "Niet verbonden",
+  "error": {
+    "401": "U bent niet bevoegd om de API te gebruiken",
+    "404": "Apparaat is niet gevonden",
+    "50x": "Tedee API is niet beschikbaar"
+  },
+  "state": {
+    "uncalibrated": "Slot is niet gekalibreerd",
+    "calibrating": "Slot wordt gekalibreerd...",
+    "firstUnLock": "Slot moet eerst ontgrendeld zijn",
+    "inUse": "Slot is op dit moment in gebruik",
+    "notReadyToLock": "Slot is niet klaar om te vergrendelen",
+    "notReadyToUnlock": "Slot is niet klaar om te ontgrendelen",
+    "disconnected": "Slot is niet verbonden",
+    "updating": "Apparaat wordt bijgewerkt...",
+    "unknown": "Slot heeft onbekende status"
+  }
+}

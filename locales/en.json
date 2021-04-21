@@ -1,0 +1,26 @@
+{
+  "accessLevels": {
+    "Guest": "Guest",
+    "Admin": "Administrator",
+    "Owner": "Owner",
+    "None": "None"
+  },
+  "connected": "Connected",
+  "disconnected": "Disconnected",
+  "error": {
+    "401": "You are not authorized to use the API",
+    "404": "Device is not found",
+    "50x": "Tedee API is not available"
+  },
+  "state": {
+    "uncalibrated": "Lock is not calibrated",
+    "calibrating": "Lock is being calibrated...",
+    "firstUnLock": "Lock must be unlocked first",
+    "inUse": "Lock is currently in use",
+    "notReadyToLock": "Lock is not ready to lock",
+    "notReadyToUnlock": "Lock is not ready to unlock",
+    "disconnected": "Device is not connected",
+    "updating": "Device is being updated...",
+    "unknown": "Lock has unknown status"
+  }
+}

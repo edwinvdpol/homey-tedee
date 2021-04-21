@@ -1,0 +1,27 @@
+{
+  "name": "com.tedee",
+  "version": "1.0.0",
+  "homepage": "https://github.com/edwinvdpol/com.tedee#readme",
+  "license": "SEE LICENSE",
+  "author": {
+    "name": "Edwin van de Pol",
+    "email": "developer@edwinvandepol.nl"
+  },
+  "funding": [
+    {
+      "type": "individual",
+      "url": "https://www.paypal.me/edwinvdpol"
+    }
+  ],
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edwinvdpol/com.tedee.git"
+  },
+  "devDependencies": {
+    "@types/homey": "npm:homey-apps-sdk-v3-types@^0.1.0"
+  },
+  "dependencies": {
+    "homey-oauth2app": "^3.2.0"
+  }
+}
