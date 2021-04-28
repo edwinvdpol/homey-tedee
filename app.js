@@ -117,9 +117,6 @@ class Tedee extends OAuth2App {
     if (this.refreshTimer == null) {
       this.refreshTimer = this.homey.setInterval(this._refreshDevices.bind(this), refreshDevicesInterval);
     }
-
-    // Emit the enable devices event
-    this.homey.emit('enable_devices');
   }
 
   // Stop timers
