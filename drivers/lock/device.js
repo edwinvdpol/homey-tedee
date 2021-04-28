@@ -1,7 +1,6 @@
 'use strict';
 
 const Device = require('/lib/Device');
-
 const {LockState} = require('/lib/Enums');
 
 class LockDevice extends Device {
@@ -243,7 +242,8 @@ class LockDevice extends Device {
         this.setBusy();
 
         // Fetch current lock state from tedee API
-        const state = await this.oAuth2Client.getLockState(this.tedeeId);
+        const deviceData = await this.oAuth2Client.getSyncLock(this.tedeeId);
+        const state = deviceData.lockProperties.state;
 
         // Log current state
         this.log(`Lock is ${this._getLockStateName(state)}`);
