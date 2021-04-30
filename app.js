@@ -22,6 +22,10 @@ class Tedee extends OAuth2App {
   async onOAuth2Init() {
     this.log('Application initialized');
 
+    // Reset timers
+    this.refreshTimer = null;
+    this.syncTimer = null;
+
     // Start timers if not already started
     this.homey.setInterval(this._startTimers.bind(this), 5000);
 
@@ -95,33 +99,29 @@ class Tedee extends OAuth2App {
 
   // Start timers
   async _startTimers() {
-    if (this.syncTimer != null && this.refreshTimer != null) {
+    if (await this._timersAreRunning()) {
       return;
     }
 
-    let sessions = this.getSavedOAuth2Sessions();
+    try {
+      // Throws error if none is available, and stop timer
+      this.oAuth2Client = this.getFirstSavedOAuth2Client();
 
-    // Check if there are sessions available
-    if (Object.keys(sessions).length === 0) {
-      return this._stopTimers();
-    }
+      this.log('Starting timers');
 
-    this.log('Starting timers');
-
-    // Start short interval for delta updates
-    if (this.syncTimer == null) {
+      // Start short interval for delta updates
       this.syncTimer = this.homey.setInterval(this._syncLocks.bind(this), syncLocksInterval);
-    }
 
-    // Start longer interval for full updates
-    if (this.refreshTimer == null) {
+      // Start longer interval for full updates
       this.refreshTimer = this.homey.setInterval(this._refreshDevices.bind(this), refreshDevicesInterval);
+    } catch (err) {
+      await this._stopTimers();
     }
   }
 
   // Stop timers
   async _stopTimers(reason = null) {
-    if (this.syncTimer == null && this.refreshTimer == null) {
+    if (! await this._timersAreRunning()) {
       return;
     }
 
@@ -143,6 +143,11 @@ class Tedee extends OAuth2App {
       this.homey.clearInterval(this.refreshTimer);
       this.refreshTimer = null;
     }
+  }
+
+  // Return if timers are running
+  async _timersAreRunning() {
+    return this.syncTimer != null && this.refreshTimer != null;
   }
 
   // Verify timers
