@@ -1,7 +1,7 @@
 'use strict';
 
 const Device = require('/lib/Device');
-const {LockState} = require('/lib/Enums');
+const {LockState, OperationTypes} = require('/lib/Enums');
 
 class LockDevice extends Device {
 
@@ -118,18 +118,23 @@ class LockDevice extends Device {
 
   // Lock (close)
   async lock() {
+    this.log('Locking lock...');
+
     // Check if lock is busy
     if (this.isBusy()) {
+      this.log('Device is busy, stopped');
+
       throw new Error(this.homey.__('state.inUse'));
     }
 
     // Set the lock to busy
     this.setBusy();
 
-    this.log('Locking lock...');
-
     // Fetch current lock state from tedee API
     const state = await this.oAuth2Client.getLockState(this.tedeeId);
+    const stateName = await this._getLockStateName(state);
+
+    this.log(`Current state is ${stateName}`);
 
     // Start progress monitor if needed
     if (await this._needsStateMonitor(state)) {
@@ -138,60 +143,69 @@ class LockDevice extends Device {
 
     // Make sure the lock is in a valid state to lock
     if (state !== LockState.Unlocked && state !== LockState.SemiLocked) {
-      this.resetState();
+      await this.resetState();
 
-      this.error(`Lock is ${this._getLockStateName(state)}, not ready to lock`);
+      this.error(`Lock is ${stateName}, not ready to lock`);
 
       throw new Error(this.homey.__('state.notReadyToLock'));
     }
 
     // Send close command to tedee API
-    await this.oAuth2Client.close(this.tedeeId);
+    const operationId = await this.oAuth2Client.close(this.tedeeId);
 
-    // Start progress monitor
-    return this._startStateMonitor();
+    // Start operation monitor
+    return this._startOperationMonitor(operationId);
   }
 
   // Unlock (open)
   async unlock() {
+    this.log('Unlocking lock...');
+
     // Check if lock is busy
     if (this.isBusy()) {
+      this.log('Device is busy, stopped');
+
       throw new Error(this.homey.__('state.inUse'));
     }
 
     // Set the lock to busy
     this.setBusy();
 
-    this.log('Unlocking lock...');
-
     // Fetch current lock state from tedee API
     const state = await this.oAuth2Client.getLockState(this.tedeeId);
+    const stateName = await this._getLockStateName(state);
+
+    this.log(`Current state is ${stateName}`);
 
     // Start progress monitor if needed
     if (await this._needsStateMonitor(state)) {
-      return await this._startStateMonitor();
+      return this._startStateMonitor();
     }
 
     // Make sure the lock is in a valid state
     if (state !== LockState.Locked && state !== LockState.SemiLocked) {
-      this.resetState();
+      await this.resetState();
 
-      this.error(`Lock is ${this._getLockStateName(state)}, not ready to unlock`);
+      this.error(`Lock is ${stateName}, not ready to unlock`);
 
       throw new Error(this.homey.__('state.notReadyToUnlock'));
     }
 
     // Send open command to tedee API
-    await this.oAuth2Client.open(this.tedeeId);
+    const operationId = await this.oAuth2Client.open(this.tedeeId);
 
-    // Start state monitor
-    return await this._startStateMonitor();
+    // Start operation monitor
+    return this._startOperationMonitor(operationId);
   }
 
   // Open (pull spring)
   async open() {
+    this.log('Opening lock...');
+
     // Check if lock is busy
     if (this.isBusy()) {
+      this.log('Device is busy, stopped');
+
       throw new Error(this.homey.__('state.inUse'));
     }
 
@@ -201,30 +215,31 @@ class LockDevice extends Device {
     // Trigger opened
     await this.driver.triggerOpened(this);
 
-    this.log('Opening lock...');
-
     // Fetch current lock state from tedee API
     const state = await this.oAuth2Client.getLockState(this.tedeeId);
+    const stateName = await this._getLockStateName(state);
+
+    this.log(`Current state is ${stateName}`);
 
     // Start progress monitor if needed
     if (await this._needsStateMonitor(state)) {
-      return await this._startStateMonitor();
+      return this._startStateMonitor();
     }
 
     // Make sure the lock is in a valid state
     if (state !== LockState.Unlocked) {
-      this.resetState();
+      await this.resetState();
 
-      this.error(`Lock is ${this._getLockStateName(state)}, not ready to open`);
+      this.error(`Lock is ${stateName}, not ready to open`);
 
       throw new Error(this.homey.__('state.firstUnLock'));
     }
 
     // Send pull spring command to tedee API
-    await this.oAuth2Client.pullSpring(this.tedeeId);
+    const operationId = await this.oAuth2Client.pullSpring(this.tedeeId);
 
-    // Start progress monitor
-    return await this._startStateMonitor();
+    // Start operation monitor
+    return this._startOperationMonitor(operationId);
   }
 
   /*
@@ -235,12 +250,21 @@ class LockDevice extends Device {
 
   // Start the state monitor
   async _startStateMonitor() {
+    this.log('Starting state monitor');
+
     // Extra safety check if lock is available
     if (!this.getAvailable()) {
+      this.error('Device not available');
+
       return this.resetState();
     }
 
-    this.log('State monitor started');
+    // Check if operation monitor is active
+    if (this.operationMonitor) {
+      this.log('Operation monitor is active, stopped');
+
+      throw new Error(this.homey.__('state.inUse'));
+    }
 
     this.stateMonitor = this.homey.setInterval(async () => {
       try {
@@ -250,9 +274,10 @@ class LockDevice extends Device {
         // Fetch current lock state from tedee API
         const deviceData = await this.oAuth2Client.getSyncLock(this.tedeeId);
         const state = deviceData.lockProperties.state;
+        const stateName = await this._getLockStateName(state);
 
         // Log current state
-        this.log(`Lock is ${this._getLockStateName(state)}`);
+        this.log(`Lock is ${stateName}`);
 
         // State is pulling or pulled
         if (state === LockState.Pulling || state === LockState.Pulled) {
@@ -271,11 +296,12 @@ class LockDevice extends Device {
 
         // Check if state monitor is still needed
         if (!await this._needsStateMonitor(state)) {
-          this.resetState();
+          await this.resetState();
         }
       } catch (err) {
         this.error('State monitor error', err);
-        this.resetState();
+
+        await this.resetState();
 
         throw new Error('Could not update lock state');
       }
@@ -293,12 +319,82 @@ class LockDevice extends Device {
 
   /*
   |-----------------------------------------------------------------------------
+  | Lock operation monitor
+  |-----------------------------------------------------------------------------
+  */
+
+  // Start the operation monitor
+  async _startOperationMonitor(operationId) {
+    this.log(`Starting operation monitor for ${operationId}`);
+
+    // Extra safety check if lock is available
+    if (!this.getAvailable()) {
+      this.error('Device not available');
+
+      return this.resetState();
+    }
+
+    // Check if state monitor monitor is active
+    if (this.stateMonitor) {
+      this.log('State monitor is active, stopped');
+
+      throw new Error(this.homey.__('state.inUse'));
+    }
+
+    this.operationMonitor = this.homey.setInterval(async () => {
+      // Set lock to busy
+      this.setBusy();
+
+      // Fetch current lock state from tedee API
+      const operationData = await this.oAuth2Client.getOperation(operationId);
+      const status = operationData.status;
+      const type = operationData.type;
+
+      // Log current state
+      this.log(`Operation status is ${status}`);
+
+      // Operation monitor is completed
+      if (status === 'COMPLETED') {
+        // Successful
+        if (operationData.result === 0) {
+          // Cleanup timers
+          await this.cleanup();
+
+          // Start state monitor
+          return this._startStateMonitor();
+        }
+
+        // Pull failed
+        if (type === OperationTypes.Pull) {
+          this.error('Pull operation failed');
+        }
+
+        // Close failed
+        if (type === OperationTypes.Close) {
+          this.error('Close operation failed');
+        }
+
+        // Open failed
+        if (type === OperationTypes.Open) {
+          this.error('Open operation failed');
+        }
+
+        // Reset state
+        await this.resetState();
+
+        throw new Error(this.homey.__('error.actionFailed'));
+      }
+    }, 800);
+  }
+
+  /*
+  |-----------------------------------------------------------------------------
   | Support functions
   |-----------------------------------------------------------------------------
   */
 
   // Returns readable name that belongs to the lock state
-  _getLockStateName(state) {
+  async _getLockStateName(state) {
     switch (state) {
       case LockState.Uncalibrated:
         return `uncalibrated (${state})`;
