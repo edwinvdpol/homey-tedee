@@ -14,6 +14,18 @@
   {
     "type": "group",
     "label": {
+      "en": "Settings",
+      "nl": "Instellingen"
+    },
+    "children": [
+      {
+        "$extends": "auto_lock_enabled"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
       "en": "Information",
       "nl": "Informatie"
     },

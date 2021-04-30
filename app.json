@@ -452,6 +452,40 @@
         {
           "type": "group",
           "label": {
+            "en": "Settings",
+            "nl": "Instellingen"
+          },
+          "children": [
+            {
+              "id": "auto_lock_enabled",
+              "type": "radio",
+              "label": {
+                "en": "Auto lock",
+                "nl": "Automatische vergrendeling"
+              },
+              "value": "-",
+              "values": [
+                {
+                  "id": "on",
+                  "label": {
+                    "en": "On",
+                    "nl": "Aan"
+                  }
+                },
+                {
+                  "id": "off",
+                  "label": {
+                    "en": "Off",
+                    "nl": "Uit"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
             "en": "Information",
             "nl": "Informatie"
           },
