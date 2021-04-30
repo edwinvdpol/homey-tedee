@@ -1,16 +1,11 @@
 {
-  "accessLevels": {
-    "Guest": "Gast",
-    "Admin": "Beheerder",
-    "Owner": "Eigenaar",
-    "None": "Geen"
-  },
   "connected": "Verbonden",
   "disconnected": "Niet verbonden",
   "error": {
     "401": "U bent niet bevoegd om de API te gebruiken",
     "404": "Apparaat is niet gevonden",
-    "50x": "Tedee API is niet beschikbaar"
+    "50x": "Tedee API is niet beschikbaar",
+    "actionFailed": "Actie mislukt"
   },
   "state": {
     "uncalibrated": "Slot is niet gekalibreerd",
