@@ -353,37 +353,39 @@ class LockDevice extends Device {
       // Log current state
       this.log(`Operation status is ${status}`);
 
-      // Operation monitor is completed
-      if (status === 'COMPLETED') {
-        // Successful
-        if (operationData.result === 0) {
-          // Cleanup timers
-          await this.cleanup();
-
-          // Start state monitor
-          return this._startStateMonitor();
-        }
-
-        // Pull failed
-        if (type === OperationTypes.Pull) {
-          this.error('Pull operation failed');
-        }
-
-        // Close failed
-        if (type === OperationTypes.Close) {
-          this.error('Close operation failed');
-        }
-
-        // Open failed
-        if (type === OperationTypes.Open) {
-          this.error('Open operation failed');
-        }
-
-        // Reset state
-        await this.resetState();
-
-        throw new Error(this.homey.__('error.actionFailed'));
+      // Operation monitor is not completed (pending)
+      if (status === 'PENDING') {
+        return;
       }
+
+      // Successful
+      if (operationData.result === 0) {
+        // Cleanup timers
+        await this.cleanup();
+
+        // Start state monitor
+        return this._startStateMonitor();
+      }
+
+      // Pull failed
+      if (type === OperationTypes.Pull) {
+        this.error('Pull operation failed');
+      }
+
+      // Close failed
+      if (type === OperationTypes.Close) {
+        this.error('Close operation failed');
+      }
+
+      // Open failed
+      if (type === OperationTypes.Open) {
+        this.error('Open operation failed');
+      }
+
+      // Reset state
+      await this.resetState();
+
+      throw new Error(this.homey.__('error.actionFailed'));
     }, 800);
   }
 
