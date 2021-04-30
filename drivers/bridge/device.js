@@ -28,7 +28,9 @@ class BridgeDevice extends Device {
   // Sync
   async _syncDevice(deviceData) {
     // Connected capability
-    this.setCapabilityValue('connected', deviceData.isConnected).catch(this.error);
+    if (deviceData.hasOwnProperty('isConnected')) {
+      this.setCapabilityValue('connected', deviceData.isConnected).catch(this.error);
+    }
 
     // Update available capability (only full update)
     if (deviceData.hasOwnProperty('softwareVersions')) {

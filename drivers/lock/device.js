@@ -43,14 +43,20 @@ class LockDevice extends Device {
       return;
     }
 
+    const lockProperties = deviceData.lockProperties;
+
     // Measure battery capability
-    this.setCapabilityValue('measure_battery', Number(deviceData.lockProperties.batteryLevel)).catch(this.error);
+    if (lockProperties.hasOwnProperty('batteryLevel')) {
+      this.setCapabilityValue('measure_battery', Number(lockProperties.batteryLevel)).catch(this.error);
+    }
 
     // Charging capability
-    this.setCapabilityValue('charging', deviceData.lockProperties.isCharging).catch(this.error);
+    if (lockProperties.hasOwnProperty('isCharging')) {
+      this.setCapabilityValue('charging', lockProperties.isCharging).catch(this.error);
+    }
 
     // Locked capability
-    const state = deviceData.lockProperties.state;
+    const state = lockProperties.state;
 
     // Start state monitor if needed
     if (await this._needsStateMonitor(state) && this.isIdle()) {
