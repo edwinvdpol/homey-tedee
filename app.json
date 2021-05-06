@@ -59,6 +59,11 @@
     }
   },
   "homepage": "https://tedee.com",
+  "homeyCommunityTopicId": 47133,
+  "support": "https://community.athom.com/t/47133",
+  "bugs": {
+    "url": "https://community.athom.com/t/47133"
+  },
   "flow": {
     "triggers": [
       {
@@ -106,8 +111,8 @@
       {
         "id": "opened",
         "title": {
-          "en": "A lock just opened",
-          "nl": "Een slot werd geopend"
+          "en": "The door just opened",
+          "nl": "De deur werd geopend"
         },
         "args": [
           {
@@ -264,7 +269,8 @@
       {
         "id": "open",
         "title": {
-          "en": "Open"
+          "en": "Open door",
+          "nl": "Deur openen"
         },
         "args": [
           {
