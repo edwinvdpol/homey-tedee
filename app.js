@@ -1,6 +1,5 @@
 'use strict';
 
-const Homey = require('homey');
 const {OAuth2App} = require('homey-oauth2app');
 const Client = require('./lib/Client');
 
