@@ -1,7 +1,7 @@
 {
   "title": {
-    "en": "Open lock",
-    "nl": "Slot openen"
+    "en": "Open door",
+    "nl": "Deur openen"
   },
   "type": "boolean",
   "getable": false,
