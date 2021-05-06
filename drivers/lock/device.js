@@ -64,7 +64,7 @@ class LockDevice extends Device {
 
     // Measure battery capability
     if (lockProperties.hasOwnProperty('batteryLevel')) {
-      this.setCapabilityValue('measure_battery', Number(lockProperties.batteryLevel)).catch(this.error);
+      this.setCapabilityValue('measure_battery', lockProperties.batteryLevel).catch(this.error);
     }
 
     // Charging capability
