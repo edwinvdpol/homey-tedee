@@ -5,6 +5,7 @@
     "401": "You are not authorized to use the API",
     "404": "Device is not found",
     "50x": "Tedee API is not available",
+    "response": "Invalid response from Tedee API",
     "actionFailed": "Action failed"
   },
   "state": {
