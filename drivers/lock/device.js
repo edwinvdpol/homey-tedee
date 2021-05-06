@@ -20,6 +20,23 @@ class LockDevice extends Device {
     return this._syncDevice(deviceData);
   }
 
+  // Settings changed
+  async onSettings({oldSettings, newSettings, changedKeys}) {
+    let settings = {}
+
+    // Auto lock enabled updated
+    if (changedKeys.includes('auto_lock_enabled')) {
+      this.log(`Auto lock enabled updated: ${newSettings.auto_lock_enabled}`);
+
+      settings.autoLockEnabled = newSettings.auto_lock_enabled === 'on';
+    }
+
+    // Device settings need to be updated
+    if (Object.keys(settings).length > 0) {
+      await this.oAuth2Client.updateLockSettings(this.tedeeId, settings);
+    }
+  }
+
   /*
   |-----------------------------------------------------------------------------
   | Lock actions
@@ -39,7 +56,7 @@ class LockDevice extends Device {
     }
 
     // Return when `lockProperties` is not found in lock data
-    if (!deviceData.hasOwnProperty('lockProperties')) {
+    if (!deviceData.hasOwnProperty('lockProperties') || deviceData.lockProperties === null) {
       return;
     }
 
@@ -77,7 +94,7 @@ class LockDevice extends Device {
     }
 
     // Return when `lockProperties` is not found in lock data
-    if (!deviceData.hasOwnProperty('lockProperties')) {
+    if (!deviceData.hasOwnProperty('lockProperties') || deviceData.lockProperties === null) {
       return;
     }
 
