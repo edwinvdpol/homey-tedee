@@ -57,5 +57,10 @@
       }
     }
   },
-  "homepage": "https://tedee.com"
+  "homepage": "https://tedee.com",
+  "homeyCommunityTopicId": 47133,
+  "support": "https://community.athom.com/t/47133",
+  "bugs": {
+    "url": "https://community.athom.com/t/47133"
+  }
 }
