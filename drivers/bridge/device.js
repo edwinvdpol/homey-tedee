@@ -41,12 +41,12 @@ class BridgeDevice extends Device {
   // Availability
   async _setAvailability(deviceData) {
     // Disconnected
-    if (!deviceData.isConnected) {
+    if (deviceData.hasOwnProperty('isConnected') && !deviceData.isConnected) {
       return this.setUnavailable(this.homey.__('state.disconnected'));
     }
 
     // Updating
-    if (deviceData.isUpdating) {
+    if (deviceData.hasOwnProperty('isUpdating') && deviceData.isUpdating) {
       return this.setUnavailable(this.homey.__('state.updating'));
     }
 
