@@ -30,10 +30,9 @@ class LockDevice extends Device {
    * This method is called when the user updates the device's settings.
    *
    * @async
-   * @param {object} event - The onSettings event data
-   * @param {object} event.oldSettings - The old settings object
-   * @param {object} event.newSettings - The new settings object
-   * @param {string[]} event.changedKeys - An array of keys changed since the previous version
+   * @param {object} oldSettings - The old settings object
+   * @param {object} newSettings - The new settings object
+   * @param {string[]} changedKeys - An array of keys changed since the previous version
    * @returns {Promise<string|void>} - Return a custom message that will be displayed
    */
   async onSettings({oldSettings, newSettings, changedKeys}) {
@@ -63,7 +62,7 @@ class LockDevice extends Device {
    *
    * @async
    * @param {object} deviceData
-   * @returns {Promise<void|undefined>}
+   * @returns {Promise<void>}
    * @private
    */
   async _syncDevice(deviceData) {
@@ -165,7 +164,7 @@ class LockDevice extends Device {
    * Lock (close).
    *
    * @async
-   * @returns {Promise<void|undefined>}
+   * @returns {Promise<void>}
    * @throws {Error}
    */
   async lock() {
@@ -212,7 +211,8 @@ class LockDevice extends Device {
    * Unlock (open).
    *
    * @async
-   * @returns {Promise<void|undefined>}
+   * @returns {Promise<void>}
+   * @throws {Error}
    */
   async unlock() {
     this.log('Unlocking lock...');
@@ -258,7 +258,8 @@ class LockDevice extends Device {
    * Open (pull spring).
    *
    * @async
-   * @returns {Promise<void|undefined>}
+   * @returns {Promise<void>}
+   * @throws {Error}
    */
   async open() {
     this.log('Opening lock...');
@@ -314,6 +315,7 @@ class LockDevice extends Device {
    *
    * @async
    * @returns {Promise<void>}
+   * @throws {Error}
    * @private
    */
   async _startStateMonitor() {
@@ -379,16 +381,16 @@ class LockDevice extends Device {
    * Verify if the state monitor needs to be started or continue.
    *
    * @async
-   * @param {string} state
+   * @param {number} stateId
    * @returns {Promise<boolean>}
    * @private
    */
-  async _needsStateMonitor(state) {
+  async _needsStateMonitor(stateId) {
     return this.getAvailable() &&
-        (state === LockState.Locking ||
-            state === LockState.Unlocking ||
-            state === LockState.Pulled ||
-            state === LockState.Pulling);
+        (stateId === LockState.Locking ||
+            stateId === LockState.Unlocking ||
+            stateId === LockState.Pulled ||
+            stateId === LockState.Pulling);
   }
 
   /*
@@ -403,6 +405,7 @@ class LockDevice extends Device {
    * @async
    * @param {string} operationId
    * @returns {Promise<void>}
+   * @throws {Error}
    * @private
    */
   async _startOperationMonitor(operationId) {
@@ -478,35 +481,36 @@ class LockDevice extends Device {
 
   /**
    * Returns readable name that belongs to the lock state.
+   *
    * @async
-   * @param {string} state
+   * @param {number} stateId
    * @returns {Promise<string>}
    * @private
    */
-  async _getLockStateName(state) {
-    switch (state) {
+  async _getLockStateName(stateId) {
+    switch (stateId) {
       case LockState.Uncalibrated:
-        return `uncalibrated (${state})`;
+        return `uncalibrated (${stateId})`;
       case LockState.Calibrating:
-        return `calibrating (${state})`;
+        return `calibrating (${stateId})`;
       case LockState.Unlocked:
-        return `unlocked (${state})`;
+        return `unlocked (${stateId})`;
       case LockState.SemiLocked:
-        return `semi locked (${state})`;
+        return `semi locked (${stateId})`;
       case LockState.Unlocking:
-        return `unlocking (${state})`;
+        return `unlocking (${stateId})`;
       case LockState.Locking:
-        return `locking (${state})`;
+        return `locking (${stateId})`;
       case LockState.Locked:
-        return `locked (${state})`;
+        return `locked (${stateId})`;
       case LockState.Pulled:
-        return `pulled (${state})`;
+        return `pulled (${stateId})`;
       case LockState.Pulling:
-        return `pulling (${state})`;
+        return `pulling (${stateId})`;
       case LockState.Unknown:
-        return `unknown (${state})`;
+        return `unknown (${stateId})`;
       case LockState.Updating:
-        return `updating (${state})`;
+        return `updating (${stateId})`;
       default:
         return `unknown`;
     }
