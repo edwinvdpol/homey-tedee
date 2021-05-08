@@ -368,7 +368,7 @@ class LockDevice extends Device {
           await this.resetState();
         }
       } catch (err) {
-        this.error('State monitor error', err);
+        this.error('State Monitor', err);
 
         await this.resetState();
 

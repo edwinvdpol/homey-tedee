@@ -142,7 +142,7 @@ class Tedee extends OAuth2App {
       // Start longer interval for full updates
       this.refreshTimer = this.homey.setInterval(this._refreshDevices.bind(this), refreshDevicesInterval);
     } catch (err) {
-      await this._stopTimers();
+      await this._stopTimers(err.message);
     }
   }
 
@@ -202,7 +202,7 @@ class Tedee extends OAuth2App {
       let devices = 0;
 
       if (Object.keys(drivers).length === 0) {
-        return this._stopTimers();
+        return await this._stopTimers();
       }
 
       for (const driverId in drivers) {
