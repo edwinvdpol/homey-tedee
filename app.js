@@ -17,7 +17,12 @@ class Tedee extends OAuth2App {
   |-----------------------------------------------------------------------------
   */
 
-  // Application initialized
+  /**
+   * Application initialized.
+   *
+   * @async
+   * @returns {Promise<void>}
+   */
   async onOAuth2Init() {
     this.log('Application initialized');
 
@@ -51,24 +56,41 @@ class Tedee extends OAuth2App {
   |-----------------------------------------------------------------------------
   */
 
-  // Refresh devices (full update)
+  /**
+   * Refresh devices (full update).
+   *
+   * @async
+   * @returns {Promise<void>}
+   * @private
+   */
   async _refreshDevices() {
     return this._updateDevices('refresh');
   }
 
-  // Sync locks (delta update)
+  /**
+   * Sync locks (delta update).
+   *
+   * @async
+   * @returns {Promise<void>}
+   * @private
+   */
   async _syncLocks() {
     return this._updateDevices('sync');
   }
 
-  // Update devices by action
+  /**
+   * Update devices by action.
+   *
+   * @async
+   * @param {string} action
+   * @returns {Promise<void>}
+   * @private
+   */
   async _updateDevices(action) {
     try {
       // Verify action
       if (action !== 'refresh' && action !== 'sync') {
-        this.log(`Invalid action: ${action}`);
-
-        return;
+        return this.log(`Invalid action: ${action}`);
       }
 
       // Set oAuth client
@@ -96,7 +118,13 @@ class Tedee extends OAuth2App {
   |-----------------------------------------------------------------------------
   */
 
-  // Start timers
+  /**
+   * Start timers.
+   *
+   * @async
+   * @returns {Promise<void>}
+   * @private
+   */
   async _startTimers() {
     if (await this._timersAreRunning()) {
       return;
@@ -118,7 +146,14 @@ class Tedee extends OAuth2App {
     }
   }
 
-  // Stop timers
+  /**
+   * Stop timers.
+   *
+   * @async
+   * @param {string|null} reason
+   * @returns {Promise<void>}
+   * @private
+   */
   async _stopTimers(reason = null) {
     if (! await this._timersAreRunning()) {
       return;
@@ -144,12 +179,23 @@ class Tedee extends OAuth2App {
     }
   }
 
-  // Return if timers are running
+  /**
+   * Return if timers are running.
+   *
+   * @async
+   * @returns {Promise<boolean>}
+   * @private
+   */
   async _timersAreRunning() {
     return this.syncTimer != null && this.refreshTimer != null;
   }
 
-  // Verify timers
+  /**
+   * Verify timers.
+   *
+   * @async
+   * @returns {Promise<void>}
+   */
   async verifyTimers() {
     try {
       const drivers = this.homey.drivers.getDrivers();
@@ -187,14 +233,26 @@ class Tedee extends OAuth2App {
   |-----------------------------------------------------------------------------
   */
 
-  // Register action flow cards
+  /**
+   * Register action flow cards.
+   *
+   * @async
+   * @returns {Promise<void>}
+   * @private
+   */
   async _registerActionFlowCards() {
     // Register action flow card for pulling the spring
     this.homey.flow.getActionCard('open')
         .registerRunListener(async (args) => args.device.open());
   }
 
-  // Register condition flow cards
+  /**
+   * Register condition flow cards.
+   *
+   * @async
+   * @returns {Promise<void>}
+   * @private
+   */
   async _registerConditionFlowCards() {
     // Register condition flow card for charging
     this.homey.flow.getConditionCard('is_charging')

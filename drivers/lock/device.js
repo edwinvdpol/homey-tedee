@@ -11,7 +11,13 @@ class LockDevice extends Device {
   |-----------------------------------------------------------------------------
   */
 
-  // Lock initialized
+  /**
+   * Lock initialized.
+   *
+   * @async
+   * @returns {Promise<undefined|void>}
+   * @private
+   */
   async _onOAuth2Init() {
     // Get lock data from tedee API
     const deviceData = await this.oAuth2Client.getLock(this.tedeeId);
@@ -20,7 +26,16 @@ class LockDevice extends Device {
     return this._syncDevice(deviceData);
   }
 
-  // Settings changed
+  /**
+   * This method is called when the user updates the device's settings.
+   *
+   * @async
+   * @param {object} event - The onSettings event data
+   * @param {object} event.oldSettings - The old settings object
+   * @param {object} event.newSettings - The new settings object
+   * @param {string[]} event.changedKeys - An array of keys changed since the previous version
+   * @returns {Promise<string|void>} - Return a custom message that will be displayed
+   */
   async onSettings({oldSettings, newSettings, changedKeys}) {
     let settings = {}
 
@@ -43,7 +58,14 @@ class LockDevice extends Device {
   |-----------------------------------------------------------------------------
   */
 
-  // Sync
+  /**
+   * Sync lock.
+   *
+   * @async
+   * @param {object} deviceData
+   * @returns {Promise<void|undefined>}
+   * @private
+   */
   async _syncDevice(deviceData) {
     // Connected capability
     if (deviceData.hasOwnProperty('isConnected')) {
@@ -86,7 +108,13 @@ class LockDevice extends Device {
     this.setCapabilityValue('locked', locked).catch(this.error);
   }
 
-  // Availability
+  /**
+   * Availability.
+   *
+   * @param {object} deviceData
+   * @returns {Promise<any>}
+   * @private
+   */
   async _setAvailability(deviceData) {
     // Disconnected
     if (!deviceData.isConnected) {
@@ -133,7 +161,13 @@ class LockDevice extends Device {
   |-----------------------------------------------------------------------------
   */
 
-  // Lock (close)
+  /**
+   * Lock (close).
+   *
+   * @async
+   * @returns {Promise<void|undefined>}
+   * @throws {Error}
+   */
   async lock() {
     this.log('Locking lock...');
 
@@ -174,7 +208,12 @@ class LockDevice extends Device {
     return this._startOperationMonitor(operationId);
   }
 
-  // Unlock (open)
+  /**
+   * Unlock (open).
+   *
+   * @async
+   * @returns {Promise<void|undefined>}
+   */
   async unlock() {
     this.log('Unlocking lock...');
 
@@ -215,7 +254,12 @@ class LockDevice extends Device {
     return this._startOperationMonitor(operationId);
   }
 
-  // Open (pull spring)
+  /**
+   * Open (pull spring).
+   *
+   * @async
+   * @returns {Promise<void|undefined>}
+   */
   async open() {
     this.log('Opening lock...');
 
@@ -265,7 +309,13 @@ class LockDevice extends Device {
   |-----------------------------------------------------------------------------
   */
 
-  // Start the state monitor
+  /**
+   * Start the state monitor.
+   *
+   * @async
+   * @returns {Promise<void>}
+   * @private
+   */
   async _startStateMonitor() {
     this.log('Starting state monitor');
 
@@ -325,7 +375,14 @@ class LockDevice extends Device {
     }, 800);
   }
 
-  // Verify if the state monitor needs to be started or continue
+  /**
+   * Verify if the state monitor needs to be started or continue.
+   *
+   * @async
+   * @param {string} state
+   * @returns {Promise<boolean>}
+   * @private
+   */
   async _needsStateMonitor(state) {
     return this.getAvailable() &&
         (state === LockState.Locking ||
@@ -340,7 +397,14 @@ class LockDevice extends Device {
   |-----------------------------------------------------------------------------
   */
 
-  // Start the operation monitor
+  /**
+   * Start the operation monitor.
+   *
+   * @async
+   * @param {string} operationId
+   * @returns {Promise<void>}
+   * @private
+   */
   async _startOperationMonitor(operationId) {
     this.log(`Starting operation monitor for ${operationId}`);
 
@@ -412,7 +476,13 @@ class LockDevice extends Device {
   |-----------------------------------------------------------------------------
   */
 
-  // Returns readable name that belongs to the lock state
+  /**
+   * Returns readable name that belongs to the lock state.
+   * @async
+   * @param {string} state
+   * @returns {Promise<string>}
+   * @private
+   */
   async _getLockStateName(state) {
     switch (state) {
       case LockState.Uncalibrated:

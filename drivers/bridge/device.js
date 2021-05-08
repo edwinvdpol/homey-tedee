@@ -10,7 +10,13 @@ class BridgeDevice extends Device {
   |-----------------------------------------------------------------------------
   */
 
-  // Bridge initialized
+  /**
+   * Bridge initialized.
+   *
+   * @async
+   * @returns {Promise<void>}
+   * @private
+   */
   async _onOAuth2Init() {
     // Get bridge data from tedee API
     const deviceData = await this.oAuth2Client.getBridge(this.tedeeId);
@@ -25,7 +31,14 @@ class BridgeDevice extends Device {
   |-----------------------------------------------------------------------------
   */
 
-  // Sync
+  /**
+   * Sync bridge.
+   *
+   * @async
+   * @param {object} deviceData
+   * @returns {Promise<void>}
+   * @private
+   */
   async _syncDevice(deviceData) {
     // Connected capability
     if (deviceData.hasOwnProperty('isConnected')) {
@@ -38,7 +51,14 @@ class BridgeDevice extends Device {
     }
   }
 
-  // Availability
+  /**
+   * Availability.
+   *
+   * @async
+   * @param {object} deviceData
+   * @returns {Promise<any>}
+   * @private
+   */
   async _setAvailability(deviceData) {
     // Disconnected
     if (deviceData.hasOwnProperty('isConnected') && !deviceData.isConnected) {

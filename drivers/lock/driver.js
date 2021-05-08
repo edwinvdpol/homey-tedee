@@ -10,7 +10,12 @@ class LockDriver extends Driver {
   |-----------------------------------------------------------------------------
   */
 
-  // Driver initialized
+  /**
+   * Driver initialized.
+   *
+   * @async
+   * @returns {Promise<void>}
+   */
   async onOAuth2Init() {
     this._flowTriggerOpened = this.homey.flow.getDeviceTriggerCard('opened');
   }
@@ -21,7 +26,13 @@ class LockDriver extends Driver {
   |-----------------------------------------------------------------------------
   */
 
-  // Opened trigger
+  /**
+   * Opened trigger.
+   *
+   * @async
+   * @param {Device} device
+   * @returns {Promise<any | void>}
+   */
   async triggerOpened(device) {
     if (device.alreadyTriggered('opened')) {
       return;
