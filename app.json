@@ -544,6 +544,15 @@
       "type": "boolean",
       "getable": true,
       "setable": true,
+      "insights": true,
+      "insightsTitleTrue": {
+        "en": "Charging",
+        "nl": "Opladen"
+      },
+      "insightsTitleFalse": {
+        "en": "Charged",
+        "nl": "Opgeladen"
+      },
       "uiComponent": null
     },
     "connected": {
@@ -553,6 +562,15 @@
       "type": "boolean",
       "getable": true,
       "setable": true,
+      "insights": true,
+      "insightsTitleTrue": {
+        "en": "Connected",
+        "nl": "Verbonden"
+      },
+      "insightsTitleFalse": {
+        "en": "Disconnected",
+        "nl": "Verbroken"
+      },
       "uiComponent": null
     },
     "open": {
