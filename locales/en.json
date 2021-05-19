@@ -16,7 +16,7 @@
     "notReadyToLock": "Lock is not ready to lock",
     "notReadyToUnlock": "Lock is not ready to unlock",
     "disconnected": "Device is not connected",
-    "semiLocked": "Lock is jammed",
+    "semiLocked": "Lock is semi locked",
     "updating": "Device is being updated...",
     "unknown": "Lock has unknown status",
     "updateAvailable": "Software update is available"

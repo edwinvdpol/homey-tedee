@@ -42,7 +42,7 @@ class BridgeDevice extends Device {
   async _syncDevice(deviceData) {
     // Connected capability
     if (deviceData.hasOwnProperty('isConnected')) {
-      this.setCapabilityValue('connected', deviceData.isConnected).catch(this.error);
+      await this.setCapabilityValue('connected', deviceData.isConnected);
     }
 
     // Update available capability (only full update)
@@ -60,7 +60,7 @@ class BridgeDevice extends Device {
         await this.unsetWarning();
       }
 
-      this.setCapabilityValue('update_available', updateAvailable).catch(this.error);
+      await this.setCapabilityValue('update_available', updateAvailable);
     }
   }
 
@@ -88,6 +88,7 @@ class BridgeDevice extends Device {
       await this.setAvailable();
     }
   }
+
 }
 
 module.exports = BridgeDevice;

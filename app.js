@@ -126,20 +126,21 @@ class Tedee extends OAuth2App {
    * @private
    */
   async _startTimers() {
-    if (await this._timersAreRunning()) {
-      return;
-    }
-
     try {
+      // Check if timers are already running
+      if (await this._timersAreRunning()) {
+        return;
+      }
+
       // Throws error if none is available, and stop timer
       this.oAuth2Client = this.getFirstSavedOAuth2Client();
 
       this.log('Starting timers');
 
-      // Start short interval for delta updates
+      // Start interval for delta updates
       this.syncTimer = this.homey.setInterval(this._syncLocks.bind(this), syncLocksInterval);
 
-      // Start longer interval for full updates
+      // Start interval for full updates
       this.refreshTimer = this.homey.setInterval(this._refreshDevices.bind(this), refreshDevicesInterval);
     } catch (err) {
       await this._stopTimers(err.message);
@@ -166,13 +167,13 @@ class Tedee extends OAuth2App {
       this.log(`Stopping timers: ${reason}`);
     }
 
-    // Stop short interval for delta updates
+    // Stop delta updates
     if (this.syncTimer != null) {
       this.homey.clearInterval(this.syncTimer);
       this.syncTimer = null;
     }
 
-    // Stop longer interval for full updates
+    // Stop full updates
     if (this.refreshTimer != null) {
       this.homey.clearInterval(this.refreshTimer);
       this.refreshTimer = null;
@@ -217,11 +218,12 @@ class Tedee extends OAuth2App {
         devices += Object.keys(driver.getDevices()).length;
       }
 
+      // Stop timers when no devices found
       if (devices === 0) {
-        await this._stopTimers('No devices found');
-      } else {
-        await this._startTimers();
+        return await this._stopTimers('No devices found');
       }
+
+      return await this._startTimers();
     } catch (err) {
       this.error('Verify timers', err);
     }
@@ -268,6 +270,7 @@ class Tedee extends OAuth2App {
       return args.device.open();
     });
   }
+
 }
 
 module.exports = Tedee;

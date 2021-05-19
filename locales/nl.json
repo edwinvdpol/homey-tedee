@@ -16,7 +16,7 @@
     "notReadyToLock": "Slot is niet klaar om te vergrendelen",
     "notReadyToUnlock": "Slot is niet klaar om te ontgrendelen",
     "disconnected": "Slot is niet verbonden",
-    "semiLocked": "Slot zit vast",
+    "semiLocked": "Slot is half vergrendeld",
     "updating": "Apparaat wordt bijgewerkt...",
     "unknown": "Slot heeft onbekende status",
     "updateAvailable": "Software update is beschikbaar"
