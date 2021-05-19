@@ -8,6 +8,9 @@
     "connected",
     "update_available"
   ],
+  "energy": {
+    "usageConstant": 0.8
+  },
   "$extends": [
     "defaults"
   ]

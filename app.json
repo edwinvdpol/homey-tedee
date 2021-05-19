@@ -322,6 +322,9 @@
         "connected",
         "update_available"
       ],
+      "energy": {
+        "usageConstant": 0.8
+      },
       "settings": [
         {
           "type": "group",
