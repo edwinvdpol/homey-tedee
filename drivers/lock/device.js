@@ -202,6 +202,7 @@ class LockDevice extends Device {
 
     // Make sure the lock is in a valid state to lock
     if (state !== LockState.Unlocked && state !== LockState.SemiLocked) {
+      // Reset device state
       await this.resetState();
 
       this.error('Lock is not ready to lock');
@@ -213,7 +214,7 @@ class LockDevice extends Device {
     const operationId = await this.oAuth2Client.close(this.tedeeId);
 
     // Start operation monitor
-    await this._startOperationMonitor(operationId);
+    return this._startOperationMonitor(operationId);
   }
 
   /**
@@ -236,6 +237,7 @@ class LockDevice extends Device {
 
     // Make sure the lock is in a valid state
     if (state !== LockState.Locked && state !== LockState.SemiLocked) {
+      // Reset device state
       await this.resetState();
 
       this.error('Lock is not ready to unlock');
@@ -247,7 +249,7 @@ class LockDevice extends Device {
     const operationId = await this.oAuth2Client.open(this.tedeeId);
 
     // Start operation monitor
-    await this._startOperationMonitor(operationId);
+    return this._startOperationMonitor(operationId);
   }
 
   /**
@@ -273,6 +275,7 @@ class LockDevice extends Device {
 
     // Make sure the lock is in a valid state
     if (state !== LockState.Unlocked) {
+      // Reset device state
       await this.resetState();
 
       this.error('Lock is not ready to open');
@@ -284,7 +287,7 @@ class LockDevice extends Device {
     const operationId = await this.oAuth2Client.pullSpring(this.tedeeId);
 
     // Start operation monitor
-    await this._startOperationMonitor(operationId);
+    return this._startOperationMonitor(operationId);
   }
 
   /**
@@ -335,7 +338,10 @@ class LockDevice extends Device {
     if (!this.getAvailable()) {
       this.error('Device not available');
 
-      return this.resetState();
+      // Reset device state
+      await this.resetState();
+
+      throw new Error(this.homey.__('state.notAvailable'));
     }
 
     // Check if operation monitor is active
@@ -380,11 +386,13 @@ class LockDevice extends Device {
 
         // Check if state monitor is still needed
         if (!await this._needsStateMonitor(state)) {
+          // Reset device state
           await this.resetState();
         }
       } catch (err) {
         this.error('State Monitor', err);
 
+        // Reset device state
         await this.resetState();
 
         throw new Error('Could not update lock state');
@@ -430,7 +438,10 @@ class LockDevice extends Device {
     if (!this.getAvailable()) {
       this.error('Device not available');
 
-      return this.resetState();
+      // Reset device state
+      await this.resetState();
+
+      throw new Error(this.homey.__('state.notAvailable'));
     }
 
     // Check if state monitor monitor is active
@@ -481,7 +492,7 @@ class LockDevice extends Device {
         this.error('Open operation failed');
       }
 
-      // Reset state
+      // Reset device state
       await this.resetState();
 
       throw new Error(this.homey.__('error.actionFailed'));

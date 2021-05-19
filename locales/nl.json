@@ -13,6 +13,7 @@
     "calibrating": "Slot wordt gekalibreerd...",
     "firstUnLock": "Slot moet eerst ontgrendeld zijn",
     "inUse": "Slot is op dit moment in gebruik",
+    "notAvailable": "Slot is niet beschikbaar",
     "notReadyToLock": "Slot is niet klaar om te vergrendelen",
     "notReadyToUnlock": "Slot is niet klaar om te ontgrendelen",
     "disconnected": "Slot is niet verbonden",

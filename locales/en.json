@@ -13,6 +13,7 @@
     "calibrating": "Lock is being calibrated...",
     "firstUnLock": "Lock must be unlocked first",
     "inUse": "Lock is currently in use",
+    "notAvailable": "Lock is not available",
     "notReadyToLock": "Lock is not ready to lock",
     "notReadyToUnlock": "Lock is not ready to unlock",
     "disconnected": "Device is not connected",
