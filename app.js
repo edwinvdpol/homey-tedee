@@ -30,12 +30,12 @@ class Tedee extends OAuth2App {
     this.refreshTimer = null;
     this.syncTimer = null;
 
+    // Register flow cards
+    this._registerActionFlowCards();
+    this._registerConditionFlowCards();
+
     // Start timers if not already started
     this.homey.setInterval(this._startTimers.bind(this), 5000);
-
-    // Register action- and condition flow cards
-    await this._registerActionFlowCards();
-    await this._registerConditionFlowCards();
 
     // Register app event listeners
     this.homey.on('cpuwarn', () => {
@@ -64,7 +64,7 @@ class Tedee extends OAuth2App {
    * @private
    */
   async _refreshDevices() {
-    return this._updateDevices('refresh');
+    await this._updateDevices('refresh');
   }
 
   /**
@@ -75,7 +75,7 @@ class Tedee extends OAuth2App {
    * @private
    */
   async _syncLocks() {
-    return this._updateDevices('sync');
+    await this._updateDevices('sync');
   }
 
   /**
@@ -234,45 +234,40 @@ class Tedee extends OAuth2App {
   */
 
   /**
-   * Register action flow cards.
+   * Register condition flow cards.
    *
-   * @async
-   * @returns {Promise<void>}
+   * @returns {void}
    * @private
    */
-  async _registerActionFlowCards() {
-    // Register action flow card for pulling the spring
-    this.homey.flow.getActionCard('open')
-        .registerRunListener(async (args) => args.device.open());
+  _registerConditionFlowCards() {
+    // ... and is charging ...
+    this.homey.flow.getConditionCard('charging').registerRunListener(async (args) => {
+      return args.device.getCapabilityValue('charging') === true;
+    });
+
+    // ... and is connected ...
+    this.homey.flow.getConditionCard('connected').registerRunListener(async (args) => {
+      return args.device.getCapabilityValue('connected') === true;
+    });
+
+    // ... and update is available ...
+    this.homey.flow.getConditionCard('update_available').registerRunListener(async (args) => {
+      return args.device.getCapabilityValue('update_available') === true;
+    });
   }
 
   /**
-   * Register condition flow cards.
+   * Register action flow cards.
    *
-   * @async
-   * @returns {Promise<void>}
+   * @returns {void}
    * @private
    */
-  async _registerConditionFlowCards() {
-    // Register condition flow card for charging
-    this.homey.flow.getConditionCard('is_charging')
-        .registerRunListener(async (args) => {
-          return args.device.getCapabilityValue('charging');
-        });
-
-    // Register condition flow card for connected
-    this.homey.flow.getConditionCard('is_connected')
-        .registerRunListener(async (args) => {
-          return args.device.getCapabilityValue('connected');
-        });
-
-    // Register condition flow card for update available
-    this.homey.flow.getConditionCard('is_update_available')
-        .registerRunListener(async (args) => {
-          return args.device.getCapabilityValue('update_available');
-        });
+  _registerActionFlowCards() {
+    // ... then pull the spring ...
+    this.homey.flow.getActionCard('open').registerRunListener(async (args) => {
+      return args.device.open();
+    });
   }
-
 }
 
 module.exports = Tedee;

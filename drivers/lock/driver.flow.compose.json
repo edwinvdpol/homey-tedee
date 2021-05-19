@@ -21,13 +21,13 @@
   ],
   "conditions": [
     {
-      "$extends": "is_charging"
+      "$extends": "charging"
     },
     {
-      "$extends": "is_connected"
+      "$extends": "connected"
     },
     {
-      "$extends": "is_update_available"
+      "$extends": "update_available"
     }
   ],
   "actions": [

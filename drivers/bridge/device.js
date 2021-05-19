@@ -22,7 +22,7 @@ class BridgeDevice extends Device {
     const deviceData = await this.oAuth2Client.getBridge(this.tedeeId);
 
     // Sync bridge
-    return this._syncDevice(deviceData);
+    await this._syncDevice(deviceData);
   }
 
   /*
@@ -47,7 +47,20 @@ class BridgeDevice extends Device {
 
     // Update available capability (only full update)
     if (deviceData.hasOwnProperty('softwareVersions')) {
-      this.setCapabilityValue('update_available', deviceData.softwareVersions[0].updateAvailable).catch(this.error);
+      const updateAvailable = deviceData.softwareVersions[0].updateAvailable;
+      const currentlyAvailable = await this.getCapabilityValue('update_available');
+
+      // Update available message
+      if (updateAvailable && !currentlyAvailable) {
+        await this.setWarning(this.homey.__('state.updateAvailable'));
+      }
+
+      // Remove update available message if needed
+      if (!updateAvailable && currentlyAvailable) {
+        await this.unsetWarning();
+      }
+
+      this.setCapabilityValue('update_available', updateAvailable).catch(this.error);
     }
   }
 

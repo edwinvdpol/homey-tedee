@@ -12,10 +12,10 @@
   ],
   "conditions": [
     {
-      "$extends": "is_connected"
+      "$extends": "connected"
     },
     {
-      "$extends": "is_update_available"
+      "$extends": "update_available"
     }
   ]
 }

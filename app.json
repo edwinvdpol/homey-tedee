@@ -195,7 +195,7 @@
     ],
     "conditions": [
       {
-        "id": "is_connected",
+        "id": "connected",
         "title": {
           "en": "!{{Is|Is not}} connected",
           "nl": "!{{Is|Is niet}} verbonden"
@@ -209,7 +209,7 @@
         ]
       },
       {
-        "id": "is_update_available",
+        "id": "update_available",
         "title": {
           "en": "An update !{{is|is not}} available",
           "nl": "Een update !{{is|is niet}} beschikbaar"
@@ -223,7 +223,7 @@
         ]
       },
       {
-        "id": "is_charging",
+        "id": "charging",
         "title": {
           "en": "A lock !{{is|is not}} charging",
           "nl": "Een slot !{{is|is niet}} aan het opladen"
@@ -237,7 +237,7 @@
         ]
       },
       {
-        "id": "is_connected",
+        "id": "connected",
         "title": {
           "en": "!{{Is|Is not}} connected",
           "nl": "!{{Is|Is niet}} verbonden"
@@ -251,7 +251,7 @@
         ]
       },
       {
-        "id": "is_update_available",
+        "id": "update_available",
         "title": {
           "en": "An update !{{is|is not}} available",
           "nl": "Een update !{{is|is niet}} beschikbaar"
@@ -543,7 +543,7 @@
       },
       "type": "boolean",
       "getable": true,
-      "setable": true,
+      "setable": false,
       "insights": true,
       "insightsTitleTrue": {
         "en": "Charging",
@@ -561,7 +561,7 @@
       },
       "type": "boolean",
       "getable": true,
-      "setable": true,
+      "setable": false,
       "insights": true,
       "insightsTitleTrue": {
         "en": "Connected",
@@ -599,7 +599,7 @@
       },
       "type": "boolean",
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": null
     }
   }

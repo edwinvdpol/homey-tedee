@@ -23,7 +23,11 @@ class LockDevice extends Device {
     const deviceData = await this.oAuth2Client.getLock(this.tedeeId);
 
     // Sync lock
-    return this._syncDevice(deviceData);
+    await this._syncDevice(deviceData);
+
+    // Register capability listeners
+    this.registerCapabilityListener('locked', this.onCapabilityLocked.bind(this));
+    this.registerCapabilityListener('open', this.onCapabilityOpen.bind(this));
   }
 
   /**
@@ -73,7 +77,20 @@ class LockDevice extends Device {
 
     // Update available capability (only full update)
     if (deviceData.hasOwnProperty('softwareVersions')) {
-      this.setCapabilityValue('update_available', deviceData.softwareVersions[0].updateAvailable).catch(this.error);
+      const updateAvailable = deviceData.softwareVersions[0].updateAvailable;
+      const currentlyAvailable = await this.getCapabilityValue('update_available');
+
+      // Update available message
+      if (updateAvailable && !currentlyAvailable) {
+        await this.setWarning(this.homey.__('state.updateAvailable'));
+      }
+
+      // Remove update available message
+      if (!updateAvailable && currentlyAvailable) {
+        await this.unsetWarning();
+      }
+
+      this.setCapabilityValue('update_available', updateAvailable).catch(this.error);
     }
 
     // Return when `lockProperties` is not found in lock data
@@ -136,6 +153,11 @@ class LockDevice extends Device {
     // Calibrating
     if (state === LockState.Calibrating) {
       return this.setUnavailable(this.homey.__('state.calibrating'));
+    }
+
+    // Jammed (semi locked)
+    if (state === LockState.SemiLocked) {
+      return this.setUnavailable(this.homey.__('state.semiLocked'));
     }
 
     // Unknown
@@ -275,7 +297,7 @@ class LockDevice extends Device {
     this.setBusy();
 
     // Trigger opened
-    await this.driver.triggerOpened(this);
+    this.driver.triggerOpened(this);
 
     // Fetch current lock state from tedee API
     const state = await this.oAuth2Client.getLockState(this.tedeeId);
@@ -355,12 +377,12 @@ class LockDevice extends Device {
 
         // State is locked
         if (state === LockState.Locked) {
-          this.setCapabilityValue('locked', true).catch(this.error);
+          await this.setCapabilityValue('locked', true);
         }
 
         // State is unlocked
         if (state === LockState.Unlocked) {
-          this.setCapabilityValue('locked', false).catch(this.error);
+          await this.setCapabilityValue('locked', false);
         }
 
         // Check if state monitor is still needed

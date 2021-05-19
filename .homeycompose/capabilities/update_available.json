@@ -4,6 +4,6 @@
   },
   "type": "boolean",
   "getable": true,
-  "setable": true,
+  "setable": false,
   "uiComponent": null
 }
