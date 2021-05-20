@@ -321,7 +321,7 @@ class LockDevice extends Device {
       const type = operationData.type;
 
       // Log current state
-      this.log(`Operation status is ${status}`);
+      this.log(`Operation status is '${status}'`);
 
       // Operation monitor is not completed (pending)
       if (status === 'PENDING') {
