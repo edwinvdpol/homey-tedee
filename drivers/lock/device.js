@@ -55,7 +55,7 @@ class LockDevice extends Device {
     // Prepare and validate state
     const state = await this._prepareCommand();
 
-    // Start progress monitor if needed
+    // Start progress monitor
     if (await this._needsStateMonitor(state)) {
       return this._startStateMonitor();
     }
@@ -90,7 +90,7 @@ class LockDevice extends Device {
     // Prepare and validate state
     const state = await this._prepareCommand();
 
-    // Start progress monitor if needed
+    // Start progress monitor
     if (await this._needsStateMonitor(state)) {
       return this._startStateMonitor();
     }
@@ -128,7 +128,7 @@ class LockDevice extends Device {
     // Trigger opened
     this.driver.triggerOpened(this);
 
-    // Start progress monitor if needed
+    // Start progress monitor
     if (await this._needsStateMonitor(state)) {
       return this._startStateMonitor();
     }
@@ -154,7 +154,7 @@ class LockDevice extends Device {
    * Prepare device and return state ID.
    *
    * @async
-   * @returns {Promise<number|boolean>}
+   * @returns {Promise<number>}
    * @private
    */
   async _prepareCommand() {
@@ -248,6 +248,10 @@ class LockDevice extends Device {
         if (!await this._needsStateMonitor(state)) {
           // Set device to idle state
           await this.setIdle();
+
+          // Final sync to make sure the states are correct
+          this.log('State monitor finished!')
+          this.emit('sync');
         }
       } catch (err) {
         this.error('State Monitor failed:', err.message);
@@ -269,7 +273,7 @@ class LockDevice extends Device {
    * @private
    */
   async _needsStateMonitor(stateId) {
-    return this.getAvailable() &&
+    return this.getAvailable() && ! this.operationMonitor &&
         (stateId === LockState.Locking ||
             stateId === LockState.Unlocking ||
             stateId === LockState.Pulled ||
