@@ -137,13 +137,6 @@ class Tedee extends OAuth2App {
             continue;
           }
 
-          // Check if device is busy
-          if (await device.isBusy()) {
-            this.log('Device is busy, skipping update...');
-
-            continue;
-          }
-
           await device.setDeviceData(data);
         }
       }
