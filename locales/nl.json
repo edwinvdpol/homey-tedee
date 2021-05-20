@@ -6,7 +6,7 @@
     "404": "Apparaat is niet gevonden",
     "50x": "Tedee API is niet beschikbaar",
     "response": "Ongeldige response van Tedee API",
-    "actionFailed": "Actie mislukt"
+    "unknown": "Er is een onbekende fout opgetreden"
   },
   "state": {
     "uncalibrated": "Slot is niet gekalibreerd",

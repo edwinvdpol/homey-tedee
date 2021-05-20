@@ -62,10 +62,10 @@ class LockDevice extends Device {
 
     // Make sure the lock is in a valid state to lock
     if (state !== LockState.Unlocked && state !== LockState.SemiLocked) {
+      this.error('Lock failed: Not ready to lock');
+
       // Reset device state
       await this.resetState();
-
-      this.error('Lock is not ready to lock');
 
       throw new Error(this.homey.__('state.notReadyToLock'));
     }
@@ -97,10 +97,10 @@ class LockDevice extends Device {
 
     // Make sure the lock is in a valid state
     if (state !== LockState.Locked && state !== LockState.SemiLocked) {
+      this.error('Unlock failed: Not ready to unlock');
+
       // Reset device state
       await this.resetState();
-
-      this.error('Lock is not ready to unlock');
 
       throw new Error(this.homey.__('state.notReadyToUnlock'));
     }
@@ -135,10 +135,10 @@ class LockDevice extends Device {
 
     // Make sure the lock is in a valid state
     if (state !== LockState.Unlocked) {
+      this.error('Open failed: Unlock first');
+
       // Reset device state
       await this.resetState();
-
-      this.error('Lock is not ready to open');
 
       throw new Error(this.homey.__('state.firstUnLock'));
     }
@@ -250,12 +250,12 @@ class LockDevice extends Device {
           await this.resetState();
         }
       } catch (err) {
-        this.error('State Monitor', err);
+        this.error('State Monitor failed:', err.message);
 
         // Reset device state
         await this.resetState();
 
-        throw new Error('Could not update lock state');
+        throw new Error(this.homey.__('error.unknown'));
       }
     }, 800);
   }
@@ -355,7 +355,7 @@ class LockDevice extends Device {
       // Reset device state
       await this.resetState();
 
-      throw new Error(this.homey.__('error.actionFailed'));
+      throw new Error(this.homey.__('error.unknown'));
     }, 800);
   }
 

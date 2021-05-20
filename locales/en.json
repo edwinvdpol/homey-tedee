@@ -6,7 +6,7 @@
     "404": "Device is not found",
     "50x": "Tedee API is not available",
     "response": "Invalid response from Tedee API",
-    "actionFailed": "Action failed"
+    "unknown": "An unknown error has occurred"
   },
   "state": {
     "uncalibrated": "Lock is not calibrated",
