@@ -5,6 +5,35 @@ const {LockState, OperationTypes} = require('/lib/Enums');
 
 class LockDevice extends Device {
 
+  /**
+   * Device initialized.
+   *
+   * @async
+   * @returns {Promise<void>}
+   */
+  async onOAuth2Init() {
+    this.log('Device initialized');
+
+    // Initial data
+    this.idle = false;
+
+    // Set tedee ID
+    this.tedeeId = Number(this.getSetting('tedee_id'));
+
+    // Set device to idle state
+    await this.setIdle();
+
+    // Register capability listeners
+    await this.registerCapabilityListeners();
+
+    // Register event listeners
+    this.on('sync', this.onSync.bind(this));
+    this.on('full', this.onFull.bind(this));
+
+    // Emit full update event
+    this.emit('full');
+  }
+
   /*
   |-----------------------------------------------------------------------------
   | Lock events
@@ -25,7 +54,7 @@ class LockDevice extends Device {
 
     // Auto lock enabled updated
     if (changedKeys.includes('auto_lock_enabled')) {
-      this.log(`Auto lock enabled updated: ${newSettings.auto_lock_enabled}`);
+      this.log(`Auto lock enabled is now '${newSettings.auto_lock_enabled}'`);
 
       settings.autoLockEnabled = newSettings.auto_lock_enabled === 'on';
     }
@@ -33,6 +62,9 @@ class LockDevice extends Device {
     // Device settings need to be updated
     if (Object.keys(settings).length > 0) {
       await this.oAuth2Client.updateLockSettings(this.tedeeId, settings);
+
+      // Emit full update
+      this.emit('full');
     }
   }
 
@@ -96,7 +128,7 @@ class LockDevice extends Device {
     }
 
     // Make sure the lock is in a valid state
-    if (state !== LockState.Locked && state !== LockState.SemiLocked) {
+    if (state !== LockState.Locked) {
       this.error('Unlock failed: Not ready to unlock');
 
       // Set device to idle state
@@ -212,54 +244,45 @@ class LockDevice extends Device {
     }
 
     this.stateMonitor = this.homey.setInterval(async () => {
-      try {
-        // Set lock to busy
-        await this.setBusy();
+      // Set lock to busy
+      await this.setBusy();
 
-        // Fetch current lock state from tedee API
-        const deviceData = await this.oAuth2Client.getSyncLock(this.tedeeId);
-        const state = deviceData.lockProperties.state;
-        const stateName = await this._getLockStateName(state);
+      // Fetch current lock state from tedee API
+      const deviceData = await this.oAuth2Client.getSyncLock(this.tedeeId);
+      const state = deviceData.lockProperties.state;
+      const stateName = await this._getLockStateName(state);
 
-        // Log current state
-        this.log(`Lock is ${stateName}`);
+      // Log current state
+      this.log(`Lock is ${stateName}`);
 
-        // State is pulling or pulled
-        if (state === LockState.Pulling || state === LockState.Pulled) {
-          await this.driver.triggerOpened(this);
-        }
+      // State is pulling or pulled
+      if (state === LockState.Pulling || state === LockState.Pulled) {
+        await this.driver.triggerOpened(this);
+      }
 
-        // State is locked
-        if (state === LockState.Locked) {
-          await this.setCapabilityValue('locked', true);
-        }
+      // State is locked
+      if (state === LockState.Locked) {
+        await this.setCapabilityValue('locked', true);
+      }
 
-        // State is unlocked
-        if (state === LockState.Unlocked) {
-          await this.setCapabilityValue('locked', false);
-        }
+      // State is unlocked
+      if (state === LockState.Unlocked) {
+        await this.setCapabilityValue('locked', false);
+      }
 
-        // State is semi locked (show as unlocked for safety reasons)
-        if (state === LockState.SemiLocked) {
-          await this.setCapabilityValue('locked', false);
-        }
+      // State is semi locked (show as unlocked for safety reasons)
+      if (state === LockState.SemiLocked) {
+        await this.setCapabilityValue('locked', false);
+      }
 
-        // Check if state monitor is still needed
-        if (!await this._needsStateMonitor(state)) {
-          // Set device to idle state
-          await this.setIdle();
-
-          // Final sync to make sure the states are correct
-          this.log('State monitor finished!')
-          this.emit('sync');
-        }
-      } catch (err) {
-        this.error('State Monitor failed:', err.message);
-
+      // Check if state monitor is still needed
+      if (!await this._needsStateMonitor(state)) {
         // Set device to idle state
         await this.setIdle();
 
-        throw new Error(this.homey.__('error.unknown'));
+        // Final sync to make sure the states are correct
+        this.log('State monitor finished!')
+        this.emit('sync');
       }
     }, 800);
   }
