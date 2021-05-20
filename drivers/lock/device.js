@@ -54,9 +54,16 @@ class LockDevice extends Device {
 
     // Auto lock enabled updated
     if (changedKeys.includes('auto_lock_enabled')) {
-      this.log(`Auto lock enabled is now '${newSettings.auto_lock_enabled}'`);
+      this.log(`Auto-lock enabled is now '${newSettings.auto_lock_enabled}'`);
 
       settings.autoLockEnabled = newSettings.auto_lock_enabled === 'on';
+    }
+
+    // Pull spring enabled updated
+    if (changedKeys.includes('pull_spring_enabled')) {
+      this.log(`Pull spring enabled is now '${newSettings.pull_spring_enabled}'`);
+
+      settings.pullSpringEnabled = newSettings.pull_spring_enabled === 'on';
     }
 
     // Device settings need to be updated
@@ -153,6 +160,16 @@ class LockDevice extends Device {
    */
   async open() {
     this.log('Opening lock...');
+
+    // Check if pull spring is enabled
+    if (this.getSetting('pull_spring_enabled') === 'off') {
+      this.error('Open failed: Pull spring not enabled');
+
+      // Set device to idle state
+      await this.setIdle();
+
+      throw new Error(this.homey.__('error.pullSpringDisabled'));
+    }
 
     // Prepare and validate state
     const state = await this._prepareCommand();

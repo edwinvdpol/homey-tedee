@@ -20,6 +20,9 @@
     "children": [
       {
         "$extends": "auto_lock_enabled"
+      },
+      {
+        "$extends": "pull_spring_enabled"
       }
     ]
   },

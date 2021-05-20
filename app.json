@@ -471,8 +471,41 @@
               "id": "auto_lock_enabled",
               "type": "radio",
               "label": {
-                "en": "Auto lock",
+                "en": "Auto-lock",
                 "nl": "Automatische vergrendeling"
+              },
+              "hint": {
+                "en": "Automatically close the door when the lock is in the open position.",
+                "nl": "Sluit de deur automatisch wanneer het slot in open positie staat."
+              },
+              "value": "-",
+              "values": [
+                {
+                  "id": "on",
+                  "label": {
+                    "en": "On",
+                    "nl": "Aan"
+                  }
+                },
+                {
+                  "id": "off",
+                  "label": {
+                    "en": "Off",
+                    "nl": "Uit"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "pull_spring_enabled",
+              "type": "radio",
+              "label": {
+                "en": "Pull spring",
+                "nl": "Deurvergrendeling"
+              },
+              "hint": {
+                "en": "When the pull spring is disabled, it resets pull spring calibration!",
+                "nl": "Wanneer de deurvergrendeling uitgezet is, wordt de kalibratie van de trekveer gereset!"
               },
               "value": "-",
               "values": [

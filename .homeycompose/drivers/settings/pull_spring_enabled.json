@@ -1,12 +1,12 @@
 {
   "type": "radio",
   "label": {
-    "en": "Auto-lock",
-    "nl": "Automatische vergrendeling"
+    "en": "Pull spring",
+    "nl": "Deurvergrendeling"
   },
   "hint": {
-    "en": "Automatically close the door when the lock is in the open position.",
-    "nl": "Sluit de deur automatisch wanneer het slot in open positie staat."
+    "en": "When the pull spring is disabled, it resets pull spring calibration!",
+    "nl": "Wanneer de deurvergrendeling uitgezet is, wordt de kalibratie van de trekveer gereset!"
   },
   "value": "-",
   "values": [

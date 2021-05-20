@@ -6,7 +6,8 @@
     "404": "Device is not found",
     "50x": "Tedee API is not available",
     "response": "Invalid response from Tedee API",
-    "unknown": "An unknown error has occurred"
+    "unknown": "An unknown error has occurred",
+    "pullSpringDisabled": "Pull spring is disabled"
   },
   "state": {
     "uncalibrated": "Lock is not calibrated",
