@@ -105,10 +105,41 @@ class Tedee extends OAuth2App {
         data = await this.oAuth2Client.getSyncLocks();
       }
 
-      // Emit the sync devices event
-      this.homey.emit('sync_devices', data);
+      // Update devices from list
+      await this._updateDevicesList(data);
     } catch (err) {
       await this._stopTimers(err.message);
+    }
+  }
+
+  /**
+   * Update devices from list of tedee devices.
+   *
+   * @async
+   * @param {object} list
+   * @returns {Promise<void>}
+   * @private
+   */
+  async _updateDevicesList(list) {
+    // Search for devices and set data
+    const drivers = this.homey.drivers.getDrivers();
+
+    for (const driverId in drivers) {
+      if (!drivers.hasOwnProperty(driverId)) {
+        return;
+      }
+
+      const devices = drivers[driverId].getDevices();
+
+      for (const device of devices) {
+        for (const data of list) {
+          if (data.id !== Number(device.getSetting('tedee_id'))) {
+            continue;
+          }
+
+          await device.setDeviceData(data);
+        }
+      }
     }
   }
 
