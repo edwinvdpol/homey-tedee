@@ -64,8 +64,8 @@ class LockDevice extends Device {
     if (state !== LockState.Unlocked && state !== LockState.SemiLocked) {
       this.error('Lock failed: Not ready to lock');
 
-      // Reset device state
-      await this.resetState();
+      // Set device to idle state
+      await this.setIdle();
 
       throw new Error(this.homey.__('state.notReadyToLock'));
     }
@@ -74,7 +74,7 @@ class LockDevice extends Device {
     const operationId = await this.oAuth2Client.close(this.tedeeId);
 
     // Start operation monitor
-    return this._startOperationMonitor(operationId);
+    await this._startOperationMonitor(operationId);
   }
 
   /**
@@ -99,8 +99,8 @@ class LockDevice extends Device {
     if (state !== LockState.Locked && state !== LockState.SemiLocked) {
       this.error('Unlock failed: Not ready to unlock');
 
-      // Reset device state
-      await this.resetState();
+      // Set device to idle state
+      await this.setIdle();
 
       throw new Error(this.homey.__('state.notReadyToUnlock'));
     }
@@ -109,7 +109,7 @@ class LockDevice extends Device {
     const operationId = await this.oAuth2Client.open(this.tedeeId);
 
     // Start operation monitor
-    return this._startOperationMonitor(operationId);
+    await this._startOperationMonitor(operationId);
   }
 
   /**
@@ -137,8 +137,8 @@ class LockDevice extends Device {
     if (state !== LockState.Unlocked) {
       this.error('Open failed: Unlock first');
 
-      // Reset device state
-      await this.resetState();
+      // Set device to idle state
+      await this.setIdle();
 
       throw new Error(this.homey.__('state.firstUnLock'));
     }
@@ -147,26 +147,26 @@ class LockDevice extends Device {
     const operationId = await this.oAuth2Client.pullSpring(this.tedeeId);
 
     // Start operation monitor
-    return this._startOperationMonitor(operationId);
+    await this._startOperationMonitor(operationId);
   }
 
   /**
    * Prepare device and return state ID.
    *
    * @async
-   * @returns {Promise<number>}
+   * @returns {Promise<number|boolean>}
    * @private
    */
   async _prepareCommand() {
     // Check if lock is busy
-    if (this.isBusy()) {
+    if (await this.isBusy()) {
       this.log('Device is busy, stopped');
 
       throw new Error(this.homey.__('state.inUse'));
     }
 
     // Set the lock to busy
-    this.setBusy();
+    await this.setBusy();
 
     // Fetch current lock state from tedee API
     const state = await this.oAuth2Client.getLockState(this.tedeeId);
@@ -198,8 +198,8 @@ class LockDevice extends Device {
     if (!this.getAvailable()) {
       this.error('Device not available');
 
-      // Reset device state
-      await this.resetState();
+      // Set device to idle state
+      await this.setIdle();
 
       throw new Error(this.homey.__('state.notAvailable'));
     }
@@ -214,7 +214,7 @@ class LockDevice extends Device {
     this.stateMonitor = this.homey.setInterval(async () => {
       try {
         // Set lock to busy
-        this.setBusy();
+        await this.setBusy();
 
         // Fetch current lock state from tedee API
         const deviceData = await this.oAuth2Client.getSyncLock(this.tedeeId);
@@ -246,14 +246,14 @@ class LockDevice extends Device {
 
         // Check if state monitor is still needed
         if (!await this._needsStateMonitor(state)) {
-          // Reset device state
-          await this.resetState();
+          // Set device to idle state
+          await this.setIdle();
         }
       } catch (err) {
         this.error('State Monitor failed:', err.message);
 
-        // Reset device state
-        await this.resetState();
+        // Set device to idle state
+        await this.setIdle();
 
         throw new Error(this.homey.__('error.unknown'));
       }
@@ -298,8 +298,8 @@ class LockDevice extends Device {
     if (!this.getAvailable()) {
       this.error('Device not available');
 
-      // Reset device state
-      await this.resetState();
+      // Set device to idle state
+      await this.setIdle();
 
       throw new Error(this.homey.__('state.notAvailable'));
     }
@@ -313,7 +313,7 @@ class LockDevice extends Device {
 
     this.operationMonitor = this.homey.setInterval(async () => {
       // Set lock to busy
-      this.setBusy();
+      await this.setBusy();
 
       // Fetch current lock state from tedee API
       const operationData = await this.oAuth2Client.getOperation(operationId);
@@ -330,8 +330,8 @@ class LockDevice extends Device {
 
       // Successful
       if (operationData.result === 0) {
-        // Cleanup timers
-        await this.cleanup();
+        // Reset operation monitor
+        await this.resetOperationMonitor();
 
         // Start state monitor
         return this._startStateMonitor();
@@ -352,8 +352,8 @@ class LockDevice extends Device {
         this.error('Open operation failed');
       }
 
-      // Reset device state
-      await this.resetState();
+      // Set device to idle state
+      await this.setIdle();
 
       throw new Error(this.homey.__('error.unknown'));
     }, 800);

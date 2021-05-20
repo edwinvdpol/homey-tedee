@@ -137,6 +137,13 @@ class Tedee extends OAuth2App {
             continue;
           }
 
+          // Check if device is busy
+          if (await device.isBusy()) {
+            this.log('Device is busy, skipping update...');
+
+            continue;
+          }
+
           await device.setDeviceData(data);
         }
       }
@@ -234,7 +241,7 @@ class Tedee extends OAuth2App {
       let devices = 0;
 
       if (Object.keys(drivers).length === 0) {
-        return await this._stopTimers();
+        return this._stopTimers();
       }
 
       for (const driverId in drivers) {
@@ -251,12 +258,12 @@ class Tedee extends OAuth2App {
 
       // Stop timers when no devices found
       if (devices === 0) {
-        return await this._stopTimers('No devices found');
+        return this._stopTimers('No devices found');
       }
 
-      return await this._startTimers();
+      return this._startTimers();
     } catch (err) {
-      this.error('Verify timers', err);
+      this.error('Verify timers:', err.message);
     }
   }
 
