@@ -5,35 +5,6 @@ const {LockState, OperationTypes} = require('/lib/Enums');
 
 class LockDevice extends Device {
 
-  /**
-   * Device initialized.
-   *
-   * @async
-   * @returns {Promise<void>}
-   */
-  async onOAuth2Init() {
-    this.log('Device initialized');
-
-    // Initial data
-    this.idle = false;
-
-    // Set tedee ID
-    this.tedeeId = Number(this.getSetting('tedee_id'));
-
-    // Set device to idle state
-    await this.setIdle();
-
-    // Register capability listeners
-    await this.registerCapabilityListeners();
-
-    // Register event listeners
-    this.on('sync', this.onSync.bind(this));
-    this.on('full', this.onFull.bind(this));
-
-    // Emit full update event
-    this.emit('full');
-  }
-
   /*
   |-----------------------------------------------------------------------------
   | Lock events
