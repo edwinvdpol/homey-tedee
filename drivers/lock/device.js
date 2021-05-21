@@ -181,6 +181,9 @@ class LockDevice extends Device {
     if (!this.getAvailable()) {
       this.error('Device not available');
 
+      // Set device to idle state
+      await this.setIdle();
+
       throw new Error(this.homey.__('state.notAvailable'));
     }
 
