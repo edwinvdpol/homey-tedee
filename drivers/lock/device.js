@@ -60,7 +60,7 @@ class LockDevice extends Device {
    * @throws {Error}
    */
   async lock() {
-    this.log('Locking lock...');
+    this.log('----- Locking lock -----');
 
     // Prepare and validate state
     const state = await this._prepareCommand();
@@ -95,7 +95,7 @@ class LockDevice extends Device {
    * @throws {Error}
    */
   async unlock() {
-    this.log('Unlocking lock...');
+    this.log('----- Unlocking lock -----');
 
     // Prepare and validate state
     const state = await this._prepareCommand();
@@ -130,7 +130,7 @@ class LockDevice extends Device {
    * @throws {Error}
    */
   async open() {
-    this.log('Opening lock...');
+    this.log('----- Opening lock -----');
 
     // Check if pull spring is enabled
     if (this.getSetting('pull_spring_enabled') === 'off') {
@@ -318,11 +318,16 @@ class LockDevice extends Device {
     await (async () => {
       this.operationMonitor = true;
 
+      let numberOfTries = 0;
+
       // Set lock to busy
       await this.setBusy();
 
       while (this.operationMonitor) {
         await new Promise(resolve => setTimeout(resolve, 800));
+
+        // Increment number of tries
+        numberOfTries++;
 
         // Fetch current lock state from tedee API
         const operationData = await this.oAuth2Client.getOperation(operationId);
@@ -330,7 +335,17 @@ class LockDevice extends Device {
         const type = operationData.type;
 
         // Log current state
-        this.log(`Operation status is '${status}'`);
+        this.log(`Operation status is '${status}' (${numberOfTries})`);
+
+        // Stop operation monitor at 5 or more tries
+        if (numberOfTries > 4) {
+          this.error('Stopping operation monitor, to many tries');
+
+          // Set device to idle state
+          await this.setIdle();
+
+          throw new Error(this.homey.__('error.response'));
+        }
 
         // Operation monitor is not completed (pending)
         if (status === 'PENDING') {
