@@ -174,9 +174,6 @@ class LockDevice extends Device {
     // Prepare and validate state
     const state = await this._prepareCommand();
 
-    // Trigger opened
-    this.driver.triggerOpened(this);
-
     // Start progress monitor
     if (await this._needsStateMonitor(state)) {
       return this._startStateMonitor();
