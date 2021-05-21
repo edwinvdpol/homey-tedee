@@ -41,6 +41,8 @@ class LockDevice extends Device {
     if (Object.keys(settings).length > 0) {
       await this.oAuth2Client.updateLockSettings(this.tedeeId, settings);
 
+      this.log(`Lock settings ${this.tedeeId} updated successfully!`);
+
       // Emit full update
       this.emit('full');
     }
