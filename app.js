@@ -2,6 +2,7 @@
 
 const {OAuth2App} = require('homey-oauth2app');
 const Client = require('./lib/Client');
+const {Log} = require('homey-log');
 
 const syncLocksInterval = 10 * 1000; // 10 seconds
 const refreshDevicesInterval = 10 * 60 * 1000; // 10 minutes
@@ -25,6 +26,9 @@ class Tedee extends OAuth2App {
    */
   async onOAuth2Init() {
     this.log('Application initialized');
+
+    // Sentry logging
+    this.homeyLog = new Log({ homey: this.homey });
 
     // Reset timers
     this.refreshTimer = null;
