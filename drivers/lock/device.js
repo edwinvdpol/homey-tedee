@@ -62,8 +62,8 @@ class LockDevice extends Device {
   async lock() {
     this.log('----- Locking lock -----');
 
-    // Prepare and validate state
-    const state = await this._prepareCommand();
+    // Get and validate state
+    const state = await this._getState();
 
     // Start progress monitor
     if (await this._needsStateMonitor(state)) {
@@ -97,8 +97,8 @@ class LockDevice extends Device {
   async unlock() {
     this.log('----- Unlocking lock -----');
 
-    // Prepare and validate state
-    const state = await this._prepareCommand();
+    // Get and validate state
+    const state = await this._getState();
 
     // Start progress monitor
     if (await this._needsStateMonitor(state)) {
@@ -142,8 +142,8 @@ class LockDevice extends Device {
       throw new Error(this.homey.__('error.pullSpringDisabled'));
     }
 
-    // Prepare and validate state
-    const state = await this._prepareCommand();
+    // Get and validate state
+    const state = await this._getState();
 
     // Start progress monitor
     if (await this._needsStateMonitor(state)) {
@@ -168,13 +168,15 @@ class LockDevice extends Device {
   }
 
   /**
-   * Prepare device and return state ID.
+   * Validate and return state.
    *
    * @async
    * @returns {Promise<number>}
    * @private
    */
-  async _prepareCommand() {
+  async _getState() {
+    this.log('Fetching state...');
+
     // Check if lock is available
     if (!this.getAvailable()) {
       this.error('Device not available');
