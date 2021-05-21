@@ -204,6 +204,13 @@ class LockDevice extends Device {
    * @private
    */
   async _prepareCommand() {
+    // Check if lock is available
+    if (!this.getAvailable()) {
+      this.error('Device not available');
+
+      throw new Error(this.homey.__('state.notAvailable'));
+    }
+
     // Check if lock is busy
     if (await this.isBusy()) {
       this.log('Device is busy, stopped');
@@ -240,16 +247,6 @@ class LockDevice extends Device {
   async _startStateMonitor() {
     this.log('Starting state monitor');
 
-    // Extra safety check if lock is available
-    if (!this.getAvailable()) {
-      this.error('Device not available');
-
-      // Set device to idle state
-      await this.setIdle();
-
-      throw new Error(this.homey.__('state.notAvailable'));
-    }
-
     // Check if operation monitor is active
     if (this.operationMonitor) {
       this.log('Operation monitor is active, stopped');
@@ -257,48 +254,53 @@ class LockDevice extends Device {
       throw new Error(this.homey.__('state.inUse'));
     }
 
-    this.stateMonitor = this.homey.setInterval(async () => {
+    await (async () => {
+      this.stateMonitor = true;
+
       // Set lock to busy
       await this.setBusy();
 
-      // Fetch current lock state from tedee API
-      const deviceData = await this.oAuth2Client.getSyncLock(this.tedeeId);
-      const state = deviceData.lockProperties.state;
-      const stateName = await this._getLockStateName(state);
+      while (this.stateMonitor) {
+        await new Promise(resolve => setTimeout(resolve, 800));
 
-      // Log current state
-      this.log(`Lock is ${stateName}`);
+        // Fetch current lock state from tedee API
+        const deviceData = await this.oAuth2Client.getSyncLock(this.tedeeId);
+        const state = deviceData.lockProperties.state;
+        const stateName = await this._getLockStateName(state);
 
-      // State is pulling or pulled
-      if (state === LockState.Pulling || state === LockState.Pulled) {
-        await this.driver.triggerOpened(this);
+        // Log current state
+        this.log(`Lock is ${stateName}`);
+
+        // State is pulling or pulled
+        if (state === LockState.Pulling || state === LockState.Pulled) {
+          await this.driver.triggerOpened(this);
+        }
+
+        // State is locked
+        if (state === LockState.Locked) {
+          await this.setCapabilityValue('locked', true);
+        }
+
+        // State is unlocked
+        if (state === LockState.Unlocked) {
+          await this.setCapabilityValue('locked', false);
+        }
+
+        // State is semi locked (show as unlocked for safety reasons)
+        if (state === LockState.SemiLocked) {
+          await this.setCapabilityValue('locked', false);
+        }
+
+        // Check if state monitor is still needed
+        if (!await this._needsStateMonitor(state)) {
+          // Set device to idle state
+          await this.setIdle();
+
+          // Final sync to make sure the states are correct
+          this.emit('sync');
+        }
       }
-
-      // State is locked
-      if (state === LockState.Locked) {
-        await this.setCapabilityValue('locked', true);
-      }
-
-      // State is unlocked
-      if (state === LockState.Unlocked) {
-        await this.setCapabilityValue('locked', false);
-      }
-
-      // State is semi locked (show as unlocked for safety reasons)
-      if (state === LockState.SemiLocked) {
-        await this.setCapabilityValue('locked', false);
-      }
-
-      // Check if state monitor is still needed
-      if (!await this._needsStateMonitor(state)) {
-        // Set device to idle state
-        await this.setIdle();
-
-        // Final sync to make sure the states are correct
-        this.log('State monitor finished!')
-        this.emit('sync');
-      }
-    }, 800);
+    })();
   }
 
   /**
@@ -310,7 +312,7 @@ class LockDevice extends Device {
    * @private
    */
   async _needsStateMonitor(stateId) {
-    return this.getAvailable() && ! this.operationMonitor &&
+    return this.getAvailable() &&
         (stateId === LockState.Locking ||
             stateId === LockState.Unlocking ||
             stateId === LockState.Pulled ||
@@ -335,16 +337,6 @@ class LockDevice extends Device {
   async _startOperationMonitor(operationId) {
     this.log(`Starting operation monitor for ${operationId}`);
 
-    // Extra safety check if lock is available
-    if (!this.getAvailable()) {
-      this.error('Device not available');
-
-      // Set device to idle state
-      await this.setIdle();
-
-      throw new Error(this.homey.__('state.notAvailable'));
-    }
-
     // Check if state monitor monitor is active
     if (this.stateMonitor) {
       this.log('State monitor is active, stopped');
@@ -352,52 +344,58 @@ class LockDevice extends Device {
       throw new Error(this.homey.__('state.inUse'));
     }
 
-    this.operationMonitor = this.homey.setInterval(async () => {
+    await (async () => {
+      this.operationMonitor = true;
+
       // Set lock to busy
       await this.setBusy();
 
-      // Fetch current lock state from tedee API
-      const operationData = await this.oAuth2Client.getOperation(operationId);
-      const status = operationData.status;
-      const type = operationData.type;
+      while (this.operationMonitor) {
+        await new Promise(resolve => setTimeout(resolve, 800));
 
-      // Log current state
-      this.log(`Operation status is '${status}'`);
+        // Fetch current lock state from tedee API
+        const operationData = await this.oAuth2Client.getOperation(operationId);
+        const status = operationData.status;
+        const type = operationData.type;
 
-      // Operation monitor is not completed (pending)
-      if (status === 'PENDING') {
-        return;
+        // Log current state
+        this.log(`Operation status is '${status}'`);
+
+        // Operation monitor is not completed (pending)
+        if (status === 'PENDING') {
+          continue;
+        }
+
+        // Stop operation monitor
+        await this.stopOperationMonitor();
+
+        // Successful
+        if (operationData.result === 0) {
+          // Start state monitor
+          return this._startStateMonitor();
+        }
+
+        // Pull failed
+        if (type === OperationTypes.Pull) {
+          this.error('Pull operation failed');
+        }
+
+        // Close failed
+        if (type === OperationTypes.Close) {
+          this.error('Close operation failed');
+        }
+
+        // Open failed
+        if (type === OperationTypes.Open) {
+          this.error('Open operation failed');
+        }
+
+        // Set device to idle state
+        await this.setIdle();
+
+        throw new Error(this.homey.__('error.response'));
       }
-
-      // Successful
-      if (operationData.result === 0) {
-        // Reset operation monitor
-        await this.resetOperationMonitor();
-
-        // Start state monitor
-        return this._startStateMonitor();
-      }
-
-      // Pull failed
-      if (type === OperationTypes.Pull) {
-        this.error('Pull operation failed');
-      }
-
-      // Close failed
-      if (type === OperationTypes.Close) {
-        this.error('Close operation failed');
-      }
-
-      // Open failed
-      if (type === OperationTypes.Open) {
-        this.error('Open operation failed');
-      }
-
-      // Set device to idle state
-      await this.setIdle();
-
-      throw new Error(this.homey.__('error.unknown'));
-    }, 800);
+    })();
   }
 
   /*
