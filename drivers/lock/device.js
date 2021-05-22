@@ -126,7 +126,7 @@ class LockDevice extends Device {
     }
 
     // Make sure the lock is in a valid state
-    if (state !== LockState.Locked) {
+    if (state !== LockState.Locked && state !== LockState.SemiLocked) {
       await this.errorIdle(`Not ready to unlock, currently ${state}`, 'error.notReadyToUnlock');
     }
 
