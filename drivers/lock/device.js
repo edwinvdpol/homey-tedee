@@ -30,13 +30,6 @@ class LockDevice extends Device {
       settings.autoLockEnabled = newSettings.auto_lock_enabled === 'on';
     }
 
-    // Pull spring enabled updated
-    if (changedKeys.includes('pull_spring_enabled')) {
-      this.log(`Pull spring enabled is now '${newSettings.pull_spring_enabled}'`);
-
-      settings.pullSpringEnabled = newSettings.pull_spring_enabled === 'on';
-    }
-
     // Device settings need to be updated
     if (Object.keys(settings).length > 0) {
       await this.oAuth2Client.updateLockSettings(this.tedeeId, settings);
@@ -135,7 +128,7 @@ class LockDevice extends Device {
     this.log('----- Opening lock -----');
 
     // Check if pull spring is enabled
-    if (this.getSetting('pull_spring_enabled') === 'off') {
+    if (this.getStoreValue('pull_spring_enabled') !== 'on') {
       this.error('Open failed: Pull spring not enabled');
 
       // Set device to idle state
