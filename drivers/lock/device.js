@@ -418,7 +418,7 @@ class LockDevice extends Device {
       case LockState.Updating:
         return `updating (${stateId})`;
       default:
-        return `unknown`;
+        return `error`;
     }
   }
 
