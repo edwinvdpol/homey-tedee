@@ -111,8 +111,8 @@
       {
         "id": "opened",
         "title": {
-          "en": "The door just opened",
-          "nl": "De deur werd geopend"
+          "en": "The lock just opened",
+          "nl": "Een slot werd geopend"
         },
         "args": [
           {
@@ -269,8 +269,8 @@
       {
         "id": "open",
         "title": {
-          "en": "Open door",
-          "nl": "Deur openen"
+          "en": "Open",
+          "nl": "Openen"
         },
         "args": [
           {
@@ -642,8 +642,8 @@
     },
     "open": {
       "title": {
-        "en": "Open door",
-        "nl": "Deur openen"
+        "en": "Open",
+        "nl": "Openen"
       },
       "type": "boolean",
       "getable": true,
