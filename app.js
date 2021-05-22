@@ -10,7 +10,6 @@ const refreshDevicesInterval = 5 * 60 * 1000; // 5 minutes
 class Tedee extends OAuth2App {
 
   static OAUTH2_CLIENT = Client;
-  // static OAUTH2_DEBUG = true;
 
   /*
   |-----------------------------------------------------------------------------
@@ -92,21 +91,21 @@ class Tedee extends OAuth2App {
    */
   async _updateDevices(action) {
     try {
-      // Verify action
-      if (action !== 'refresh' && action !== 'sync') {
-        return this.log(`Invalid action: ${action}`);
-      }
-
       // Set oAuth client
       this.oAuth2Client = this.getFirstSavedOAuth2Client();
 
-      let data;
+      let data = {};
 
       // Fetch requested data from tedee API
       if (action === 'refresh') {
         data = await this.oAuth2Client.getAllDevicesDetails();
       } else if (action === 'sync') {
         data = await this.oAuth2Client.getSyncLocks();
+      }
+
+      // Check data
+      if (Object.keys(data).length === 0) {
+        return;
       }
 
       // Update devices from list
