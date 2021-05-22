@@ -209,7 +209,7 @@ class LockDevice extends Device {
 
     // Check if lock is busy
     if (await this.isBusy()) {
-      this.log('Device is busy, stopped');
+      this.error('Device is busy, stopped');
 
       throw new Error(this.homey.__('state.inUse'));
     }
@@ -245,7 +245,7 @@ class LockDevice extends Device {
 
     // Check if operation monitor is active
     if (this.operationMonitor) {
-      this.log('Operation monitor is active, stopped');
+      this.error('Operation monitor is active, stopped');
 
       throw new Error(this.homey.__('state.inUse'));
     }
@@ -335,7 +335,7 @@ class LockDevice extends Device {
 
     // Check if state monitor monitor is active
     if (this.stateMonitor) {
-      this.log('State monitor is active, stopped');
+      this.error('State monitor is active, stopped');
 
       throw new Error(this.homey.__('state.inUse'));
     }
