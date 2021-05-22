@@ -463,6 +463,73 @@
         {
           "type": "group",
           "label": {
+            "en": "Close button",
+            "nl": "Sluitknop"
+          },
+          "children": [
+            {
+              "id": "button_lock_enabled",
+              "type": "radio",
+              "label": {
+                "en": "Push to lock",
+                "nl": "Druk om te vergrendelen"
+              },
+              "hint": {
+                "en": "Lock the lock when the button is pressed.",
+                "nl": "Vergrendel het slot wanneer op de knop gedrukt wordt."
+              },
+              "value": "-",
+              "values": [
+                {
+                  "id": "on",
+                  "label": {
+                    "en": "On",
+                    "nl": "Aan"
+                  }
+                },
+                {
+                  "id": "off",
+                  "label": {
+                    "en": "Off",
+                    "nl": "Uit"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "button_unlock_enabled",
+              "type": "radio",
+              "label": {
+                "en": "Push to unlock",
+                "nl": "Druk om te ontgrendelen"
+              },
+              "hint": {
+                "en": "Unlock the lock when the button is pressed.",
+                "nl": "Ontgrendel het slot wanneer op de knop gedrukt wordt."
+              },
+              "value": "-",
+              "values": [
+                {
+                  "id": "on",
+                  "label": {
+                    "en": "On",
+                    "nl": "Aan"
+                  }
+                },
+                {
+                  "id": "off",
+                  "label": {
+                    "en": "Off",
+                    "nl": "Uit"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
             "en": "Settings",
             "nl": "Instellingen"
           },

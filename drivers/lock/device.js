@@ -30,6 +30,20 @@ class LockDevice extends Device {
       settings.autoLockEnabled = newSettings.auto_lock_enabled === 'on';
     }
 
+    // Button lock enabled updated
+    if (changedKeys.includes('button_lock_enabled')) {
+      this.log(`Button lock enabled is now '${newSettings.button_lock_enabled}'`);
+
+      settings.buttonLockEnabled = newSettings.button_lock_enabled === 'on';
+    }
+
+    // Button unlock enabled updated
+    if (changedKeys.includes('button_unlock_enabled')) {
+      this.log(`Button unlock enabled is now '${newSettings.button_unlock_enabled}'`);
+
+      settings.buttonUnlockEnabled = newSettings.button_unlock_enabled === 'on';
+    }
+
     // Device settings need to be updated
     if (Object.keys(settings).length > 0) {
       await this.oAuth2Client.updateLockSettings(this.tedeeId, settings);

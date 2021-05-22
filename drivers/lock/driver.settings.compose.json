@@ -14,6 +14,21 @@
   {
     "type": "group",
     "label": {
+      "en": "Close button",
+      "nl": "Sluitknop"
+    },
+    "children": [
+      {
+        "$extends": "button_lock_enabled"
+      },
+      {
+        "$extends": "button_unlock_enabled"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
       "en": "Settings",
       "nl": "Instellingen"
     },

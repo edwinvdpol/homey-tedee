@@ -1,0 +1,28 @@
+{
+  "type": "radio",
+  "label": {
+    "en": "Push to lock",
+    "nl": "Druk om te vergrendelen"
+  },
+  "hint": {
+    "en": "Lock the lock when the button is pressed.",
+    "nl": "Vergrendel het slot wanneer op de knop gedrukt wordt."
+  },
+  "value": "-",
+  "values": [
+    {
+      "id": "on",
+      "label": {
+        "en": "On",
+        "nl": "Aan"
+      }
+    },
+    {
+      "id": "off",
+      "label": {
+        "en": "Off",
+        "nl": "Uit"
+      }
+    }
+  ]
+}
