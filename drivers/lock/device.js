@@ -89,12 +89,7 @@ class LockDevice extends Device {
 
     // Make sure the lock is in a valid state to lock
     if (state !== LockState.Unlocked && state !== LockState.SemiLocked) {
-      this.error('Lock failed: Not ready to lock');
-
-      // Set device to idle state
-      await this.setIdle();
-
-      throw new Error(this.homey.__('state.notReadyToLock'));
+      await this.errorIdle(`Not ready to lock, currently ${state}`, 'error.notReadyToLock');
     }
 
     // Send close command to tedee API
@@ -132,12 +127,7 @@ class LockDevice extends Device {
 
     // Make sure the lock is in a valid state
     if (state !== LockState.Locked) {
-      this.error('Unlock failed: Not ready to unlock');
-
-      // Set device to idle state
-      await this.setIdle();
-
-      throw new Error(this.homey.__('state.notReadyToUnlock'));
+      await this.errorIdle(`Not ready to unlock, currently ${state}`, 'error.notReadyToUnlock');
     }
 
     // Send open command to tedee API
@@ -159,12 +149,7 @@ class LockDevice extends Device {
 
     // Check if pull spring is enabled
     if (this.getStoreValue('pull_spring_enabled') !== 'on') {
-      this.error('Open failed: Pull spring not enabled');
-
-      // Set device to idle state
-      await this.setIdle();
-
-      throw new Error(this.homey.__('error.pullSpringDisabled'));
+      await this.errorIdle('Pull spring not enabled', 'error.pullSpringDisabled');
     }
 
     // Get and validate state
@@ -172,12 +157,7 @@ class LockDevice extends Device {
 
     // Make sure the lock is in a valid state
     if (state !== LockState.Unlocked) {
-      this.error('Open failed: Unlock first');
-
-      // Set device to idle state
-      await this.setIdle();
-
-      throw new Error(this.homey.__('state.firstUnLock'));
+      await this.errorIdle(`Not in unlocked state, currently ${state}`, 'error.firstUnLock');
     }
 
     // Send pull spring command to tedee API
@@ -192,6 +172,7 @@ class LockDevice extends Device {
    *
    * @async
    * @returns {Promise<number>}
+   * @throws {Error}
    * @private
    */
   async _getState() {
@@ -199,12 +180,7 @@ class LockDevice extends Device {
 
     // Check if lock is available
     if (!this.getAvailable()) {
-      this.error('Device not available');
-
-      // Set device to idle state
-      await this.setIdle();
-
-      throw new Error(this.homey.__('state.notAvailable'));
+      await this.errorIdle('Device not available', 'state.notAvailable');
     }
 
     // Check if lock is busy
@@ -364,12 +340,7 @@ class LockDevice extends Device {
 
         // Stop operation monitor at 5 or more tries
         if (numberOfTries > 4) {
-          this.error('Stopping operation monitor, to many tries');
-
-          // Set device to idle state
-          await this.setIdle();
-
-          throw new Error(this.homey.__('error.response'));
+          await this.errorIdle('Stopping operation monitor, to many tries', 'error.response');
         }
 
         // Operation monitor is not completed (pending)
@@ -386,25 +357,24 @@ class LockDevice extends Device {
           return this._startStateMonitor();
         }
 
-        // Pull failed
-        if (type === OperationTypes.Pull) {
-          this.error('Pull operation failed');
+        // Error message
+        let error = '';
+
+        switch (type) {
+          case OperationTypes.Pull:
+            error = 'Pull operation failed';
+            break;
+          case OperationTypes.Close:
+            error = 'Close operation failed';
+            break;
+          case OperationTypes.Open:
+            error = 'Open operation failed';
+            break;
+          default:
+            error = 'Unknown operation type';
         }
 
-        // Close failed
-        if (type === OperationTypes.Close) {
-          this.error('Close operation failed');
-        }
-
-        // Open failed
-        if (type === OperationTypes.Open) {
-          this.error('Open operation failed');
-        }
-
-        // Set device to idle state
-        await this.setIdle();
-
-        throw new Error(this.homey.__('error.response'));
+        await this.errorIdle(error, 'error.response');
       }
     })();
   }
