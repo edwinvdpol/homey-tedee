@@ -457,6 +457,35 @@
                 "nl": "Status"
               },
               "value": "-"
+            },
+            {
+              "id": "auto_lock_enabled",
+              "type": "radio",
+              "label": {
+                "en": "Auto-lock",
+                "nl": "Automatische vergrendeling"
+              },
+              "hint": {
+                "en": "Automatically close the door when the lock is in the open position.",
+                "nl": "Sluit de deur automatisch wanneer het slot in open positie staat."
+              },
+              "value": "-",
+              "values": [
+                {
+                  "id": "on",
+                  "label": {
+                    "en": "On",
+                    "nl": "Aan"
+                  }
+                },
+                {
+                  "id": "off",
+                  "label": {
+                    "en": "Off",
+                    "nl": "Uit"
+                  }
+                }
+              ]
             }
           ]
         },
@@ -506,44 +535,6 @@
               "hint": {
                 "en": "Unlock the lock when the button is pressed.",
                 "nl": "Ontgrendel het slot wanneer op de knop gedrukt wordt."
-              },
-              "value": "-",
-              "values": [
-                {
-                  "id": "on",
-                  "label": {
-                    "en": "On",
-                    "nl": "Aan"
-                  }
-                },
-                {
-                  "id": "off",
-                  "label": {
-                    "en": "Off",
-                    "nl": "Uit"
-                  }
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "Settings",
-            "nl": "Instellingen"
-          },
-          "children": [
-            {
-              "id": "auto_lock_enabled",
-              "type": "radio",
-              "label": {
-                "en": "Auto-lock",
-                "nl": "Automatische vergrendeling"
-              },
-              "hint": {
-                "en": "Automatically close the door when the lock is in the open position.",
-                "nl": "Sluit de deur automatisch wanneer het slot in open positie staat."
               },
               "value": "-",
               "values": [
