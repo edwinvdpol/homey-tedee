@@ -74,6 +74,14 @@ class LockDevice extends Device {
     // Get and validate state
     const state = await this._getState();
 
+    // Lock is already locked
+    if (state === LockState.Locked) {
+      this.log('Lock is already locked');
+
+      // Set device to idle state
+      return this.setIdle();
+    }
+
     // Start progress monitor
     if (await this._needsStateMonitor(state)) {
       return this._startStateMonitor();
@@ -108,6 +116,14 @@ class LockDevice extends Device {
 
     // Get and validate state
     const state = await this._getState();
+
+    // Lock is already unlocked
+    if (state === LockState.Unlocked) {
+      this.log('Lock is already unlocked');
+
+      // Set device to idle state
+      return this.setIdle();
+    }
 
     // Start progress monitor
     if (await this._needsStateMonitor(state)) {
@@ -153,11 +169,6 @@ class LockDevice extends Device {
 
     // Get and validate state
     const state = await this._getState();
-
-    // Start progress monitor
-    if (await this._needsStateMonitor(state)) {
-      return this._startStateMonitor();
-    }
 
     // Make sure the lock is in a valid state
     if (state !== LockState.Unlocked) {

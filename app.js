@@ -5,7 +5,7 @@ const Client = require('./lib/Client');
 const {Log} = require('homey-log');
 
 const syncLocksInterval = 10 * 1000; // 10 seconds
-const refreshDevicesInterval = 10 * 60 * 1000; // 10 minutes
+const refreshDevicesInterval = 5 * 60 * 1000; // 5 minutes
 
 class Tedee extends OAuth2App {
 
@@ -104,7 +104,7 @@ class Tedee extends OAuth2App {
 
       // Fetch requested data from tedee API
       if (action === 'refresh') {
-        data = await this.oAuth2Client.getDevices();
+        data = await this.oAuth2Client.getAllDevicesDetails();
       } else if (action === 'sync') {
         data = await this.oAuth2Client.getSyncLocks();
       }
