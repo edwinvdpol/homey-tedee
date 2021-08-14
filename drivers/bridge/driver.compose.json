@@ -8,6 +8,7 @@
     "connected",
     "update_available"
   ],
+  "connectivity": ["cloud"],
   "energy": {
     "approximation": {
       "usageConstant": 0.8

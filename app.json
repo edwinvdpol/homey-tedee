@@ -252,6 +252,9 @@
         "connected",
         "update_available"
       ],
+      "connectivity": [
+        "cloud"
+      ],
       "energy": {
         "approximation": {
           "usageConstant": 0.8
@@ -365,6 +368,9 @@
         "connected",
         "update_available",
         "measure_battery"
+      ],
+      "connectivity": [
+        "cloud"
       ],
       "energy": {
         "batteries": [
