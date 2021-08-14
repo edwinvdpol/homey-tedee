@@ -1,0 +1,14 @@
+{
+  "id": "connected_true",
+  "title": {
+    "en": "The connection was restored",
+    "nl": "De verbinding werd hersteld"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=bridge|lock"
+    }
+  ]
+}

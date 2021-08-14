@@ -1,0 +1,14 @@
+{
+  "id": "connected_false",
+  "title": {
+    "en": "The connection was lost",
+    "nl": "De verbinding werd verbroken"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=bridge|lock"
+    }
+  ]
+}

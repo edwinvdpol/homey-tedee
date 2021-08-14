@@ -67,62 +67,6 @@
   "flow": {
     "triggers": [
       {
-        "id": "connected_false",
-        "title": {
-          "en": "The connection was lost",
-          "nl": "De verbinding werd verbroken"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=bridge"
-          }
-        ]
-      },
-      {
-        "id": "connected_true",
-        "title": {
-          "en": "The connection was restored",
-          "nl": "De verbinding werd hersteld"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=bridge"
-          }
-        ]
-      },
-      {
-        "id": "update_available_true",
-        "title": {
-          "en": "An update is available",
-          "nl": "Een update is beschikbaar"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=bridge"
-          }
-        ]
-      },
-      {
-        "id": "opened",
-        "title": {
-          "en": "The lock just opened",
-          "nl": "Een slot werd geopend"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=lock"
-          }
-        ]
-      },
-      {
         "id": "charging_false",
         "title": {
           "en": "A lock is charged",
@@ -160,7 +104,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=lock"
+            "filter": "driver_id=bridge|lock"
           }
         ]
       },
@@ -169,6 +113,20 @@
         "title": {
           "en": "The connection was restored",
           "nl": "De verbinding werd hersteld"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=bridge|lock"
+          }
+        ]
+      },
+      {
+        "id": "opened",
+        "title": {
+          "en": "The lock just opened",
+          "nl": "Een slot werd geopend"
         },
         "args": [
           {
@@ -188,40 +146,12 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=lock"
+            "filter": "driver_id=bridge|lock"
           }
         ]
       }
     ],
     "conditions": [
-      {
-        "id": "connected",
-        "title": {
-          "en": "!{{Is|Is not}} connected",
-          "nl": "!{{Is|Is niet}} verbonden"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=bridge"
-          }
-        ]
-      },
-      {
-        "id": "update_available",
-        "title": {
-          "en": "An update !{{is|is not}} available",
-          "nl": "Een update !{{is|is niet}} beschikbaar"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=bridge"
-          }
-        ]
-      },
       {
         "id": "charging",
         "title": {
@@ -246,7 +176,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=lock"
+            "filter": "driver_id=bridge|lock"
           }
         ]
       },
@@ -260,7 +190,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=lock"
+            "filter": "driver_id=bridge|lock"
           }
         ]
       }

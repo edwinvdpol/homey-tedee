@@ -1,0 +1,14 @@
+{
+  "id": "open",
+  "title": {
+    "en": "Open",
+    "nl": "Openen"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=lock"
+    }
+  ]
+}

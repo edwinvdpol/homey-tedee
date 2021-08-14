@@ -1,0 +1,14 @@
+{
+  "id": "opened",
+  "title": {
+    "en": "The lock just opened",
+    "nl": "Een slot werd geopend"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=lock"
+    }
+  ]
+}

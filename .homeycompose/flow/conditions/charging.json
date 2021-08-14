@@ -1,0 +1,14 @@
+{
+  "id": "charging",
+  "title": {
+    "en": "A lock !{{is|is not}} charging",
+    "nl": "Een slot !{{is|is niet}} aan het opladen"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=lock"
+    }
+  ]
+}

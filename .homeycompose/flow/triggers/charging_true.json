@@ -1,0 +1,14 @@
+{
+  "id": "charging_true",
+  "title": {
+    "en": "A lock just charged",
+    "nl": "Een slot werd opgeladen"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=lock"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "update_available_true",
+  "title": {
+    "en": "An update is available",
+    "nl": "Een update is beschikbaar"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=bridge|lock"
+    }
+  ]
+}
