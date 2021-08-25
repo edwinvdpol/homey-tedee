@@ -13,7 +13,6 @@
     "update_available",
     "measure_battery"
   ],
-  "connectivity": ["cloud"],
   "energy": {
     "batteries": [
       "INTERNAL"

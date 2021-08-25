@@ -243,6 +243,9 @@
           "template": "login_oauth2"
         }
       ],
+      "connectivity": [
+        "cloud"
+      ],
       "id": "bridge",
       "name": {
         "en": "Bridge"
@@ -251,9 +254,6 @@
       "capabilities": [
         "connected",
         "update_available"
-      ],
-      "connectivity": [
-        "cloud"
       ],
       "energy": {
         "approximation": {
@@ -355,6 +355,9 @@
           "template": "login_oauth2"
         }
       ],
+      "connectivity": [
+        "cloud"
+      ],
       "id": "lock",
       "name": {
         "en": "Lock",
@@ -368,9 +371,6 @@
         "connected",
         "update_available",
         "measure_battery"
-      ],
-      "connectivity": [
-        "cloud"
       ],
       "energy": {
         "batteries": [
