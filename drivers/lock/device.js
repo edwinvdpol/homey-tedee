@@ -338,7 +338,7 @@ class LockDevice extends Device {
     }
 
     // Set the lock to busy
-    await this.setBusy();
+    this.idle = false;
 
     // Fetch current lock state from tedee API
     const state = await this.oAuth2Client.getLockState(this.tedeeId);
