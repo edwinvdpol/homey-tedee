@@ -4,8 +4,8 @@ const {OAuth2App} = require('homey-oauth2app');
 const Client = require('./lib/Client');
 const {Log} = require('homey-log');
 
-const syncLocksInterval = 10 * 1000; // 10 seconds
-const refreshDevicesInterval = 5 * 60 * 1000; // 5 minutes
+const fullUpdateMinute = 5; // Full update every 5 minutes
+const refreshInterval = 10 * 1000; // 10 seconds
 
 class Tedee extends OAuth2App {
 
@@ -24,21 +24,16 @@ class Tedee extends OAuth2App {
    * @returns {Promise<void>}
    */
   async onOAuth2Init() {
-    this.log('Application initialized');
-
     // Sentry logging
     this.homeyLog = new Log({ homey: this.homey });
 
-    // Reset timers
+    // Reset timer properties
+    this.lastRefreshMinute = null;
     this.refreshTimer = null;
-    this.syncTimer = null;
 
     // Register flow cards
     this._registerActionFlowCards();
     this._registerConditionFlowCards();
-
-    // Start timers if not already started
-    this.homey.setInterval(this._startTimers.bind(this), 5000);
 
     // Register app event listeners
     this.homey.on('cpuwarn', () => {
@@ -46,9 +41,6 @@ class Tedee extends OAuth2App {
     }).on('memwarn', () => {
       this.log('-- Memory warning! --');
     }).on('unload', () => {
-      // Stop timers
-      this._stopTimers();
-
       this.log('-- Unloaded! _o/ --');
     });
   }
@@ -60,207 +52,69 @@ class Tedee extends OAuth2App {
   */
 
   /**
-   * Refresh devices (full update).
+   * Start refresh timer.
+   *
+   * @async
+   * @returns {Promise<void>}
+   */
+  async startTimer() {
+    if (this.refreshTimer) {
+      return;
+    }
+
+    this.refreshTimer = this.homey.setInterval(this._refreshDevices.bind(this), refreshInterval);
+  }
+
+  /**
+   * Refresh devices.
    *
    * @async
    * @returns {Promise<void>}
    * @private
    */
   async _refreshDevices() {
-    await this._updateDevices('refresh');
-  }
-
-  /**
-   * Sync locks (delta update).
-   *
-   * @async
-   * @returns {Promise<void>}
-   * @private
-   */
-  async _syncLocks() {
-    await this._updateDevices('sync');
-  }
-
-  /**
-   * Update devices by action.
-   *
-   * @async
-   * @param {string} action
-   * @returns {Promise<void>}
-   * @private
-   */
-  async _updateDevices(action) {
     try {
-      // Set oAuth client
       this.oAuth2Client = this.getFirstSavedOAuth2Client();
-
-      let data = {};
-
-      // Fetch requested data from tedee API
-      if (action === 'refresh') {
-        data = await this.oAuth2Client.getAllDevicesDetails();
-      } else if (action === 'sync') {
-        data = await this.oAuth2Client.getSyncLocks();
-      }
-
-      // Check data
-      if (Object.keys(data).length === 0) {
-        return;
-      }
-
-      // Update devices from list
-      await this._updateDevicesList(data);
     } catch (err) {
-      await this._stopTimers(err.message);
-    }
-  }
-
-  /**
-   * Update devices from list of tedee devices.
-   *
-   * @async
-   * @param {object} list
-   * @returns {Promise<void>}
-   * @private
-   */
-  async _updateDevicesList(list) {
-    // Search for devices and set data
-    const drivers = this.homey.drivers.getDrivers();
-
-    for (const driverId in drivers) {
-      if (!drivers.hasOwnProperty(driverId)) {
-        return;
-      }
-
-      const devices = drivers[driverId].getDevices();
-
-      for (const device of devices) {
-        for (const data of list) {
-          if (data.id !== Number(device.getSetting('tedee_id'))) {
-            continue;
-          }
-
-          await device.setDeviceData(data);
-        }
-      }
-    }
-  }
-
-  /*
-  |-----------------------------------------------------------------------------
-  | Timers actions
-  |-----------------------------------------------------------------------------
-  */
-
-  /**
-   * Start timers.
-   *
-   * @async
-   * @returns {Promise<void>}
-   * @private
-   */
-  async _startTimers() {
-    try {
-      // Check if timers are already running
-      if (await this._timersAreRunning()) {
-        return;
-      }
-
-      // Throws error if none is available, and stop timer
-      this.oAuth2Client = this.getFirstSavedOAuth2Client();
-
-      this.log('Starting timers');
-
-      // Start interval for delta updates
-      this.syncTimer = this.homey.setInterval(this._syncLocks.bind(this), syncLocksInterval);
-
-      // Start interval for full updates
-      this.refreshTimer = this.homey.setInterval(this._refreshDevices.bind(this), refreshDevicesInterval);
-    } catch (err) {
-      await this._stopTimers(err.message);
-    }
-  }
-
-  /**
-   * Stop timers.
-   *
-   * @async
-   * @param {string|null} reason
-   * @returns {Promise<void>}
-   * @private
-   */
-  async _stopTimers(reason = null) {
-    if (! await this._timersAreRunning()) {
       return;
     }
 
-    // Logging
-    if (reason == null) {
-      this.log('Stopping timers');
-    } else {
-      this.log(`Stopping timers: ${reason}`);
-    }
-
-    // Stop delta updates
-    if (this.syncTimer != null) {
-      this.homey.clearInterval(this.syncTimer);
-      this.syncTimer = null;
-    }
-
-    // Stop full updates
-    if (this.refreshTimer != null) {
-      this.homey.clearInterval(this.refreshTimer);
-      this.refreshTimer = null;
+    try {
+      // Fetch requested data from tedee API
+      if (this._refreshType() === 'full') {
+        await this.oAuth2Client.syncDevices();
+      } else {
+        await this.oAuth2Client.syncLocks();
+      }
+    } catch (err) {
+      this.error(err);
+      await this.setUnavailable(err.message);
     }
   }
 
   /**
-   * Return if timers are running.
+   * Get update type.
    *
    * @async
-   * @returns {Promise<boolean>}
+   * @returns {string}
    * @private
    */
-  async _timersAreRunning() {
-    return this.syncTimer != null && this.refreshTimer != null;
-  }
+  _refreshType() {
+    const currentMinute = new Date().getMinutes();
 
-  /**
-   * Verify timers.
-   *
-   * @async
-   * @returns {Promise<void>}
-   */
-  async verifyTimers() {
-    try {
-      const drivers = this.homey.drivers.getDrivers();
-      let devices = 0;
-
-      if (Object.keys(drivers).length === 0) {
-        return this._stopTimers();
-      }
-
-      for (const driverId in drivers) {
-        if (!drivers.hasOwnProperty(driverId)) {
-          return;
-        }
-
-        // Get driver
-        const driver = this.homey.drivers.getDriver(driverId);
-
-        // Add number of devices
-        devices += Object.keys(driver.getDevices()).length;
-      }
-
-      // Stop timers when no devices found
-      if (devices === 0) {
-        return this._stopTimers('No devices found');
-      }
-
-      return this._startTimers();
-    } catch (err) {
-      this.error('Verify timers:', err.message);
+    if (currentMinute === this.lastRefreshMinute) {
+      return 'sync';
     }
+
+    if (currentMinute !== this.lastRefreshMinute) {
+      this.lastRefreshMinute = currentMinute;
+
+      if (currentMinute % fullUpdateMinute === 0) {
+        return 'full';
+      }
+    }
+
+    return 'sync';
   }
 
   /*
