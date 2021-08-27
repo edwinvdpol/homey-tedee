@@ -31,8 +31,8 @@ class LockDevice extends Device {
     const state = lockProperties.state;
 
     // Start state monitor if needed
-    if (this.idle && this.needsStateMonitor(state)) {
-      return this.startStateMonitor();
+    if (this.idle && this.needsMonitor(state)) {
+      return this.startMonitor();
     }
 
     // Locked state
@@ -149,8 +149,8 @@ class LockDevice extends Device {
     }
 
     // Start progress monitor
-    if (this.needsStateMonitor(state)) {
-      return this.startStateMonitor();
+    if (this.needsMonitor(state)) {
+      return this.startMonitor();
     }
 
     // Make sure the lock is in a valid state to lock
@@ -159,10 +159,10 @@ class LockDevice extends Device {
     }
 
     // Send close command to tedee API
-    const operationId = await this.oAuth2Client.close(this.tedeeId);
+    this.operationId = await this.oAuth2Client.close(this.tedeeId);
 
     // Start operation monitor
-    await this.startOperationMonitor(operationId);
+    await this.startOperationMonitor();
   }
 
   /**
@@ -189,10 +189,10 @@ class LockDevice extends Device {
     }
 
     // Send pull spring command to tedee API
-    const operationId = await this.oAuth2Client.pullSpring(this.tedeeId);
+    this.operationId = await this.oAuth2Client.pullSpring(this.tedeeId);
 
     // Start operation monitor
-    await this.startOperationMonitor(operationId);
+    await this.startOperationMonitor();
   }
 
   /**
@@ -217,8 +217,8 @@ class LockDevice extends Device {
     }
 
     // Start progress monitor
-    if (this.needsStateMonitor(state)) {
-      return this.startStateMonitor();
+    if (this.needsMonitor(state)) {
+      return this.startMonitor();
     }
 
     // Make sure the lock is in a valid state
@@ -227,10 +227,10 @@ class LockDevice extends Device {
     }
 
     // Send open command to tedee API
-    const operationId = await this.oAuth2Client.open(this.tedeeId);
+    this.operationId = await this.oAuth2Client.open(this.tedeeId);
 
     // Start operation monitor
-    await this.startOperationMonitor(operationId);
+    await this.startOperationMonitor();
   }
 
   /*
@@ -247,19 +247,13 @@ class LockDevice extends Device {
    * @returns {Promise<*>}
    */
   async onCapabilityLocked(lock) {
-    this.setCapabilityValue('locked', lock).catch(this.error);
+    this.log(`Capability 'locked' is now '${lock}'`);
 
     if (lock) {
-      // Lock the lock
-      await this.lock();
-
-      return this.log(`Lock ${this.tedeeId} locked successfully!`);
+      return this.lock();
     }
 
-    // Unlock the lock
-    await this.unlock();
-
-    return this.log(`Lock ${this.tedeeId} unlocked successfully!`);
+    return this.unlock();
   }
 
   /**
@@ -273,9 +267,7 @@ class LockDevice extends Device {
     this.log(`Capability 'open' is now '${open}'`);
 
     if (open) {
-      await this.open();
-
-      return this.log(`Lock ${this.tedeeId} opened successfully!`);
+      return this.open();
     }
   }
 
@@ -284,21 +276,6 @@ class LockDevice extends Device {
   | Support functions
   |-----------------------------------------------------------------------------
   */
-
-  /**
-   * Register capability listeners.
-   *
-   * @async
-   * @returns {Promise<void>}
-   * @private
-   */
-  async _registerCapabilityListeners() {
-    this.registerCapabilityListener('locked', this.onCapabilityLocked.bind(this));
-
-    if (this.hasCapability('open')) {
-      this.registerCapabilityListener('open', this.onCapabilityOpen.bind(this));
-    }
-  }
 
   /**
    * Returns readable name that belongs to the lock state.
