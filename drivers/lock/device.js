@@ -30,7 +30,7 @@ class LockDevice extends Device {
     // Locked capability
     const state = lockProperties.state;
 
-    // Start state monitor if needed
+    // Start monitor if needed
     if (this.idle && this.needsMonitor(state)) {
       return this.startMonitor();
     }
