@@ -1,6 +1,5 @@
 {
   "connected": "Verbonden",
-  "connecting": "Bezig met verbinden...",
   "disconnected": "Niet verbonden",
   "error": {
     "401": "U bent niet geautoriseerd",
