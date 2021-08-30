@@ -1,4 +1,7 @@
 {
+  "1.1.0": {
+    "en": "Fixed memory leak and optimized code"
+  },
   "1.0.2": {
     "en": "Updated App Store information"
   },
