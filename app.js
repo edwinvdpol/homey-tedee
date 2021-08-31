@@ -87,8 +87,9 @@ class Tedee extends OAuth2App {
         await this.oAuth2Client.syncLocks();
       }
     } catch (err) {
-      this.error(err);
-      await this.setUnavailable(err.message);
+      this.error(err.message);
+
+      this.homey.emit('tedee:error', err.message);
     }
   }
 
