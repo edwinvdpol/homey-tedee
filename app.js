@@ -27,8 +27,9 @@ class Tedee extends OAuth2App {
     // Sentry logging
     this.homeyLog = new Log({ homey: this.homey });
 
-    // Reset timer properties
+    // Reset properties
     this.lastRefreshMinute = null;
+    this.client = null;
     this.refreshTimer = null;
 
     // Register flow cards
@@ -66,6 +67,8 @@ class Tedee extends OAuth2App {
     }
 
     this.refreshTimer = this.homey.setInterval(this._refreshDevices.bind(this), refreshInterval);
+
+    this.log('App timer started');
   }
 
   /**
@@ -77,17 +80,13 @@ class Tedee extends OAuth2App {
    */
   async _refreshDevices() {
     try {
-      this.oAuth2Client = this.getFirstSavedOAuth2Client();
-    } catch (err) {
-      return;
-    }
+      this.client = this.getFirstSavedOAuth2Client();
 
-    try {
       // Fetch requested data from tedee API
       if (this._refreshType() === 'full') {
-        await this.oAuth2Client.syncDevices();
+        await this.client.syncDevices();
       } else {
-        await this.oAuth2Client.syncLocks();
+        await this.client.syncLocks();
       }
     } catch (err) {
       this.error(err.message);
@@ -119,6 +118,44 @@ class Tedee extends OAuth2App {
     }
 
     return 'sync';
+  }
+
+  /*
+  |-----------------------------------------------------------------------------
+  | API interactions
+  |-----------------------------------------------------------------------------
+  */
+
+  /**
+   * Get lock state for device.
+   *
+   * @async
+   * @param {number} tedeeId - The Tedee device ID
+   * @returns {Promise<number>}
+   * @throws {Error}
+   */
+  async getLockState(tedeeId)
+  {
+    this.log(`Fetching lock state for ${tedeeId} from API`);
+
+    const response = await this.getSyncLock(tedeeId);
+
+    return Number(response.result.lockProperties.state);
+  }
+
+  /**
+   * Get lock sync for device.
+   *
+   * @async
+   * @param {number} tedeeId - The Tedee device ID
+   * @returns {Promise<Object>} - The API response result
+   */
+  async getSyncLock(tedeeId) {
+    const response = await this.get({
+      path: `/my/lock/${tedeeId}/sync`
+    });
+
+    return response.result;
   }
 
   /*
