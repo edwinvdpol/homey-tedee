@@ -42,9 +42,6 @@ class Tedee extends OAuth2App {
     }).on('memwarn', () => {
       this.log('-- Memory warning! --');
     }).on('unload', () => {
-      // Cleanup devices
-      this.homey.emit('tedee:cleanup');
-
       this.log('-- Unloaded! _o/ --');
     });
   }
