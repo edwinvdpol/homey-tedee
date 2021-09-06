@@ -1,7 +1,8 @@
 {
   "title": {
     "en": "Open",
-    "nl": "Openen"
+    "nl": "Openen",
+    "fr": "Ouvrir"
   },
   "type": "boolean",
   "getable": true,
@@ -9,11 +10,13 @@
   "insights": true,
   "insightsTitleTrue": {
     "en": "Opened",
-    "nl": "Geopend"
+    "nl": "Geopend",
+    "fr": "Ouvert"
   },
   "insightsTitleFalse": {
     "en": "Closed",
-    "nl": "Gesloten"
+    "nl": "Gesloten",
+    "fr": "Fermé"
   },
   "uiComponent": "button",
   "uiQuickAction": false

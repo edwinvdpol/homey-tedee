@@ -1,6 +1,8 @@
 {
   "title": {
-    "en": "Update available"
+    "en": "Update available",
+    "nl": "Update beschikbaar",
+    "fr": "Mise à jour disponible"
   },
   "type": "boolean",
   "getable": true,

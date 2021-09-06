@@ -10,7 +10,8 @@
   },
   "description": {
     "en": "Unlock your door with Homey",
-    "nl": "Open je deur met Homey"
+    "nl": "Open je deur met Homey",
+    "fr": "Déverrouillez votre porte avec Homey"
   },
   "category": [
     "security"
@@ -31,6 +32,14 @@
       "slot",
       "thuis",
       "beveiliging"
+    ],
+    "fr": [
+      "tedee",
+      "intelligent",
+      "porte",
+      "verrou",
+      "accueil",
+      "sécurité"
     ]
   },
   "permissions": [],
@@ -70,7 +79,8 @@
         "id": "charging_false",
         "title": {
           "en": "A lock is charged",
-          "nl": "Een slot is opgeladen"
+          "nl": "Een slot is opgeladen",
+          "fr": "Une serrure est chargée"
         },
         "args": [
           {
@@ -84,7 +94,8 @@
         "id": "charging_true",
         "title": {
           "en": "A lock just charged",
-          "nl": "Een slot werd opgeladen"
+          "nl": "Een slot werd opgeladen",
+          "fr": "Une serrure vient de charger"
         },
         "args": [
           {
@@ -98,7 +109,8 @@
         "id": "connected_false",
         "title": {
           "en": "The connection was lost",
-          "nl": "De verbinding werd verbroken"
+          "nl": "De verbinding werd verbroken",
+          "fr": "La connexion a été perdue"
         },
         "args": [
           {
@@ -112,7 +124,8 @@
         "id": "connected_true",
         "title": {
           "en": "The connection was restored",
-          "nl": "De verbinding werd hersteld"
+          "nl": "De verbinding werd hersteld",
+          "fr": "La connexion a été rétablie"
         },
         "args": [
           {
@@ -126,7 +139,8 @@
         "id": "opened",
         "title": {
           "en": "The lock just opened",
-          "nl": "Een slot werd geopend"
+          "nl": "Een slot werd geopend",
+          "fr": "La serrure vient d'ouvrir"
         },
         "args": [
           {
@@ -140,7 +154,8 @@
         "id": "update_available_true",
         "title": {
           "en": "An update is available",
-          "nl": "Een update is beschikbaar"
+          "nl": "Een update is beschikbaar",
+          "fr": "Une mise à jour est disponible"
         },
         "args": [
           {
@@ -156,7 +171,8 @@
         "id": "charging",
         "title": {
           "en": "A lock !{{is|is not}} charging",
-          "nl": "Een slot !{{is|is niet}} aan het opladen"
+          "nl": "Een slot !{{is|is niet}} aan het opladen",
+          "fr": "Une serrure !{{se charge|ne charge pas charge}}"
         },
         "args": [
           {
@@ -170,7 +186,8 @@
         "id": "connected",
         "title": {
           "en": "!{{Is|Is not}} connected",
-          "nl": "!{{Is|Is niet}} verbonden"
+          "nl": "!{{Is|Is niet}} verbonden",
+          "fr": "!{{Est|N'est pas}} connecté"
         },
         "args": [
           {
@@ -184,7 +201,8 @@
         "id": "update_available",
         "title": {
           "en": "An update !{{is|is not}} available",
-          "nl": "Een update !{{is|is niet}} beschikbaar"
+          "nl": "Een update !{{is|is niet}} beschikbaar",
+          "fr": "Une mise à jour !{{est|n'est pas}} disponible"
         },
         "args": [
           {
@@ -200,7 +218,8 @@
         "id": "open",
         "title": {
           "en": "Open",
-          "nl": "Openen"
+          "nl": "Openen",
+          "fr": "Ouvrir"
         },
         "args": [
           {
@@ -265,7 +284,8 @@
           "type": "group",
           "label": {
             "en": "General",
-            "nl": "Algemeen"
+            "nl": "Algemeen",
+            "fr": "Général"
           },
           "children": [
             {
@@ -273,7 +293,8 @@
               "type": "label",
               "label": {
                 "en": "Status",
-                "nl": "Status"
+                "nl": "Status",
+                "fr": "Status"
               },
               "value": "-"
             }
@@ -283,7 +304,8 @@
           "type": "group",
           "label": {
             "en": "Information",
-            "nl": "Informatie"
+            "nl": "Informatie",
+            "fr": "Informations"
           },
           "children": [
             {
@@ -291,7 +313,8 @@
               "type": "label",
               "label": {
                 "en": "Device ID",
-                "nl": "Apparaat-ID"
+                "nl": "Apparaat-ID",
+                "fr": "Reference de l'appareil"
               },
               "value": "-"
             },
@@ -300,7 +323,8 @@
               "type": "label",
               "label": {
                 "en": "Firmware Version",
-                "nl": "Firmwareversie"
+                "nl": "Firmwareversie",
+                "fr": "Version du firmware"
               },
               "value": "-"
             },
@@ -309,7 +333,8 @@
               "type": "label",
               "label": {
                 "en": "Serial Number",
-                "nl": "Serienummer"
+                "nl": "Serienummer",
+                "fr": "Numéro de série"
               },
               "value": "-"
             },
@@ -361,7 +386,8 @@
       "id": "lock",
       "name": {
         "en": "Lock",
-        "nl": "Slot"
+        "nl": "Slot",
+        "fr": "Verrou"
       },
       "class": "lock",
       "capabilities": [
@@ -382,7 +408,8 @@
           "type": "group",
           "label": {
             "en": "General",
-            "nl": "Algemeen"
+            "nl": "Algemeen",
+            "fr": "Général"
           },
           "children": [
             {
@@ -390,7 +417,8 @@
               "type": "label",
               "label": {
                 "en": "Status",
-                "nl": "Status"
+                "nl": "Status",
+                "fr": "Status"
               },
               "value": "-"
             },
@@ -399,11 +427,13 @@
               "type": "radio",
               "label": {
                 "en": "Auto-lock",
-                "nl": "Automatische vergrendeling"
+                "nl": "Automatische vergrendeling",
+                "fr": "Verrouillage automatique"
               },
               "hint": {
                 "en": "Automatically close the door when the lock is in the open position.",
-                "nl": "Sluit de deur automatisch wanneer het slot in open positie staat."
+                "nl": "Sluit de deur automatisch wanneer het slot in open positie staat.",
+                "fr": "Fermer automatiquement la porte lorsque la serrure est en position ouverte."
               },
               "value": "-",
               "values": [
@@ -411,14 +441,16 @@
                   "id": "on",
                   "label": {
                     "en": "On",
-                    "nl": "Aan"
+                    "nl": "Aan",
+                    "fr": "Activé"
                   }
                 },
                 {
                   "id": "off",
                   "label": {
                     "en": "Off",
-                    "nl": "Uit"
+                    "nl": "Uit",
+                    "fr": "Désactivé"
                   }
                 }
               ]
@@ -429,7 +461,8 @@
           "type": "group",
           "label": {
             "en": "Close button",
-            "nl": "Sluitknop"
+            "nl": "Sluitknop",
+            "fr": "Bouton Fermer"
           },
           "children": [
             {
@@ -437,11 +470,13 @@
               "type": "radio",
               "label": {
                 "en": "Push to lock",
-                "nl": "Druk om te vergrendelen"
+                "nl": "Druk om te vergrendelen",
+                "fr": "Appuyez pour verrouiller"
               },
               "hint": {
                 "en": "Lock the lock when the button is pressed.",
-                "nl": "Vergrendel het slot wanneer op de knop gedrukt wordt."
+                "nl": "Vergrendel het slot wanneer op de knop gedrukt wordt.",
+                "fr": "Verrouillez la serrure lorsque vous appuyez sur le bouton."
               },
               "value": "-",
               "values": [
@@ -449,14 +484,16 @@
                   "id": "on",
                   "label": {
                     "en": "On",
-                    "nl": "Aan"
+                    "nl": "Aan",
+                    "fr": "Activé"
                   }
                 },
                 {
                   "id": "off",
                   "label": {
                     "en": "Off",
-                    "nl": "Uit"
+                    "nl": "Uit",
+                    "fr": "Désactivé"
                   }
                 }
               ]
@@ -466,11 +503,13 @@
               "type": "radio",
               "label": {
                 "en": "Push to unlock",
-                "nl": "Druk om te ontgrendelen"
+                "nl": "Druk om te ontgrendelen",
+                "fr": "Appuyez pour déverrouiller"
               },
               "hint": {
                 "en": "Unlock the lock when the button is pressed.",
-                "nl": "Ontgrendel het slot wanneer op de knop gedrukt wordt."
+                "nl": "Ontgrendel het slot wanneer op de knop gedrukt wordt.",
+                "fr": "Déverrouillez le verrou lorsque vous appuyez sur le bouton."
               },
               "value": "-",
               "values": [
@@ -478,14 +517,16 @@
                   "id": "on",
                   "label": {
                     "en": "On",
-                    "nl": "Aan"
+                    "nl": "Aan",
+                    "fr": "Activé"
                   }
                 },
                 {
                   "id": "off",
                   "label": {
                     "en": "Off",
-                    "nl": "Uit"
+                    "nl": "Uit",
+                    "fr": "Désactivé"
                   }
                 }
               ]
@@ -496,7 +537,8 @@
           "type": "group",
           "label": {
             "en": "Information",
-            "nl": "Informatie"
+            "nl": "Informatie",
+            "fr": "Informations"
           },
           "children": [
             {
@@ -504,7 +546,8 @@
               "type": "label",
               "label": {
                 "en": "Device ID",
-                "nl": "Apparaat-ID"
+                "nl": "Apparaat-ID",
+                "fr": "Reference de l'appareil"
               },
               "value": "-"
             },
@@ -513,7 +556,8 @@
               "type": "label",
               "label": {
                 "en": "Firmware Version",
-                "nl": "Firmwareversie"
+                "nl": "Firmwareversie",
+                "fr": "Version du firmware"
               },
               "value": "-"
             },
@@ -522,7 +566,8 @@
               "type": "label",
               "label": {
                 "en": "Serial Number",
-                "nl": "Serienummer"
+                "nl": "Serienummer",
+                "fr": "Numéro de série"
               },
               "value": "-"
             },
@@ -550,11 +595,13 @@
       "insights": true,
       "insightsTitleTrue": {
         "en": "Charging",
-        "nl": "Opladen"
+        "nl": "Opladen",
+        "fr": "Charger"
       },
       "insightsTitleFalse": {
         "en": "Charged",
-        "nl": "Opgeladen"
+        "nl": "Opgeladen",
+        "fr": "Chargée"
       },
       "uiComponent": null
     },
@@ -568,18 +615,21 @@
       "insights": true,
       "insightsTitleTrue": {
         "en": "Connected",
-        "nl": "Verbonden"
+        "nl": "Verbonden",
+        "fr": "Connectée"
       },
       "insightsTitleFalse": {
         "en": "Disconnected",
-        "nl": "Verbroken"
+        "nl": "Verbroken",
+        "fr": "Déconnectée"
       },
       "uiComponent": null
     },
     "open": {
       "title": {
         "en": "Open",
-        "nl": "Openen"
+        "nl": "Openen",
+        "fr": "Ouvrir"
       },
       "type": "boolean",
       "getable": true,
@@ -587,18 +637,22 @@
       "insights": true,
       "insightsTitleTrue": {
         "en": "Opened",
-        "nl": "Geopend"
+        "nl": "Geopend",
+        "fr": "Ouvert"
       },
       "insightsTitleFalse": {
         "en": "Closed",
-        "nl": "Gesloten"
+        "nl": "Gesloten",
+        "fr": "Fermé"
       },
       "uiComponent": "button",
       "uiQuickAction": false
     },
     "update_available": {
       "title": {
-        "en": "Update available"
+        "en": "Update available",
+        "nl": "Update beschikbaar",
+        "fr": "Mise à jour disponible"
       },
       "type": "boolean",
       "getable": true,

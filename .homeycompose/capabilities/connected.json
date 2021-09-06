@@ -8,11 +8,13 @@
   "insights": true,
   "insightsTitleTrue": {
     "en": "Connected",
-    "nl": "Verbonden"
+    "nl": "Verbonden",
+    "fr": "Connectée"
   },
   "insightsTitleFalse": {
     "en": "Disconnected",
-    "nl": "Verbroken"
+    "nl": "Verbroken",
+    "fr": "Déconnectée"
   },
   "uiComponent": null
 }

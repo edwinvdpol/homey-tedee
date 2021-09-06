@@ -2,11 +2,13 @@
   "type": "radio",
   "label": {
     "en": "Auto-lock",
-    "nl": "Automatische vergrendeling"
+    "nl": "Automatische vergrendeling",
+    "fr": "Verrouillage automatique"
   },
   "hint": {
     "en": "Automatically close the door when the lock is in the open position.",
-    "nl": "Sluit de deur automatisch wanneer het slot in open positie staat."
+    "nl": "Sluit de deur automatisch wanneer het slot in open positie staat.",
+    "fr": "Fermer automatiquement la porte lorsque la serrure est en position ouverte."
   },
   "value": "-",
   "values": [
@@ -14,14 +16,16 @@
       "id": "on",
       "label": {
         "en": "On",
-        "nl": "Aan"
+        "nl": "Aan",
+        "fr": "Activé"
       }
     },
     {
       "id": "off",
       "label": {
         "en": "Off",
-        "nl": "Uit"
+        "nl": "Uit",
+        "fr": "Désactivé"
       }
     }
   ]

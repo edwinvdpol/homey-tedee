@@ -2,7 +2,8 @@
   "id": "charging",
   "title": {
     "en": "A lock !{{is|is not}} charging",
-    "nl": "Een slot !{{is|is niet}} aan het opladen"
+    "nl": "Een slot !{{is|is niet}} aan het opladen",
+    "fr": "Une serrure !{{se charge|ne charge pas charge}}"
   },
   "args": [
     {

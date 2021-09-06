@@ -2,7 +2,8 @@
   "id": "update_available",
   "title": {
     "en": "An update !{{is|is not}} available",
-    "nl": "Een update !{{is|is niet}} beschikbaar"
+    "nl": "Een update !{{is|is niet}} beschikbaar",
+    "fr": "Une mise à jour !{{est|n'est pas}} disponible"
   },
   "args": [
     {

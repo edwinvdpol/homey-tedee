@@ -2,7 +2,8 @@
   "id": "open",
   "title": {
     "en": "Open",
-    "nl": "Openen"
+    "nl": "Openen",
+    "fr": "Ouvrir"
   },
   "args": [
     {

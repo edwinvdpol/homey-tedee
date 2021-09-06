@@ -8,11 +8,13 @@
   "insights": true,
   "insightsTitleTrue": {
     "en": "Charging",
-    "nl": "Opladen"
+    "nl": "Opladen",
+    "fr": "Charger"
   },
   "insightsTitleFalse": {
     "en": "Charged",
-    "nl": "Opgeladen"
+    "nl": "Opgeladen",
+    "fr": "Chargée"
   },
   "uiComponent": null
 }

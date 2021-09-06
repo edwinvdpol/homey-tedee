@@ -2,11 +2,13 @@
   "type": "radio",
   "label": {
     "en": "Push to unlock",
-    "nl": "Druk om te ontgrendelen"
+    "nl": "Druk om te ontgrendelen",
+    "fr": "Appuyez pour déverrouiller"
   },
   "hint": {
     "en": "Unlock the lock when the button is pressed.",
-    "nl": "Ontgrendel het slot wanneer op de knop gedrukt wordt."
+    "nl": "Ontgrendel het slot wanneer op de knop gedrukt wordt.",
+    "fr": "Déverrouillez le verrou lorsque vous appuyez sur le bouton."
   },
   "value": "-",
   "values": [
@@ -14,14 +16,16 @@
       "id": "on",
       "label": {
         "en": "On",
-        "nl": "Aan"
+        "nl": "Aan",
+        "fr": "Activé"
       }
     },
     {
       "id": "off",
       "label": {
         "en": "Off",
-        "nl": "Uit"
+        "nl": "Uit",
+        "fr": "Désactivé"
       }
     }
   ]

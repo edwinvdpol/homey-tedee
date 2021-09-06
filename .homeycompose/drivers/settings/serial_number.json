@@ -2,7 +2,8 @@
   "type": "label",
   "label": {
     "en": "Serial Number",
-    "nl": "Serienummer"
+    "nl": "Serienummer",
+    "fr": "Numéro de série"
   },
   "value": "-"
 }

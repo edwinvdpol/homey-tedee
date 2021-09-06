@@ -3,7 +3,8 @@
     "type": "group",
     "label": {
       "en": "General",
-      "nl": "Algemeen"
+      "nl": "Algemeen",
+      "fr": "Général"
     },
     "children": [
       {
@@ -18,7 +19,8 @@
     "type": "group",
     "label": {
       "en": "Close button",
-      "nl": "Sluitknop"
+      "nl": "Sluitknop",
+      "fr": "Bouton Fermer"
     },
     "children": [
       {
@@ -33,7 +35,8 @@
     "type": "group",
     "label": {
       "en": "Information",
-      "nl": "Informatie"
+      "nl": "Informatie",
+      "fr": "Informations"
     },
     "children": [
       {

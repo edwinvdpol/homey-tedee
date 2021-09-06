@@ -2,7 +2,8 @@
   "id": "lock",
   "name": {
     "en": "Lock",
-    "nl": "Slot"
+    "nl": "Slot",
+    "fr": "Verrou"
   },
   "class": "lock",
   "capabilities": [

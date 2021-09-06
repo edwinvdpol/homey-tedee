@@ -1,0 +1,26 @@
+{
+  "connected": "Connecté",
+  "disconnected": "Déconnectée",
+  "error": {
+    "401": "Vous n'êtes pas autorisé",
+    "403": "Vous n'êtes pas autorisé à utiliser cet appareil",
+    "404": "Appareil non trouvé",
+    "50x": "L'API Tedee n'est pas disponible",
+    "response": "Réponse invalide de l'API Tedee",
+    "unknown": "Une erreur inconnue s'est produite",
+    "firstUnLock": "La serrure doit d'abord être déverrouillée",
+    "notReadyToLock": "La serrure n'est pas prête à se verrouiller",
+    "notReadyToUnlock": "Le verrou n'est pas prêt à être déverrouillé",
+    "pullSpringDisabled": "Le ressort de traction est désactivé"
+  },
+  "state": {
+    "uncalibrated": "La serrure n'est pas calibrée",
+    "calibrating": "La serrure est en cours de calibrage...",
+    "inUse": "Le verrou est actuellement utilisé",
+    "notAvailable": "Le verrouillage n'est pas disponible",
+    "disconnected": "L'appareil n'est pas connecté",
+    "updating": "L'appareil est en cours de mise à jour...",
+    "unknown": "La serrure a un statut inconnu",
+    "updateAvailable": "La mise à jour du logiciel est disponible"
+  }
+}

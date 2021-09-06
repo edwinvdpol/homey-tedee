@@ -2,7 +2,8 @@
   "id": "connected_false",
   "title": {
     "en": "The connection was lost",
-    "nl": "De verbinding werd verbroken"
+    "nl": "De verbinding werd verbroken",
+    "fr": "La connexion a été perdue"
   },
   "args": [
     {

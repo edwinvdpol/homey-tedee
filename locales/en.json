@@ -19,7 +19,6 @@
     "inUse": "Lock is currently in use",
     "notAvailable": "Lock is not available",
     "disconnected": "Device is not connected",
-    "semiLocked": "Lock is semi locked",
     "updating": "Device is being updated...",
     "unknown": "Lock has unknown status",
     "updateAvailable": "Software update is available"
