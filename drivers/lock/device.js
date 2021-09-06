@@ -92,6 +92,13 @@ class LockDevice extends Device {
   async onSettings({oldSettings, newSettings, changedKeys}) {
     let settings = {}
 
+    // Check if lock is available
+    if (!this.getAvailable()) {
+      await this.resetState();
+
+      throw new Error(this.homey.__('state.notAvailable'));
+    }
+
     // Auto lock enabled updated
     if (changedKeys.includes('auto_lock_enabled')) {
       this.log(`Auto-lock enabled is now '${newSettings.auto_lock_enabled}'`);
@@ -137,6 +144,11 @@ class LockDevice extends Device {
   async lock() {
     this.log('----- Locking lock -----');
 
+    // Check if lock is available
+    if (!this.getAvailable()) {
+      return this.resetState();
+    }
+
     // Get and validate state
     const state = await this.getState();
 
@@ -180,6 +192,11 @@ class LockDevice extends Device {
       await this.errorIdle('Pull spring not enabled', 'error.pullSpringDisabled');
     }
 
+    // Check if lock is available
+    if (!this.getAvailable()) {
+      return this.resetState();
+    }
+
     // Get and validate state
     const state = await this.getState();
 
@@ -204,6 +221,11 @@ class LockDevice extends Device {
    */
   async unlock() {
     this.log('----- Unlocking lock -----');
+
+    // Check if lock is available
+    if (!this.getAvailable()) {
+      return this.resetState();
+    }
 
     // Get and validate state
     const state = await this.getState();
@@ -322,11 +344,6 @@ class LockDevice extends Device {
   async getState() {
     this.log('Fetching state...');
 
-    // Check if lock is available
-    if (!this.getAvailable()) {
-      return this.resetState()
-    }
-
     // Check if lock is busy
     if (!this.idle) {
       this.error('Device is busy, stopped');
@@ -339,9 +356,8 @@ class LockDevice extends Device {
 
     // Fetch current lock state from tedee API
     const state = await this.oAuth2Client.getLockState(this.tedeeId);
-    const stateName = this.getLockStateName(state);
 
-    this.log(`Current state is ${stateName}`);
+    this.log(`Current state is ${this.getLockStateName(state)}`);
 
     return state;
   }
