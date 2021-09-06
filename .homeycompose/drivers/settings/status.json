@@ -1,9 +1,7 @@
 {
   "type": "label",
   "label": {
-    "en": "Status",
-    "nl": "Status",
-    "fr": "Status"
+    "en": "Status"
   },
   "value": "-"
 }

@@ -1,6 +1,9 @@
 {
   "title": {
-    "en": "Charging"
+    "en": "Charging",
+    "nl": "Opladen",
+    "de": "Aufladen",
+    "fr": "Charger"
   },
   "type": "boolean",
   "getable": true,
@@ -9,11 +12,13 @@
   "insightsTitleTrue": {
     "en": "Charging",
     "nl": "Opladen",
+    "de": "Aufladen",
     "fr": "Charger"
   },
   "insightsTitleFalse": {
     "en": "Charged",
     "nl": "Opgeladen",
+    "de": "Geladen",
     "fr": "Chargée"
   },
   "uiComponent": null

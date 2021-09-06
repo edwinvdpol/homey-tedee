@@ -3,6 +3,7 @@
   "label": {
     "en": "Firmware Version",
     "nl": "Firmwareversie",
+    "de": "Firmware Version",
     "fr": "Version du firmware"
   },
   "value": "-"

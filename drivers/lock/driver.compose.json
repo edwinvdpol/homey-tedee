@@ -3,6 +3,7 @@
   "name": {
     "en": "Lock",
     "nl": "Slot",
+    "de": "Schloss",
     "fr": "Verrou"
   },
   "class": "lock",

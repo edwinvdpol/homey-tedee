@@ -3,6 +3,7 @@
   "title": {
     "en": "The lock just opened",
     "nl": "Een slot werd geopend",
+    "de": "Ein Schloss wurde geöffnet",
     "fr": "La serrure vient d'ouvrir"
   },
   "args": [

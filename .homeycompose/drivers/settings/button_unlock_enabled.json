@@ -3,11 +3,13 @@
   "label": {
     "en": "Push to unlock",
     "nl": "Druk om te ontgrendelen",
+    "de": "Drücke zum Entsperren",
     "fr": "Appuyez pour déverrouiller"
   },
   "hint": {
     "en": "Unlock the lock when the button is pressed.",
     "nl": "Ontgrendel het slot wanneer op de knop gedrukt wordt.",
+    "de": "Entriegeln Sie das Schloss, wenn die Taste gedrückt wird.",
     "fr": "Déverrouillez le verrou lorsque vous appuyez sur le bouton."
   },
   "value": "-",
@@ -17,6 +19,7 @@
       "label": {
         "en": "On",
         "nl": "Aan",
+        "de": "An",
         "fr": "Activé"
       }
     },
@@ -25,6 +28,7 @@
       "label": {
         "en": "Off",
         "nl": "Uit",
+        "de": "Aus",
         "fr": "Désactivé"
       }
     }

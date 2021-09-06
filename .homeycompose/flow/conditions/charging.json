@@ -3,6 +3,7 @@
   "title": {
     "en": "A lock !{{is|is not}} charging",
     "nl": "Een slot !{{is|is niet}} aan het opladen",
+    "de": "Ein Schloss !{{wird geladen|lädt nicht}}",
     "fr": "Une serrure !{{se charge|ne charge pas charge}}"
   },
   "args": [

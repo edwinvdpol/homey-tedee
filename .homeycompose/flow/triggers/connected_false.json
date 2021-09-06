@@ -3,6 +3,7 @@
   "title": {
     "en": "The connection was lost",
     "nl": "De verbinding werd verbroken",
+    "de": "Die Verbindung war verloren",
     "fr": "La connexion a été perdue"
   },
   "args": [

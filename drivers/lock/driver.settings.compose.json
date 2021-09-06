@@ -4,6 +4,7 @@
     "label": {
       "en": "General",
       "nl": "Algemeen",
+      "de": "Allgemein",
       "fr": "Général"
     },
     "children": [
@@ -20,6 +21,7 @@
     "label": {
       "en": "Close button",
       "nl": "Sluitknop",
+      "de": "Schließen-Button",
       "fr": "Bouton Fermer"
     },
     "children": [
@@ -36,6 +38,7 @@
     "label": {
       "en": "Information",
       "nl": "Informatie",
+      "de": "Information",
       "fr": "Informations"
     },
     "children": [

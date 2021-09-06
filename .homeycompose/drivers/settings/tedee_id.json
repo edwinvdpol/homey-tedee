@@ -3,6 +3,7 @@
   "label": {
     "en": "Device ID",
     "nl": "Apparaat-ID",
+    "de": "Geräte ID",
     "fr": "Reference de l'appareil"
   },
   "value": "-"

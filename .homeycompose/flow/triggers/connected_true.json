@@ -3,6 +3,7 @@
   "title": {
     "en": "The connection was restored",
     "nl": "De verbinding werd hersteld",
+    "de": "Die Verbindung wurde wiederhergestellt",
     "fr": "La connexion a été rétablie"
   },
   "args": [

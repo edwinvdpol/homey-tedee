@@ -3,6 +3,7 @@
   "title": {
     "en": "An update is available",
     "nl": "Een update is beschikbaar",
+    "de": "Eine Aktualisierung ist verfügbar",
     "fr": "Une mise à jour est disponible"
   },
   "args": [

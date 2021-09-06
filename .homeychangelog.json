@@ -1,6 +1,6 @@
 {
   "1.1.1": {
-    "en": "Added French translations"
+    "en": "Added French and German translations"
   },
   "1.1.0": {
     "en": "Fixed memory leak and optimized code"

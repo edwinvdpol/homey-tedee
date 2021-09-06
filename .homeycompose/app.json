@@ -10,6 +10,7 @@
   "description": {
     "en": "Unlock your door with Homey",
     "nl": "Open je deur met Homey",
+    "de": "Öffne deine Tür mit Homey",
     "fr": "Déverrouillez votre porte avec Homey"
   },
   "category": [
@@ -31,6 +32,14 @@
       "slot",
       "thuis",
       "beveiliging"
+    ],
+    "de": [
+      "tedee",
+      "Clever",
+      "Tür",
+      "Schloss",
+      "Heim",
+      "Sicherheit"
     ],
     "fr": [
       "tedee",
