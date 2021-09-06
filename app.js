@@ -74,6 +74,10 @@ class Tedee extends OAuth2App {
    * @returns {Promise<void>}
    */
   async refreshDevices() {
+    if (Object.keys(this.getSavedOAuth2Sessions()).length <= 0) {
+      return;
+    }
+
     try {
       this.client = this.getFirstSavedOAuth2Client();
 
