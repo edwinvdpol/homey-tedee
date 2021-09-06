@@ -55,10 +55,9 @@ class Tedee extends OAuth2App {
   /**
    * Start refresh timer.
    *
-   * @async
-   * @returns {Promise<void>}
+   * @returns <void>
    */
-  async startTimer() {
+  startTimer() {
     if (this.refreshTimer) {
       return;
     }
