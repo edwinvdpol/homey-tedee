@@ -15,6 +15,10 @@ class LockDevice extends Device {
   async setCapabilities(deviceData) {
     await super.setCapabilities(deviceData);
 
+    if (!deviceData.hasOwnProperty('lockProperties')) {
+      return;
+    }
+
     const lockProperties = deviceData.lockProperties;
 
     // Measure battery capability
@@ -50,6 +54,10 @@ class LockDevice extends Device {
    */
   async setAvailability(deviceData) {
     await super.setAvailability(deviceData);
+
+    if (!deviceData.hasOwnProperty('lockProperties')) {
+      return;
+    }
 
     // Current state
     const state = deviceData.lockProperties.state;
