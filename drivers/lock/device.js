@@ -143,7 +143,7 @@ class LockDevice extends Device {
   */
 
   /**
-   * Lock (close).
+   * Lock.
    *
    * @async
    * @returns {Promise<void>}
@@ -168,32 +168,27 @@ class LockDevice extends Device {
       return this.resetState();
     }
 
-    // Start progress monitor
-    if (this.needsMonitor(state)) {
-      return this.startMonitor();
-    }
-
     // Make sure the lock is in a valid state to lock
     if (state !== LockState.Unlocked && state !== LockState.SemiLocked) {
       await this.errorIdle(`Not ready to lock, currently ${state}`, 'error.notReadyToLock');
     }
 
-    // Send close command to tedee API
-    this.operationId = await this.oAuth2Client.close(this.tedeeId);
+    // Send lock command to tedee API
+    this.operationId = await this.oAuth2Client.lock(this.tedeeId);
 
     // Start monitor
     await this.startMonitor();
   }
 
   /**
-   * Open (pull spring).
+   * Pull spring.
    *
    * @async
    * @returns {Promise<void>}
    * @throws {Error}
    */
-  async open() {
-    this.log('----- Opening lock -----');
+  async pullSpring() {
+    this.log('----- Pulling spring -----');
 
     // Check if pull spring is enabled
     if (this.getStoreValue('pull_spring_enabled') !== 'on') {
@@ -221,7 +216,7 @@ class LockDevice extends Device {
   }
 
   /**
-   * Unlock (open).
+   * Unlock.
    *
    * @async
    * @returns {Promise<void>}
@@ -246,18 +241,13 @@ class LockDevice extends Device {
       return this.resetState();
     }
 
-    // Start progress monitor
-    if (this.needsMonitor(state)) {
-      return this.startMonitor();
-    }
-
     // Make sure the lock is in a valid state
     if (state !== LockState.Locked && state !== LockState.SemiLocked) {
       await this.errorIdle(`Not ready to unlock, currently ${state}`, 'error.notReadyToUnlock');
     }
 
     // Send open command to tedee API
-    this.operationId = await this.oAuth2Client.open(this.tedeeId);
+    this.operationId = await this.oAuth2Client.unlock(this.tedeeId);
 
     // Start monitor
     await this.startMonitor();
@@ -297,7 +287,7 @@ class LockDevice extends Device {
     this.log(`Capability 'open' is now '${open}'`);
 
     if (open) {
-      return this.open();
+      return this.pullSpring();
     }
   }
 

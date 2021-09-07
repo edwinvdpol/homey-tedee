@@ -155,7 +155,7 @@ class Tedee extends OAuth2App {
   _registerActionFlowCards() {
     // ... then pull the spring ...
     this.homey.flow.getActionCard('open').registerRunListener(async (args) => {
-      return args.device.open();
+      return args.device.pullSpring();
     });
   }
 

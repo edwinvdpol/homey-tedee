@@ -8,11 +8,11 @@ class BridgeDevice extends Device {
    * Set device availability.
    *
    * @async
-   * @param {object} deviceData
+   * @param {object} data
    * @returns {Promise<void>}
    */
-  async setAvailability(deviceData) {
-    await super.setAvailability(deviceData);
+  async setAvailability(data) {
+    await super.setAvailability(data);
 
     // Set available if currently not available
     if (!this.getAvailable()) {
