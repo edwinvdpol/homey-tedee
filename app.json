@@ -3,6 +3,10 @@
   "id": "com.tedee",
   "version": "1.1.1",
   "compatibility": ">=5.0.0",
+  "platforms": [
+    "local",
+    "cloud"
+  ],
   "sdk": 3,
   "brandColor": "#3BD5FD",
   "name": {
@@ -284,6 +288,10 @@
       "connectivity": [
         "cloud"
       ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
       "id": "bridge",
       "name": {
         "en": "Bridge"
@@ -403,6 +411,10 @@
         }
       ],
       "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
         "cloud"
       ],
       "id": "lock",
