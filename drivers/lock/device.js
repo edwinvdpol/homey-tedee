@@ -191,7 +191,7 @@ class LockDevice extends Device {
     this.log('----- Pulling spring -----');
 
     // Check if pull spring is enabled
-    if (this.getStoreValue('pull_spring_enabled') !== 'on') {
+    if (this.getStoreValue('pull_spring_enabled') !== 'on' || !this.hasCapability('open')) {
       await this.errorIdle('Pull spring not enabled', 'error.pullSpringDisabled');
     }
 
