@@ -246,7 +246,7 @@ class LockDevice extends Device {
       await this.errorIdle(`Not ready to unlock, currently ${state}`, 'error.notReadyToUnlock');
     }
 
-    // Send open command to tedee API
+    // Send unlock command to tedee API
     this.operationId = await this.oAuth2Client.unlock(this.tedeeId);
 
     // Start monitor
