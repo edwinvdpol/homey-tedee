@@ -1,10 +1,10 @@
 {
   "images": {
-    "small": "{{driverPath}}/assets/images/small.png",
-    "large": "{{driverPath}}/assets/images/large.png",
-    "xlarge": "{{driverPath}}/assets/images/xlarge.png"
+    "small": "{{driverAssetsPath}}/images/small.png",
+    "large": "{{driverAssetsPath}}/images/large.png",
+    "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
   },
-  "icon": "{{driverPath}}/assets/icon.svg",
+  "icon": "{{driverAssetsPath}}/icon.svg",
   "pair": [
     {
       "id": "login_oauth2",
