@@ -91,10 +91,10 @@
       {
         "id": "charging_false",
         "title": {
-          "en": "A lock is charged",
-          "nl": "Een slot is opgeladen",
-          "de": "Ein Schloss wird aufgeladen",
-          "fr": "Une serrure est chargée"
+          "en": "Is charged",
+          "nl": "Is opgeladen",
+          "de": "Ist geladen",
+          "fr": "Est chargé"
         },
         "args": [
           {
@@ -107,10 +107,10 @@
       {
         "id": "charging_true",
         "title": {
-          "en": "A lock just charged",
-          "nl": "Een slot werd opgeladen",
-          "de": "Eine Schloss wurde aufgeladen",
-          "fr": "Une serrure vient de charger"
+          "en": "Is charging",
+          "nl": "Wordt opgeladen",
+          "de": "Wird geladen",
+          "fr": "Est en charge"
         },
         "args": [
           {
@@ -123,10 +123,10 @@
       {
         "id": "connected_false",
         "title": {
-          "en": "The connection was lost",
-          "nl": "De verbinding werd verbroken",
-          "de": "Die Verbindung war verloren",
-          "fr": "La connexion a été perdue"
+          "en": "Connection was lost",
+          "nl": "Verbinding werd verbroken",
+          "de": "Verbindung war verloren",
+          "fr": "Connexion a été perdue"
         },
         "args": [
           {
@@ -139,10 +139,10 @@
       {
         "id": "connected_true",
         "title": {
-          "en": "The connection was restored",
-          "nl": "De verbinding werd hersteld",
-          "de": "Die Verbindung wurde wiederhergestellt",
-          "fr": "La connexion a été rétablie"
+          "en": "Connection was restored",
+          "nl": "Verbinding werd hersteld",
+          "de": "Verbindung wurde wiederhergestellt",
+          "fr": "Connexion a été rétablie"
         },
         "args": [
           {
@@ -155,10 +155,10 @@
       {
         "id": "opened",
         "title": {
-          "en": "The lock just opened",
-          "nl": "Een slot werd geopend",
-          "de": "Ein Schloss wurde geöffnet",
-          "fr": "La serrure vient d'ouvrir"
+          "en": "Opened",
+          "nl": "Geopend",
+          "de": "Geöffnet",
+          "fr": "Ouvert"
         },
         "args": [
           {
@@ -171,10 +171,10 @@
       {
         "id": "update_available_true",
         "title": {
-          "en": "An update is available",
-          "nl": "Een update is beschikbaar",
-          "de": "Eine Aktualisierung ist verfügbar",
-          "fr": "Une mise à jour est disponible"
+          "en": "Update is available",
+          "nl": "Update is beschikbaar",
+          "de": "Aktualisierung ist verfügbar",
+          "fr": "Mise à jour est disponible"
         },
         "args": [
           {
@@ -189,10 +189,10 @@
       {
         "id": "charging",
         "title": {
-          "en": "A lock !{{is|is not}} charging",
-          "nl": "Een slot !{{is|is niet}} aan het opladen",
-          "de": "Ein Schloss !{{wird geladen|lädt nicht}}",
-          "fr": "Une serrure !{{se charge|ne charge pas charge}}"
+          "en": "!{{Is|Is not}} charging",
+          "nl": "!{{Is|Is niet}} aan het opladen",
+          "de": "!{{Wird geladen|Wird nicht geladen}}",
+          "fr": "!{{Se charge|Ne charge pas charge}}"
         },
         "args": [
           {
@@ -221,10 +221,10 @@
       {
         "id": "update_available",
         "title": {
-          "en": "An update !{{is|is not}} available",
-          "nl": "Een update !{{is|is niet}} beschikbaar",
-          "de": "Eine Aktualisierung !{{ist|ist nicht}} verfügbar",
-          "fr": "Une mise à jour !{{est|n'est pas}} disponible"
+          "en": "Update !{{is|is not}} available",
+          "nl": "Update !{{is|is niet}} beschikbaar",
+          "de": "Aktualisierung !{{ist|ist nicht}} verfügbar",
+          "fr": "Mise à jour !{{est|n'est pas}} disponible"
         },
         "args": [
           {

@@ -1,10 +1,10 @@
 {
   "id": "connected_true",
   "title": {
-    "en": "The connection was restored",
-    "nl": "De verbinding werd hersteld",
-    "de": "Die Verbindung wurde wiederhergestellt",
-    "fr": "La connexion a été rétablie"
+    "en": "Connection was restored",
+    "nl": "Verbinding werd hersteld",
+    "de": "Verbindung wurde wiederhergestellt",
+    "fr": "Connexion a été rétablie"
   },
   "args": [
     {

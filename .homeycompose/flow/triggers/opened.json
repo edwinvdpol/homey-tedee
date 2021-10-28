@@ -1,10 +1,10 @@
 {
   "id": "opened",
   "title": {
-    "en": "The lock just opened",
-    "nl": "Een slot werd geopend",
-    "de": "Ein Schloss wurde geöffnet",
-    "fr": "La serrure vient d'ouvrir"
+    "en": "Opened",
+    "nl": "Geopend",
+    "de": "Geöffnet",
+    "fr": "Ouvert"
   },
   "args": [
     {

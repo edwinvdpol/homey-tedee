@@ -1,10 +1,10 @@
 {
   "id": "update_available_true",
   "title": {
-    "en": "An update is available",
-    "nl": "Een update is beschikbaar",
-    "de": "Eine Aktualisierung ist verfügbar",
-    "fr": "Une mise à jour est disponible"
+    "en": "Update is available",
+    "nl": "Update is beschikbaar",
+    "de": "Aktualisierung ist verfügbar",
+    "fr": "Mise à jour est disponible"
   },
   "args": [
     {

@@ -1,10 +1,10 @@
 {
   "id": "charging_false",
   "title": {
-    "en": "A lock is charged",
-    "nl": "Een slot is opgeladen",
-    "de": "Ein Schloss wird aufgeladen",
-    "fr": "Une serrure est chargée"
+    "en": "Is charged",
+    "nl": "Is opgeladen",
+    "de": "Ist geladen",
+    "fr": "Est chargé"
   },
   "args": [
     {
