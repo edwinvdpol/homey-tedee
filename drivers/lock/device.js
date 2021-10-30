@@ -1,7 +1,7 @@
 'use strict';
 
-const Device = require('/lib/Device');
-const {LockState} = require('/lib/Enums');
+const Device = require('../../lib/Device');
+const {LockState} = require('../../lib/Enums');
 
 class LockDevice extends Device {
 

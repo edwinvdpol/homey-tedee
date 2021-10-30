@@ -1,6 +1,6 @@
 'use strict';
 
-const Driver = require('/lib/Driver');
+const Driver = require('../../lib/Driver');
 
 class BridgeDriver extends Driver { }
 
