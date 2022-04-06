@@ -6,6 +6,10 @@
     "de": "Verbindung wurde wiederhergestellt",
     "fr": "Connexion a été rétablie"
   },
+  "platforms": [
+    "local",
+    "cloud"
+  ],
   "args": [
     {
       "type": "device",

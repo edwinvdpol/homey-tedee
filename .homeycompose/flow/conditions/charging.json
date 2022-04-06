@@ -6,6 +6,10 @@
     "de": "!{{Wird geladen|Wird nicht geladen}}",
     "fr": "!{{Se charge|Ne charge pas charge}}"
   },
+  "platforms": [
+    "local",
+    "cloud"
+  ],
   "args": [
     {
       "type": "device",

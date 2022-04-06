@@ -6,6 +6,10 @@
     "de": "Verbindung war verloren",
     "fr": "Connexion a été perdue"
   },
+  "platforms": [
+    "local",
+    "cloud"
+  ],
   "args": [
     {
       "type": "device",

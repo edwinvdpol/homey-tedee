@@ -6,6 +6,10 @@
     "de": "Ist geladen",
     "fr": "Est chargé"
   },
+  "platforms": [
+    "local",
+    "cloud"
+  ],
   "args": [
     {
       "type": "device",

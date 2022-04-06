@@ -6,6 +6,10 @@
     "de": "Wird geladen",
     "fr": "Est en charge"
   },
+  "platforms": [
+    "local",
+    "cloud"
+  ],
   "args": [
     {
       "type": "device",

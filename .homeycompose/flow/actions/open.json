@@ -6,6 +6,10 @@
     "de": "Öffnen",
     "fr": "Ouvrir"
   },
+  "platforms": [
+    "local",
+    "cloud"
+  ],
   "args": [
     {
       "type": "device",

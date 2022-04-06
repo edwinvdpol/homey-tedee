@@ -6,6 +6,10 @@
     "de": "Geöffnet",
     "fr": "Ouvert"
   },
+  "platforms": [
+    "local",
+    "cloud"
+  ],
   "args": [
     {
       "type": "device",

@@ -6,6 +6,10 @@
     "de": "!{{Ist|Nicht}} verbunden",
     "fr": "!{{Est|N'est pas}} connecté"
   },
+  "platforms": [
+    "local",
+    "cloud"
+  ],
   "args": [
     {
       "type": "device",

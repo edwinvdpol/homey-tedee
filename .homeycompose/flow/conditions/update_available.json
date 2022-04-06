@@ -6,6 +6,10 @@
     "de": "Aktualisierung !{{ist|ist nicht}} verfügbar",
     "fr": "Mise à jour !{{est|n'est pas}} disponible"
   },
+  "platforms": [
+    "local",
+    "cloud"
+  ],
   "args": [
     {
       "type": "device",

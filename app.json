@@ -96,6 +96,10 @@
           "de": "Ist geladen",
           "fr": "Est chargé"
         },
+        "platforms": [
+          "local",
+          "cloud"
+        ],
         "args": [
           {
             "type": "device",
@@ -112,6 +116,10 @@
           "de": "Wird geladen",
           "fr": "Est en charge"
         },
+        "platforms": [
+          "local",
+          "cloud"
+        ],
         "args": [
           {
             "type": "device",
@@ -128,6 +136,10 @@
           "de": "Verbindung war verloren",
           "fr": "Connexion a été perdue"
         },
+        "platforms": [
+          "local",
+          "cloud"
+        ],
         "args": [
           {
             "type": "device",
@@ -144,6 +156,10 @@
           "de": "Verbindung wurde wiederhergestellt",
           "fr": "Connexion a été rétablie"
         },
+        "platforms": [
+          "local",
+          "cloud"
+        ],
         "args": [
           {
             "type": "device",
@@ -160,6 +176,10 @@
           "de": "Geöffnet",
           "fr": "Ouvert"
         },
+        "platforms": [
+          "local",
+          "cloud"
+        ],
         "args": [
           {
             "type": "device",
@@ -176,6 +196,10 @@
           "de": "Aktualisierung ist verfügbar",
           "fr": "Mise à jour est disponible"
         },
+        "platforms": [
+          "local",
+          "cloud"
+        ],
         "args": [
           {
             "type": "device",
@@ -194,6 +218,10 @@
           "de": "!{{Wird geladen|Wird nicht geladen}}",
           "fr": "!{{Se charge|Ne charge pas charge}}"
         },
+        "platforms": [
+          "local",
+          "cloud"
+        ],
         "args": [
           {
             "type": "device",
@@ -210,6 +238,10 @@
           "de": "!{{Ist|Nicht}} verbunden",
           "fr": "!{{Est|N'est pas}} connecté"
         },
+        "platforms": [
+          "local",
+          "cloud"
+        ],
         "args": [
           {
             "type": "device",
@@ -226,6 +258,10 @@
           "de": "Aktualisierung !{{ist|ist nicht}} verfügbar",
           "fr": "Mise à jour !{{est|n'est pas}} disponible"
         },
+        "platforms": [
+          "local",
+          "cloud"
+        ],
         "args": [
           {
             "type": "device",
@@ -244,6 +280,10 @@
           "de": "Öffnen",
           "fr": "Ouvrir"
         },
+        "platforms": [
+          "local",
+          "cloud"
+        ],
         "args": [
           {
             "type": "device",

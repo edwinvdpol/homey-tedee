@@ -6,6 +6,10 @@
     "de": "Aktualisierung ist verfügbar",
     "fr": "Mise à jour est disponible"
   },
+  "platforms": [
+    "local",
+    "cloud"
+  ],
   "args": [
     {
       "type": "device",
