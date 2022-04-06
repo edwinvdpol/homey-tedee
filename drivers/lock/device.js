@@ -5,13 +5,7 @@ const {LockState} = require('../../lib/Enums');
 
 class LockDevice extends Device {
 
-  /**
-   * Set device capabilities.
-   *
-   * @async
-   * @param {object} deviceData
-   * @returns {Promise<void>}
-   */
+  // Set device capabilities
   async setCapabilities(deviceData) {
     await super.setCapabilities(deviceData);
 
@@ -36,22 +30,16 @@ class LockDevice extends Device {
 
     // Start monitor if needed
     if (this.idle && ! this.monitor && this.needsMonitor(state)) {
-      return this.startMonitor();
+      await this.startMonitor();
+    } else {
+      // Locked state
+      let locked = state === LockState.Locked;
+
+      this.setCapabilityValue('locked', locked).catch(this.error);
     }
-
-    // Locked state
-    let locked = state === LockState.Locked;
-
-    this.setCapabilityValue('locked', locked).catch(this.error);
   }
 
-  /**
-   * Set device availability.
-   *
-   * @async
-   * @param {object} deviceData
-   * @returns {Promise<void>}
-   */
+  // Set device availability
   async setAvailability(deviceData) {
     await super.setAvailability(deviceData);
 
@@ -62,41 +50,20 @@ class LockDevice extends Device {
     // Current state
     const state = deviceData.lockProperties.state;
 
-    // Uncalibrated
     if (state === LockState.Uncalibrated) {
-      return this.setUnavailable(this.homey.__('state.uncalibrated'));
-    }
-
-    // Calibrating
-    if (state === LockState.Calibrating) {
-      return this.setUnavailable(this.homey.__('state.calibrating'));
-    }
-
-    // Unknown
-    if (state === LockState.Unknown) {
-      return this.setUnavailable(this.homey.__('state.unknown'));
-    }
-
-    // Updating
-    if (state === LockState.Updating) {
-      return this.setUnavailable(this.homey.__('state.updating'));
-    }
-
-    // Set available if currently not available
-    if (!this.getAvailable()) {
+      await this.setUnavailable(this.homey.__('state.uncalibrated'));
+    } else if (state === LockState.Calibrating) {
+      await this.setUnavailable(this.homey.__('state.calibrating'));
+    } else if (state === LockState.Unknown) {
+      await this.setUnavailable(this.homey.__('state.unknown'));
+    } else if (state === LockState.Updating) {
+      await this.setUnavailable(this.homey.__('state.updating'));
+    } else if (!this.getAvailable()) {
       await this.setAvailable();
     }
   }
 
-  /**
-   * This method is called when the user updates the device's settings.
-   *
-   * @async
-   * @param {object} oldSettings - The old settings object
-   * @param {object} newSettings - The new settings object
-   * @param {string[]} changedKeys - An array of keys changed since the previous version
-   * @returns {Promise<string|void>} - Return a custom message that will be displayed
-   */
+  // Settings changed
   async onSettings({oldSettings, newSettings, changedKeys}) {
     let settings = {}
 
@@ -142,13 +109,7 @@ class LockDevice extends Device {
   |-----------------------------------------------------------------------------
   */
 
-  /**
-   * Lock.
-   *
-   * @async
-   * @returns {Promise<void>}
-   * @throws {Error}
-   */
+  // Lock action
   async lock() {
     this.log('----- Locking lock -----');
 
@@ -180,13 +141,7 @@ class LockDevice extends Device {
     await this.startMonitor();
   }
 
-  /**
-   * Pull spring.
-   *
-   * @async
-   * @returns {Promise<void>}
-   * @throws {Error}
-   */
+  // Pull spring action
   async pullSpring() {
     this.log('----- Pulling spring -----');
 
@@ -215,13 +170,7 @@ class LockDevice extends Device {
     await this.startMonitor();
   }
 
-  /**
-   * Unlock.
-   *
-   * @async
-   * @returns {Promise<void>}
-   * @throws {Error}
-   */
+  // Unlock action
   async unlock() {
     this.log('----- Unlocking lock -----');
 
@@ -259,35 +208,23 @@ class LockDevice extends Device {
   |-----------------------------------------------------------------------------
   */
 
-  /**
-   * This method will be called when locked changed.
-   *
-   * @async
-   * @param {boolean} lock
-   * @returns {Promise<*>}
-   */
+  // Locked capability changed
   async onCapabilityLocked(lock) {
     this.log(`Capability 'locked' is now '${lock}'`);
 
     if (lock) {
-      return this.lock();
+      await this.lock();
+    } else {
+      await this.unlock();
     }
-
-    return this.unlock();
   }
 
-  /**
-   * This method will be called when open changed.
-   *
-   * @async
-   * @param {boolean} open
-   * @returns {Promise<*>}
-   */
+  // Open capability changed
   async onCapabilityOpen(open) {
     this.log(`Capability 'open' is now '${open}'`);
 
     if (open) {
-      return this.pullSpring();
+      await this.pullSpring();
     }
   }
 
@@ -297,12 +234,7 @@ class LockDevice extends Device {
   |-----------------------------------------------------------------------------
   */
 
-  /**
-   * Returns readable name that belongs to the lock state.
-   *
-   * @param {number} stateId
-   * @returns {string}
-   */
+  // Returns readable name that belongs to the lock state
   getLockStateName(stateId) {
     switch (stateId) {
       case LockState.Uncalibrated:
@@ -332,13 +264,7 @@ class LockDevice extends Device {
     }
   }
 
-  /**
-   * Validate and return state.
-   *
-   * @async
-   * @returns {Promise<number>}
-   * @throws {Error}
-   */
+  // Validate and return state
   async getState() {
     this.log('Fetching state...');
 

@@ -4,13 +4,7 @@ const Device = require('../../lib/Device');
 
 class BridgeDevice extends Device {
 
-  /**
-   * Set device availability.
-   *
-   * @async
-   * @param {object} data
-   * @returns {Promise<void>}
-   */
+  // Set device availability
   async setAvailability(data) {
     await super.setAvailability(data);
 
