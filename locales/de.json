@@ -2,25 +2,27 @@
   "connected": "Verbunden",
   "disconnected": "Nicht verbunden",
   "error": {
-    "401": "Sie sind nicht berechtigt",
-    "403": "Sie dürfen dieses Gerät nicht verwenden",
-    "404": "Gerät nicht gefunden",
-    "50x": "Tedee-API ist nicht verfügbar",
-    "response": "Ungültige Antwort von Tedee API",
-    "unknown": "Ein unbekannter Fehler ist aufgetreten",
-    "firstUnLock": "Schloss muss zuerst entriegelt werden",
-    "notReadyToLock": "Schloss ist nicht bereit zum Sperren",
-    "notReadyToUnlock": "Schloss ist nicht bereit zum Entsperren",
-    "pullSpringDisabled": "Die Türverriegelung ist aus"
+    "401": "Sie sind nicht berechtigt.",
+    "403": "Sie dürfen dieses Gerät nicht verwenden.",
+    "404": "Gerät nicht gefunden.",
+    "50x": "Tedee-API ist nicht verfügbar.",
+    "expired": "Die Anmeldesitzung ist abgelaufen. Bitte autorisieren Sie erneut.",
+    "response": "Ungültige Antwort von Tedee API.",
+    "revoked": "Anmeldesitzung wurde widerrufen. Bitte autorisieren Sie erneut.",
+    "unknown": "Ein unbekannter Fehler ist aufgetreten.",
+    "firstUnLock": "Schloss muss zuerst entriegelt werden.",
+    "notReadyToLock": "Schloss ist nicht bereit zum Sperren.",
+    "notReadyToUnlock": "Schloss ist nicht bereit zum Entsperren.",
+    "pullSpringDisabled": "Die Türverriegelung ist aus."
   },
   "state": {
-    "uncalibrated": "Schloss nicht kalibriert",
+    "uncalibrated": "Schloss nicht kalibriert.",
     "calibrating": "Schloss wird kalibriert...",
-    "inUse": "Schloss wird gerade verwendet",
-    "notAvailable": "Sperre ist nicht verfügbar",
-    "disconnected": "Schloss ist nicht verbunden",
+    "inUse": "Schloss wird gerade verwendet.",
+    "notAvailable": "Sperre ist nicht verfügbar.",
+    "disconnected": "Schloss ist nicht verbunden.",
     "updating": "Gerät wird aktualisiert...",
-    "unknown": "Schloss hat unbekannten Status",
-    "updateAvailable": "Software-Update ist verfügbar"
+    "unknown": "Schloss hat unbekannten Status.",
+    "updateAvailable": "Software-Update ist verfügbar."
   }
 }
