@@ -1,4 +1,4 @@
-# Tedee Smart Lock
+# Tedee for Homey
 
 Unlock your door with Homey.
 
