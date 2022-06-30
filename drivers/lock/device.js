@@ -7,7 +7,7 @@ class LockDevice extends Device {
 
   // Set device capabilities
   async setCapabilities(deviceData) {
-    await super.setCapabilities(deviceData);
+    super.setCapabilities(deviceData).catch(this.error);
 
     if (!deviceData.hasOwnProperty('lockProperties')) {
       return;
@@ -41,7 +41,7 @@ class LockDevice extends Device {
 
   // Set device availability
   async setAvailability(deviceData) {
-    await super.setAvailability(deviceData);
+    super.setAvailability(deviceData).catch(this.error);
 
     if (!deviceData.hasOwnProperty('lockProperties')) {
       return;
@@ -51,15 +51,23 @@ class LockDevice extends Device {
     const state = deviceData.lockProperties.state;
 
     if (state === LockState.Uncalibrated) {
-      await this.setUnavailable(this.homey.__('state.uncalibrated'));
-    } else if (state === LockState.Calibrating) {
-      await this.setUnavailable(this.homey.__('state.calibrating'));
-    } else if (state === LockState.Unknown) {
-      await this.setUnavailable(this.homey.__('state.unknown'));
-    } else if (state === LockState.Updating) {
-      await this.setUnavailable(this.homey.__('state.updating'));
-    } else if (!this.getAvailable()) {
-      await this.setAvailable();
+      return this.setUnavailable(this.homey.__('state.uncalibrated'));
+    }
+
+    if (state === LockState.Calibrating) {
+      return this.setUnavailable(this.homey.__('state.calibrating'));
+    }
+
+    if (state === LockState.Unknown) {
+      return this.setUnavailable(this.homey.__('state.unknown'));
+    }
+
+    if (state === LockState.Updating) {
+      return this.setUnavailable(this.homey.__('state.updating'));
+    }
+
+    if (!this.getAvailable()) {
+      this.setAvailable().catch(this.error);
     }
   }
 

@@ -6,11 +6,11 @@ class BridgeDevice extends Device {
 
   // Set device availability
   async setAvailability(data) {
-    await super.setAvailability(data);
+    super.setAvailability(data).catch(this.error);
 
     // Set available if currently not available
     if (!this.getAvailable()) {
-      await this.setAvailable();
+      this.setAvailable().catch(this.error);
     }
   }
 
