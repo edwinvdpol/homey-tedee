@@ -1,14 +1,12 @@
 {
   "connected": "Connecté",
   "disconnected": "Déconnectée",
-  "error": {
+  "errors": {
     "401": "Vous n'êtes pas autorisé.",
     "403": "Vous n'êtes pas autorisé à utiliser cet appareil.",
     "404": "Appareil non trouvé.",
     "50x": "L'API Tedee n'est pas disponible.",
-    "expired": "La session de connexion a expiré. Veuillez réautoriser.",
     "response": "Réponse invalide de l'API Tedee.",
-    "revoked": "La session de connexion a été révoquée. Veuillez réautoriser.",
     "unknown": "Une erreur inconnue s'est produite.",
     "firstUnLock": "La serrure doit d'abord être déverrouillée.",
     "notReadyToLock": "La serrure n'est pas prête à se verrouiller.",

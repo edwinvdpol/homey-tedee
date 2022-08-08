@@ -1,14 +1,12 @@
 {
   "connected": "Verbunden",
   "disconnected": "Nicht verbunden",
-  "error": {
+  "errors": {
     "401": "Sie sind nicht berechtigt.",
     "403": "Sie dürfen dieses Gerät nicht verwenden.",
     "404": "Gerät nicht gefunden.",
     "50x": "Tedee-API ist nicht verfügbar.",
-    "expired": "Die Anmeldesitzung ist abgelaufen. Bitte autorisieren Sie erneut.",
     "response": "Ungültige Antwort von Tedee API.",
-    "revoked": "Anmeldesitzung wurde widerrufen. Bitte autorisieren Sie erneut.",
     "unknown": "Ein unbekannter Fehler ist aufgetreten.",
     "firstUnLock": "Schloss muss zuerst entriegelt werden.",
     "notReadyToLock": "Schloss ist nicht bereit zum Sperren.",

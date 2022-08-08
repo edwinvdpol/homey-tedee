@@ -1,14 +1,12 @@
 {
   "connected": "Verbonden",
   "disconnected": "Niet verbonden",
-  "error": {
+  "errors": {
     "401": "U bent niet geautoriseerd.",
     "403": "U mag dit apparaat niet gebruiken.",
     "404": "Apparaat is niet gevonden.",
     "50x": "Tedee API is niet beschikbaar.",
-    "expired": "Inlogsessie is verlopen. Gelieve opnieuw te autoriseren.",
     "response": "Ongeldig antwoord van Tedee API.",
-    "revoked": "Inlogsessie is ingetrokken. Gelieve opnieuw te autoriseren.",
     "unknown": "Er is een onbekende fout opgetreden.",
     "firstUnLock": "Slot moet eerst ontgrendeld zijn.",
     "notReadyToLock": "Slot is niet klaar om te vergrendelen.",

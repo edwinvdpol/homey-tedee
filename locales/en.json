@@ -1,14 +1,12 @@
 {
   "connected": "Connected",
   "disconnected": "Disconnected",
-  "error": {
+  "errors": {
     "401": "You are not authorized.",
     "403": "You are not allowed to use this device.",
     "404": "Device is not found.",
     "50x": "Tedee API is not available.",
-    "expired": "Login session has expired. Please re-authorize.",
     "response": "Invalid response from Tedee API.",
-    "revoked": "Login session has been revoked. Please re-authorize.",
     "unknown": "An unknown error has occurred.",
     "firstUnLock": "Lock must be unlocked first.",
     "notReadyToLock": "Lock is not ready to lock.",
