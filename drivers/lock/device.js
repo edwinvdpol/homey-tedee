@@ -1,83 +1,145 @@
 'use strict';
 
 const Device = require('../../lib/Device');
-const {LockState} = require('../../lib/Enums');
+const { LockState, LockStateNames } = require('../../lib/Enums');
+const { blank, filled } = require('../../lib/Utils');
+const Monitor = require('../../lib/Monitor');
 
 class LockDevice extends Device {
 
-  // Set device capabilities
-  async setCapabilities(deviceData) {
-    super.setCapabilities(deviceData).catch(this.error);
+  /*
+  | Device events
+  */
 
-    if (!deviceData.hasOwnProperty('lockProperties')) {
-      return;
-    }
+  // Device initialized
+  async onOAuth2Init() {
+    // Register listeners
+    this.registerCapabilityListeners();
 
-    const lockProperties = deviceData.lockProperties;
+    const device = this;
 
-    // Measure battery capability
-    if (lockProperties.hasOwnProperty('batteryLevel')) {
-      this.setCapabilityValue('measure_battery', lockProperties.batteryLevel).catch(this.error);
-    }
+    this.monitor = new Monitor({ device });
 
-    // Charging capability
-    if (lockProperties.hasOwnProperty('isCharging')) {
-      this.setCapabilityValue('charging', lockProperties.isCharging).catch(this.error);
-    }
+    await super.onOAuth2Init();
+  }
 
-    // Locked capability
-    const state = lockProperties.state;
+  // Device deleted
+  async onOAuth2Deleted() {
+    this.monitor = null;
 
-    // Start monitor if needed
-    if (this.idle && ! this.monitor && this.needsMonitor(state)) {
-      await this.startMonitor();
-    } else {
-      // Locked state
-      let locked = state === LockState.Locked;
+    await super.onOAuth2Deleted();
+  }
 
-      this.setCapabilityValue('locked', locked).catch(this.error);
+  /*
+  | Synchronization functions
+  */
+
+  // Return data which need to be synced
+  async getSyncData() {
+    return this.oAuth2Client.getLock(this.getSetting('tedee_id'));
+  }
+
+  // Set device data
+  async handleSyncData(data) {
+    try {
+      await super.handleSyncData(data);
+      await this.setStore(data);
+    } catch (err) {
+      this.error(err.message);
+      this.setUnavailable(err.message).catch(this.error);
     }
   }
 
-  // Set device availability
-  async setAvailability(deviceData) {
-    super.setAvailability(deviceData).catch(this.error);
+  // Set availability
+  async setAvailability(data) {
+    // Disconnected
+    if (filled(data.isConnected) && !data.isConnected) {
+      throw new Error(this.homey.__('state.disconnected'));
+    }
 
-    if (!deviceData.hasOwnProperty('lockProperties')) {
+    if (blank(data.lockProperties)) {
       return;
     }
 
-    // Current state
-    const state = deviceData.lockProperties.state;
+    // Lock state
+    const state = data.lockProperties.state || null;
+
+    if (blank(state)) {
+      throw new Error(this.homey.__('errors.response'));
+    }
 
     if (state === LockState.Uncalibrated) {
-      return this.setUnavailable(this.homey.__('state.uncalibrated'));
+      throw new Error(this.homey.__('state.uncalibrated'));
     }
 
     if (state === LockState.Calibrating) {
-      return this.setUnavailable(this.homey.__('state.calibrating'));
+      throw new Error(this.homey.__('state.calibrating'));
     }
 
     if (state === LockState.Unknown) {
-      return this.setUnavailable(this.homey.__('state.unknown'));
+      throw new Error(this.homey.__('state.unknown'));
     }
 
     if (state === LockState.Updating) {
-      return this.setUnavailable(this.homey.__('state.updating'));
+      throw new Error(this.homey.__('state.updating'));
     }
 
-    if (!this.getAvailable()) {
-      this.setAvailable().catch(this.error);
+    // Run monitor if needed
+    if (this.monitor.shouldRun(state)) {
+      await this.monitor.run();
+    } else {
+      this.setCapabilityValue('locked', state === LockState.Locked).catch(this.error);
     }
   }
 
+  // Set capabilities
+  async setCapabilities(data) {
+    await super.setCapabilities(data);
+
+    // Return when properties are missing
+    if (blank(data.lockProperties)) {
+      return;
+    }
+
+    const lock = data.lockProperties;
+
+    // Measure battery
+    if (filled(lock.batteryLevel)) {
+      this.setCapabilityValue('measure_battery', lock.batteryLevel).catch(this.error);
+    }
+
+    // Charging
+    if (filled(lock.isCharging)) {
+      this.setCapabilityValue('charging', lock.isCharging).catch(this.error);
+    }
+  }
+
+  // Set store values
+  async setStore(data) {
+    if (blank(data.deviceSettings)) {
+      return;
+    }
+
+    if (blank(data.deviceSettings.pullSpringEnabled)) {
+      return;
+    }
+
+    const { pullSpringEnabled } = data.deviceSettings;
+
+    // Set store values
+    this.setStoreValue('pull_spring_enabled', pullSpringEnabled).catch(this.error);
+
+    // Remove or add "open" capability
+    this.toggleOpenCapability(pullSpringEnabled);
+  }
+
   // Settings changed
-  async onSettings({oldSettings, newSettings, changedKeys}) {
-    let settings = {}
+  async onSettings({ oldSettings, newSettings, changedKeys }) {
+    const settings = {};
 
     // Check if lock is available
     if (!this.getAvailable()) {
-      await this.resetState();
+      await this.reset();
 
       throw new Error(this.homey.__('state.notAvailable'));
     }
@@ -86,35 +148,35 @@ class LockDevice extends Device {
     if (changedKeys.includes('auto_lock_enabled')) {
       this.log(`Auto-lock enabled is now '${newSettings.auto_lock_enabled}'`);
 
-      settings.autoLockEnabled = newSettings.auto_lock_enabled === 'on';
+      settings.autoLockEnabled = newSettings.auto_lock_enabled;
     }
 
     // Button lock enabled updated
     if (changedKeys.includes('button_lock_enabled')) {
       this.log(`Button lock enabled is now '${newSettings.button_lock_enabled}'`);
 
-      settings.buttonLockEnabled = newSettings.button_lock_enabled === 'on';
+      settings.buttonLockEnabled = newSettings.button_lock_enabled;
     }
 
     // Button unlock enabled updated
     if (changedKeys.includes('button_unlock_enabled')) {
       this.log(`Button unlock enabled is now '${newSettings.button_unlock_enabled}'`);
 
-      settings.buttonUnlockEnabled = newSettings.button_unlock_enabled === 'on';
+      settings.buttonUnlockEnabled = newSettings.button_unlock_enabled;
     }
 
     // Device settings need to be updated
-    if (Object.keys(settings).length > 0) {
-      await this.oAuth2Client.updateLockSettings(this.tedeeId, settings);
+    const tedeeId = this.getSetting('tedee_id');
 
-      this.log(`Lock settings ${this.tedeeId} updated successfully!`);
+    if (filled(settings)) {
+      await this.oAuth2Client.updateLockSettings(tedeeId, settings);
+
+      this.log(`Lock settings ${tedeeId} updated successfully!`);
     }
   }
 
   /*
-  |-----------------------------------------------------------------------------
   | API commands
-  |-----------------------------------------------------------------------------
   */
 
   // Lock action
@@ -123,7 +185,9 @@ class LockDevice extends Device {
 
     // Check if lock is available
     if (!this.getAvailable()) {
-      return this.resetState();
+      await this.reset();
+
+      return;
     }
 
     // Get and validate state
@@ -134,33 +198,37 @@ class LockDevice extends Device {
       this.log('Lock is already locked');
 
       // Set device to idle state
-      return this.resetState();
+      await this.reset();
+
+      return;
     }
 
     // Make sure the lock is in a valid state to lock
     if (state !== LockState.Unlocked && state !== LockState.SemiLocked) {
-      await this.errorIdle(`Not ready to lock, currently ${state}`, 'error.notReadyToLock');
+      await this.errorIdle(`Not ready to lock, currently ${state}`, 'errors.notReadyToLock');
     }
 
     // Send lock command to tedee API
-    this.operationId = await this.oAuth2Client.lock(this.tedeeId);
+    const operationId = await this.oAuth2Client.lock(this.getSetting('tedee_id'));
 
-    // Start monitor
-    await this.startMonitor();
+    // Run monitor
+    await this.monitor.run(operationId);
   }
 
   // Pull spring action
   async pullSpring() {
     this.log('----- Pulling spring -----');
 
-    // Check if pull spring is enabled
-    if (this.getStoreValue('pull_spring_enabled') !== 'on' || !this.hasCapability('open')) {
-      await this.errorIdle('Pull spring not enabled', 'error.pullSpringDisabled');
-    }
-
     // Check if lock is available
     if (!this.getAvailable()) {
-      return this.resetState();
+      await this.reset();
+
+      return;
+    }
+
+    // Check if pull spring is enabled
+    if (this.getStoreValue('pull_spring_enabled') !== 'on' || !this.hasCapability('open')) {
+      await this.errorIdle('Pull spring not enabled', 'errors.pullSpringDisabled');
     }
 
     // Get and validate state
@@ -168,14 +236,14 @@ class LockDevice extends Device {
 
     // Make sure the lock is in a valid state
     if (state !== LockState.Unlocked) {
-      await this.errorIdle(`Not in unlocked state, currently ${state}`, 'error.firstUnLock');
+      await this.errorIdle(`Not in unlocked state, currently ${LockStateNames[state]} (${state})`, 'errors.firstUnLock');
     }
 
     // Send pull spring command to tedee API
-    this.operationId = await this.oAuth2Client.pullSpring(this.tedeeId);
+    const operationId = await this.oAuth2Client.pullSpring(this.getSetting('tedee_id'));
 
-    // Start monitor
-    await this.startMonitor();
+    // Run monitor
+    await this.monitor.run(operationId);
   }
 
   // Unlock action
@@ -184,7 +252,9 @@ class LockDevice extends Device {
 
     // Check if lock is available
     if (!this.getAvailable()) {
-      return this.resetState();
+      await this.reset();
+
+      return;
     }
 
     // Get and validate state
@@ -195,25 +265,25 @@ class LockDevice extends Device {
       this.log('Lock is already unlocked');
 
       // Set device to idle state
-      return this.resetState();
+      await this.reset();
+
+      return;
     }
 
     // Make sure the lock is in a valid state
     if (state !== LockState.Locked && state !== LockState.SemiLocked) {
-      await this.errorIdle(`Not ready to unlock, currently ${state}`, 'error.notReadyToUnlock');
+      await this.errorIdle(`Not ready to unlock, currently ${LockStateNames[state]} (${state})`, 'errors.notReadyToUnlock');
     }
 
     // Send unlock command to tedee API
-    this.operationId = await this.oAuth2Client.unlock(this.tedeeId);
+    const operationId = await this.oAuth2Client.unlock(this.getSetting('tedee_id'));
 
-    // Start monitor
-    await this.startMonitor();
+    // Run monitor
+    await this.monitor.run(operationId);
   }
 
   /*
-  |-----------------------------------------------------------------------------
   | Capabilities
-  |-----------------------------------------------------------------------------
   */
 
   // Locked capability changed
@@ -237,61 +307,95 @@ class LockDevice extends Device {
   }
 
   /*
-  |-----------------------------------------------------------------------------
-  | Support functions
-  |-----------------------------------------------------------------------------
+  | Listener functions
   */
 
-  // Returns readable name that belongs to the lock state
-  getLockStateName(stateId) {
-    switch (stateId) {
-      case LockState.Uncalibrated:
-        return `uncalibrated (${stateId})`;
-      case LockState.Calibrating:
-        return `calibrating (${stateId})`;
-      case LockState.Unlocked:
-        return `unlocked (${stateId})`;
-      case LockState.SemiLocked:
-        return `semi locked (${stateId})`;
-      case LockState.Unlocking:
-        return `unlocking (${stateId})`;
-      case LockState.Locking:
-        return `locking (${stateId})`;
-      case LockState.Locked:
-        return `locked (${stateId})`;
-      case LockState.Pulled:
-        return `pulled (${stateId})`;
-      case LockState.Pulling:
-        return `pulling (${stateId})`;
-      case LockState.Unknown:
-        return `unknown (${stateId})`;
-      case LockState.Updating:
-        return `updating (${stateId})`;
-      default:
-        return `error`;
+  // Register capability listeners
+  registerCapabilityListeners() {
+    this.registerCapabilityListener('locked', this.onCapabilityLocked.bind(this));
+
+    if (this.hasCapability('open')) {
+      this.registerCapabilityListener('open', this.onCapabilityOpen.bind(this));
     }
+  }
+
+  /*
+  | Support functions
+  */
+
+  // Returns settings from given data
+  getNewSettings(data) {
+    if (blank(data.deviceSettings)) {
+      return {};
+    }
+
+    const device = data.deviceSettings;
+
+    return {
+      auto_lock_enabled: device.autoLockEnabled || false,
+      button_lock_enabled: device.buttonLockEnabled || false,
+      button_unlock_enabled: device.buttonUnlockEnabled || false,
+    };
   }
 
   // Validate and return state
   async getState() {
     this.log('Fetching state...');
 
-    // Check if lock is busy
-    if (!this.idle) {
-      this.error('Device is busy, stopped');
+    // Check if monitor is running
+    if (this.monitor.isRunning()) {
+      this.error('Monitor is running, stopped');
 
       throw new Error(this.homey.__('state.inUse'));
     }
 
-    // Set the lock to busy
-    this.idle = false;
-
     // Fetch current lock state from tedee API
-    const state = await this.oAuth2Client.getLockState(this.tedeeId);
+    const state = await this.oAuth2Client.getLockState(this.getSetting('tedee_id'));
 
-    this.log(`Current state is ${this.getLockStateName(state)}`);
+    // Unknown state
+    if (blank(state)) {
+      throw new Error(this.homey.__('state.unknown'));
+    }
+
+    this.log(`Current state is ${LockStateNames[state]} (${state})`);
 
     return state;
+  }
+
+  // Set device to idle
+  async reset() {
+    // Reset open capability
+    if (this.hasCapability('open')) {
+      this.setCapabilityValue('open', false).catch(this.error);
+    }
+
+    // Refresh device
+    await this.sync();
+  }
+
+  // Remove or add "open" capability
+  toggleOpenCapability(pullSpringEnabled) {
+    // Remove capability
+    if (this.hasCapability('open') && !pullSpringEnabled) {
+      this.log('Pull spring disabled, removing "open" capability');
+
+      this.removeCapability('open').catch(this.error);
+    }
+
+    // Add capability
+    if (!this.hasCapability('open') && pullSpringEnabled) {
+      this.log('Pull spring enabled, adding "open" capability');
+
+      this.addCapability('open').catch(this.error);
+      this.registerCapabilityListener('open', this.onCapabilityOpen.bind(this));
+    }
+  }
+
+  // Trigger opened capability
+  async triggerOpened() {
+    const device = this;
+
+    await this.driver.triggerOpened(device);
   }
 
 }
