@@ -498,7 +498,7 @@
             },
             {
               "id": "auto_lock_enabled",
-              "type": "radio",
+              "type": "checkbox",
               "label": {
                 "en": "Auto-lock",
                 "nl": "Automatische vergrendeling",
@@ -511,27 +511,7 @@
                 "de": "Schließt die Tür automatisch, wenn das Schloss in geöffneter Position befindet.",
                 "fr": "Fermer automatiquement la porte lorsque la serrure est en position ouverte."
               },
-              "value": "-",
-              "values": [
-                {
-                  "id": "on",
-                  "label": {
-                    "en": "On",
-                    "nl": "Aan",
-                    "de": "An",
-                    "fr": "Activé"
-                  }
-                },
-                {
-                  "id": "off",
-                  "label": {
-                    "en": "Off",
-                    "nl": "Uit",
-                    "de": "Aus",
-                    "fr": "Désactivé"
-                  }
-                }
-              ]
+              "value": false
             }
           ]
         },
@@ -546,7 +526,7 @@
           "children": [
             {
               "id": "button_lock_enabled",
-              "type": "radio",
+              "type": "checkbox",
               "label": {
                 "en": "Push to lock",
                 "nl": "Druk om te vergrendelen",
@@ -559,31 +539,11 @@
                 "de": "Verriegeln Sie das Schloss, wenn die Taste gedrückt wird.",
                 "fr": "Verrouillez la serrure lorsque vous appuyez sur le bouton."
               },
-              "value": "-",
-              "values": [
-                {
-                  "id": "on",
-                  "label": {
-                    "en": "On",
-                    "nl": "Aan",
-                    "de": "An",
-                    "fr": "Activé"
-                  }
-                },
-                {
-                  "id": "off",
-                  "label": {
-                    "en": "Off",
-                    "nl": "Uit",
-                    "de": "Aus",
-                    "fr": "Désactivé"
-                  }
-                }
-              ]
+              "value": false
             },
             {
               "id": "button_unlock_enabled",
-              "type": "radio",
+              "type": "checkbox",
               "label": {
                 "en": "Push to unlock",
                 "nl": "Druk om te ontgrendelen",
@@ -596,27 +556,7 @@
                 "de": "Entriegeln Sie das Schloss, wenn die Taste gedrückt wird.",
                 "fr": "Déverrouillez le verrou lorsque vous appuyez sur le bouton."
               },
-              "value": "-",
-              "values": [
-                {
-                  "id": "on",
-                  "label": {
-                    "en": "On",
-                    "nl": "Aan",
-                    "de": "An",
-                    "fr": "Activé"
-                  }
-                },
-                {
-                  "id": "off",
-                  "label": {
-                    "en": "Off",
-                    "nl": "Uit",
-                    "de": "Aus",
-                    "fr": "Désactivé"
-                  }
-                }
-              ]
+              "value": false
             }
           ]
         },
