@@ -29,6 +29,24 @@ class BridgeDevice extends Device {
     this.setAvailable().catch(this.error);
   }
 
+  /*
+  | Support functions
+  */
+
+  // Returns settings from given data
+  getNewSettings(data) {
+    const settings = {};
+
+    // Set connected status
+    if (filled(data.isConnected)) {
+      settings.status = data.isConnected
+        ? this.homey.__('connected')
+        : this.homey.__('disconnected');
+    }
+
+    return settings;
+  }
+
 }
 
 module.exports = BridgeDevice;

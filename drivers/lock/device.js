@@ -325,17 +325,26 @@ class LockDevice extends Device {
 
   // Returns settings from given data
   getNewSettings(data) {
+    const settings = {};
+
+    // Set connected status
+    if (filled(data.isConnected)) {
+      settings.status = data.isConnected
+        ? this.homey.__('connected')
+        : this.homey.__('disconnected');
+    }
+
     if (blank(data.deviceSettings)) {
-      return {};
+      return settings;
     }
 
     const device = data.deviceSettings;
 
-    return {
-      auto_lock_enabled: device.autoLockEnabled || false,
-      button_lock_enabled: device.buttonLockEnabled || false,
-      button_unlock_enabled: device.buttonUnlockEnabled || false,
-    };
+    settings.auto_lock_enabled = device.autoLockEnabled || false;
+    settings.button_lock_enabled = device.buttonLockEnabled || false;
+    settings.button_unlock_enabled = device.buttonUnlockEnabled || false;
+
+    return settings;
   }
 
   // Validate and return state
