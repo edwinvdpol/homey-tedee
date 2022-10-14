@@ -58,9 +58,7 @@ class LockDriver extends Driver {
 
   // Opened flow trigger
   triggerOpened(lock) {
-    if (!lock.hasCapability('open')) {
-      return;
-    }
+    if (!lock.hasCapability('open')) return;
 
     this.lockOpened.trigger(lock, {}).then().catch(lock.error);
   }

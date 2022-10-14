@@ -34,6 +34,36 @@ class LockDevice extends Device {
   | Synchronization functions
   */
 
+  // Returns settings from given data
+  getSettingsData(data) {
+    const settings = {};
+
+    // Set connected status
+    if (filled(data.isConnected)) {
+      settings.status = data.isConnected
+        ? this.homey.__('connected')
+        : this.homey.__('disconnected');
+
+      if (this.getStoreValue('connected_via_bridge') && data.isConnected) {
+        settings.status = this.homey.__('connectedViaBridge');
+      }
+    }
+
+    if (blank(data.deviceSettings)) {
+      return settings;
+    }
+
+    const device = data.deviceSettings;
+
+    settings.auto_lock_enabled = device.autoLockEnabled || false;
+    settings.button_lock_enabled = device.buttonLockEnabled || false;
+    settings.button_unlock_enabled = device.buttonUnlockEnabled || false;
+    settings.postponed_lock_enabled = device.postponedLockEnabled || false;
+    settings.postponed_lock_delay = device.postponedLockDelay || 10;
+
+    return settings;
+  }
+
   // Return data which need to be synced
   async getSyncData() {
     return this.oAuth2Client.getLock(this.getSetting('tedee_id'));
@@ -57,9 +87,7 @@ class LockDevice extends Device {
       throw new Error(this.homey.__('state.disconnected'));
     }
 
-    if (blank(data.lockProperties)) {
-      return;
-    }
+    if (blank(data.lockProperties)) return;
 
     // Lock state
     const state = Number(data.lockProperties.state);
@@ -93,9 +121,7 @@ class LockDevice extends Device {
     await super.setCapabilities(data);
 
     // Return when properties are missing
-    if (blank(data.lockProperties)) {
-      return;
-    }
+    if (blank(data.lockProperties)) return;
 
     const lock = data.lockProperties;
 
@@ -116,13 +142,8 @@ class LockDevice extends Device {
       this.setStoreValue('connected_via_bridge', filled(data.connectedToId)).catch(this.error);
     }
 
-    if (blank(data.deviceSettings)) {
-      return;
-    }
-
-    if (blank(data.deviceSettings.pullSpringEnabled)) {
-      return;
-    }
+    if (blank(data.deviceSettings)) return;
+    if (blank(data.deviceSettings.pullSpringEnabled)) return;
 
     const { pullSpringEnabled } = data.deviceSettings;
 
@@ -241,8 +262,8 @@ class LockDevice extends Device {
     }
 
     // Check if pull spring is enabled
-    if (!this.getStoreValue('pull_spring_enabled') || !this.hasCapability('open')) {
-      await this.errorIdle('Pull spring not enabled', 'errors.pullSpringDisabled');
+    if (!this.hasCapability('open')) {
+      await this.errorIdle('Open capability not found', 'errors.pullSpringDisabled');
     }
 
     // Get and validate state
@@ -327,45 +348,12 @@ class LockDevice extends Device {
   // Register capability listeners
   registerCapabilityListeners() {
     this.registerCapabilityListener('locked', this.onCapabilityLocked.bind(this));
-
-    if (this.hasCapability('open')) {
-      this.registerCapabilityListener('open', this.onCapabilityOpen.bind(this));
-    }
+    this.registerCapabilityListener('open', this.onCapabilityOpen.bind(this));
   }
 
   /*
   | Support functions
   */
-
-  // Returns settings from given data
-  getNewSettings(data) {
-    const settings = {};
-
-    // Set connected status
-    if (filled(data.isConnected)) {
-      settings.status = data.isConnected
-        ? this.homey.__('connected')
-        : this.homey.__('disconnected');
-
-      if (this.getStoreValue('connected_via_bridge') && data.isConnected) {
-        settings.status = this.homey.__('connectedViaBridge');
-      }
-    }
-
-    if (blank(data.deviceSettings)) {
-      return settings;
-    }
-
-    const device = data.deviceSettings;
-
-    settings.auto_lock_enabled = device.autoLockEnabled || false;
-    settings.button_lock_enabled = device.buttonLockEnabled || false;
-    settings.button_unlock_enabled = device.buttonUnlockEnabled || false;
-    settings.postponed_lock_enabled = device.postponedLockEnabled || false;
-    settings.postponed_lock_delay = device.postponedLockDelay || 10;
-
-    return settings;
-  }
 
   // Validate and return state
   async getState() {
@@ -416,7 +404,6 @@ class LockDevice extends Device {
       this.log('Pull spring enabled, adding "open" capability');
 
       this.addCapability('open').catch(this.error);
-      this.registerCapabilityListener('open', this.onCapabilityOpen.bind(this));
     }
   }
 

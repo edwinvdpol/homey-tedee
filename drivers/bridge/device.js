@@ -9,6 +9,20 @@ class BridgeDevice extends Device {
   | Synchronization functions
   */
 
+  // Returns settings from given data
+  getSettingsData(data) {
+    const settings = {};
+
+    // Set connected status
+    if (filled(data.isConnected)) {
+      settings.status = data.isConnected
+        ? this.homey.__('connected')
+        : this.homey.__('disconnected');
+    }
+
+    return settings;
+  }
+
   // Return data which need to be synced
   async getSyncData() {
     return this.oAuth2Client.getBridge(this.getSetting('tedee_id'));
@@ -27,24 +41,6 @@ class BridgeDevice extends Device {
     }
 
     this.setAvailable().catch(this.error);
-  }
-
-  /*
-  | Support functions
-  */
-
-  // Returns settings from given data
-  getNewSettings(data) {
-    const settings = {};
-
-    // Set connected status
-    if (filled(data.isConnected)) {
-      settings.status = data.isConnected
-        ? this.homey.__('connected')
-        : this.homey.__('disconnected');
-    }
-
-    return settings;
   }
 
 }

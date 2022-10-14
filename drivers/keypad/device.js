@@ -9,6 +9,32 @@ class KeypadDevice extends Device {
   | Synchronization functions
   */
 
+  // Returns settings from given data
+  getSettingsData(data) {
+    const settings = {};
+
+    if (blank(data.deviceSettings)) {
+      return settings;
+    }
+
+    // Set device settings
+    const device = data.deviceSettings;
+
+    if (filled(device.soundLevel)) {
+      settings.sound_level = `${device.soundLevel}`;
+    }
+
+    if (filled(device.backlightLevel)) {
+      settings.backlight_level = `${device.backlightLevel}`;
+    }
+
+    if (filled(device.bellButtonEnabled)) {
+      settings.bell_button_enabled = device.bellButtonEnabled;
+    }
+
+    return settings;
+  }
+
   // Return data which need to be synced
   async getSyncData() {
     return this.oAuth2Client.getKeypad(this.getSetting('tedee_id'));
@@ -56,36 +82,6 @@ class KeypadDevice extends Device {
 
       this.log(`Keypad settings ${tedeeId} updated successfully!`);
     }
-  }
-
-  /*
-  | Support functions
-  */
-
-  // Returns settings from given data
-  getNewSettings(data) {
-    const settings = {};
-
-    if (blank(data.deviceSettings)) {
-      return settings;
-    }
-
-    // Set device settings
-    const device = data.deviceSettings;
-
-    if (filled(device.soundLevel)) {
-      settings.sound_level = `${device.soundLevel}`;
-    }
-
-    if (filled(device.backlightLevel)) {
-      settings.backlight_level = `${device.backlightLevel}`;
-    }
-
-    if (filled(device.bellButtonEnabled)) {
-      settings.bell_button_enabled = device.bellButtonEnabled;
-    }
-
-    return settings;
   }
 
 }
