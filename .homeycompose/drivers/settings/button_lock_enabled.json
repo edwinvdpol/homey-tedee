@@ -1,10 +1,10 @@
 {
   "type": "checkbox",
   "label": {
-    "en": "Push to lock",
-    "nl": "Druk om te vergrendelen",
-    "de": "Zum Sperren drücken",
-    "fr": "Appuyez pour verrouiller"
+    "en": "Lock the lock",
+    "nl": "Vergrendel het slot",
+    "de": "Sperren Sie das Schloss",
+    "fr": "Verrouillez la serrure"
   },
   "hint": {
     "en": "Lock the lock when the button is pressed.",

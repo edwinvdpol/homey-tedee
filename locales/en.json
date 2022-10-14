@@ -1,5 +1,6 @@
 {
   "connected": "Connected",
+  "connectedViaBridge": "Connected via bridge",
   "disconnected": "Disconnected",
   "errors": {
     "401": "You are not authorized.",

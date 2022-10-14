@@ -1,7 +1,7 @@
 'use strict';
 
 const Device = require('../../lib/Device');
-const { LockState, LockStateNames } = require('../../lib/Enums');
+const { LockState, LockStateNames, UnlockMode } = require('../../lib/Enums');
 const { blank, filled } = require('../../lib/Utils');
 const Monitor = require('../../lib/Monitor');
 
@@ -42,8 +42,8 @@ class LockDevice extends Device {
   // Set device data
   async handleSyncData(data) {
     try {
-      await super.handleSyncData(data);
       await this.setStore(data);
+      await super.handleSyncData(data);
     } catch (err) {
       this.error(err.message);
       this.setUnavailable(err.message).catch(this.error);
@@ -62,11 +62,7 @@ class LockDevice extends Device {
     }
 
     // Lock state
-    const state = data.lockProperties.state || null;
-
-    if (blank(state)) {
-      throw new Error(this.homey.__('errors.response'));
-    }
+    const state = Number(data.lockProperties.state);
 
     if (state === LockState.Uncalibrated) {
       throw new Error(this.homey.__('state.uncalibrated'));
@@ -105,17 +101,21 @@ class LockDevice extends Device {
 
     // Measure battery
     if (filled(lock.batteryLevel)) {
-      this.setCapabilityValue('measure_battery', lock.batteryLevel).catch(this.error);
+      this.setCapabilityValue('measure_battery', Number(lock.batteryLevel)).catch(this.error);
     }
 
     // Charging
     if (filled(lock.isCharging)) {
-      this.setCapabilityValue('charging', lock.isCharging).catch(this.error);
+      this.setCapabilityValue('charging', !!lock.isCharging).catch(this.error);
     }
   }
 
   // Set store values
   async setStore(data) {
+    if ('connectedToId' in data) {
+      this.setStoreValue('connected_via_bridge', filled(data.connectedToId)).catch(this.error);
+    }
+
     if (blank(data.deviceSettings)) {
       return;
     }
@@ -163,6 +163,20 @@ class LockDevice extends Device {
       this.log(`Button unlock enabled is now '${newSettings.button_unlock_enabled}'`);
 
       settings.buttonUnlockEnabled = newSettings.button_unlock_enabled;
+    }
+
+    // Postponed lock enabled updated
+    if (changedKeys.includes('postponed_lock_enabled')) {
+      this.log(`Postponed lock enabled is now '${newSettings.postponed_lock_enabled}'`);
+
+      settings.postponedLockEnabled = newSettings.postponed_lock_enabled;
+    }
+
+    // Postponed lock delay updated
+    if (changedKeys.includes('postponed_lock_delay')) {
+      this.log(`Postponed lock delay is now '${newSettings.postponed_lock_delay}' seconds`);
+
+      settings.postponedLockDelay = newSettings.postponed_lock_delay;
     }
 
     // Device settings need to be updated
@@ -215,9 +229,9 @@ class LockDevice extends Device {
     await this.monitor.run(operationId);
   }
 
-  // Pull spring action
-  async pullSpring() {
-    this.log('----- Pulling spring -----');
+  // Open action
+  async open() {
+    this.log('----- Unlocking and opening lock -----');
 
     // Check if lock is available
     if (!this.getAvailable()) {
@@ -227,7 +241,7 @@ class LockDevice extends Device {
     }
 
     // Check if pull spring is enabled
-    if (this.getStoreValue('pull_spring_enabled') !== 'on' || !this.hasCapability('open')) {
+    if (!this.getStoreValue('pull_spring_enabled') || !this.hasCapability('open')) {
       await this.errorIdle('Pull spring not enabled', 'errors.pullSpringDisabled');
     }
 
@@ -239,8 +253,8 @@ class LockDevice extends Device {
       await this.errorIdle(`Not in unlocked state, currently ${LockStateNames[state]} (${state})`, 'errors.firstUnLock');
     }
 
-    // Send pull spring command to tedee API
-    const operationId = await this.oAuth2Client.pullSpring(this.getSetting('tedee_id'));
+    // Send open command to tedee API
+    const operationId = await this.oAuth2Client.unlock(this.getSetting('tedee_id'), UnlockMode.UnlockOrPullSpring);
 
     // Run monitor
     await this.monitor.run(operationId);
@@ -302,7 +316,7 @@ class LockDevice extends Device {
     this.log(`Capability 'open' is now '${open}'`);
 
     if (open) {
-      await this.pullSpring();
+      await this.open();
     }
   }
 
@@ -332,6 +346,10 @@ class LockDevice extends Device {
       settings.status = data.isConnected
         ? this.homey.__('connected')
         : this.homey.__('disconnected');
+
+      if (this.getStoreValue('connected_via_bridge') && data.isConnected) {
+        settings.status = this.homey.__('connectedViaBridge');
+      }
     }
 
     if (blank(data.deviceSettings)) {
@@ -343,6 +361,8 @@ class LockDevice extends Device {
     settings.auto_lock_enabled = device.autoLockEnabled || false;
     settings.button_lock_enabled = device.buttonLockEnabled || false;
     settings.button_unlock_enabled = device.buttonUnlockEnabled || false;
+    settings.postponed_lock_enabled = device.postponedLockEnabled || false;
+    settings.postponed_lock_delay = device.postponedLockDelay || 10;
 
     return settings;
   }
@@ -405,6 +425,16 @@ class LockDevice extends Device {
     const device = this;
 
     await this.driver.triggerOpened(device);
+  }
+
+  // Log error, set device state to idle and throw error
+  async errorIdle(message, locale) {
+    this.error(message);
+
+    // Set device to idle state
+    await this.reset();
+
+    throw new Error(this.homey.__(locale));
   }
 
 }

@@ -1,6 +1,7 @@
 'use strict';
 
 const Driver = require('../../lib/Driver');
+const { filled } = require('../../lib/Utils');
 
 class LockDriver extends Driver {
 
@@ -32,12 +33,15 @@ class LockDriver extends Driver {
       auto_lock_enabled: device.deviceSettings.autoLockEnabled,
       button_lock_enabled: device.deviceSettings.buttonLockEnabled,
       button_unlock_enabled: device.deviceSettings.buttonUnlockEnabled,
+      postponed_lock_enabled: device.deviceSettings.postponedLockEnabled,
+      postponed_lock_delay: device.deviceSettings.postponedLockDelay,
     };
   }
 
   // Return store value while pairing
   getPairStore(device) {
     return {
+      connected_via_bridge: filled(device.connectedToId),
       pull_spring_enabled: device.deviceSettings.pullSpringEnabled,
     };
   }

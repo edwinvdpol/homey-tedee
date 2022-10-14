@@ -1,5 +1,6 @@
 {
   "connected": "Verbonden",
+  "connectedViaBridge": "Verbonden via bridge",
   "disconnected": "Niet verbonden",
   "errors": {
     "401": "U bent niet geautoriseerd.",

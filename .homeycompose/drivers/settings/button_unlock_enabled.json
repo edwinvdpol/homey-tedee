@@ -1,10 +1,10 @@
 {
   "type": "checkbox",
   "label": {
-    "en": "Push to unlock",
-    "nl": "Druk om te ontgrendelen",
-    "de": "Drücke zum Entsperren",
-    "fr": "Appuyez pour déverrouiller"
+    "en": "Unlock the lock",
+    "nl": "Ontgrendel het slot",
+    "de": "Entriegeln Sie das Schloss",
+    "fr": "Déverrouiller la serrure"
   },
   "hint": {
     "en": "Unlock the lock when the button is pressed.",

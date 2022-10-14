@@ -1,5 +1,6 @@
 {
   "connected": "Verbunden",
+  "connectedViaBridge": "Verbunden über Bridge",
   "disconnected": "Nicht verbunden",
   "errors": {
     "401": "Sie sind nicht berechtigt.",
