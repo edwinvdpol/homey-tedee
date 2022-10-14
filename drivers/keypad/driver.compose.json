@@ -1,0 +1,20 @@
+{
+  "id": "keypad",
+  "name": {
+    "en": "Keypad"
+  },
+  "class": "other",
+  "capabilities": [
+    "update_available"
+  ],
+  "energy": {
+    "batteries": [
+      "AAA",
+      "AAA",
+      "AAA"
+    ]
+  },
+  "$extends": [
+    "defaults"
+  ]
+}

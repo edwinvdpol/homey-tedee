@@ -1,0 +1,16 @@
+{
+  "type": "checkbox",
+  "label": {
+    "en": "Call button enabled",
+    "nl": "Belknop ingeschakeld",
+    "de": "Anruftaste aktiviert",
+    "fr": "Bouton d'appel activé"
+  },
+  "hint": {
+    "en": "Send a push notification when the call button is pressed.",
+    "nl": "Stuur een push melding wanneer er op de belknop gedrukt wordt.",
+    "de": "Senden Sie eine Push-Benachrichtigung, wenn die Anruftaste gedrückt wird.",
+    "fr": "Envoyez une notification push lorsque vous appuyez sur le bouton d'appel."
+  },
+  "value": true
+}

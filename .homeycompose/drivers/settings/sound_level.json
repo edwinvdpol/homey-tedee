@@ -1,0 +1,36 @@
+{
+  "type": "dropdown",
+  "label": {
+    "en": "Sound level",
+    "nl": "Geluidsniveau",
+    "de": "Geräuschpegel",
+    "fr": "Niveau sonore"
+  },
+  "hint": {
+    "en": "The highest volume level affects battery consumption.",
+    "nl": "Het hoogste volumeniveau heeft invloed op het batterijverbruik.",
+    "de": "Die höchste Lautstärkestufe wirkt sich auf den Batterieverbrauch aus.",
+    "fr": "Le niveau de volume le plus élevé affecte la consommation de la batterie."
+  },
+  "value": "1",
+  "values": [
+    {
+      "id": "1",
+      "label": {
+        "en": "Low",
+        "nl": "Laag",
+        "de": "Niedrig",
+        "fr": "Bas"
+      }
+    },
+    {
+      "id": "2",
+      "label": {
+        "en": "High",
+        "nl": "Hoog",
+        "de": "Hoch",
+        "fr": "Haute"
+      }
+    }
+  ]
+}

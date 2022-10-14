@@ -204,7 +204,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=bridge|lock"
+            "filter": "driver_id=bridge|keypad|lock"
           }
         ]
       }
@@ -266,7 +266,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=bridge|lock"
+            "filter": "driver_id=bridge|keypad|lock"
           }
         ]
       }
@@ -422,6 +422,216 @@
     },
     {
       "images": {
+        "small": "/drivers/keypad/assets/images/small.png",
+        "large": "/drivers/keypad/assets/images/large.png",
+        "xlarge": "/drivers/keypad/assets/images/xlarge.png"
+      },
+      "icon": "/drivers/keypad/assets/icon.svg",
+      "pair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "id": "keypad",
+      "name": {
+        "en": "Keypad"
+      },
+      "class": "other",
+      "capabilities": [
+        "update_available"
+      ],
+      "energy": {
+        "batteries": [
+          "AAA",
+          "AAA",
+          "AAA"
+        ]
+      },
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "General",
+            "nl": "Algemeen",
+            "de": "Allgemein",
+            "fr": "Général"
+          },
+          "children": [
+            {
+              "id": "sound_level",
+              "type": "dropdown",
+              "label": {
+                "en": "Sound level",
+                "nl": "Geluidsniveau",
+                "de": "Geräuschpegel",
+                "fr": "Niveau sonore"
+              },
+              "hint": {
+                "en": "The highest volume level affects battery consumption.",
+                "nl": "Het hoogste volumeniveau heeft invloed op het batterijverbruik.",
+                "de": "Die höchste Lautstärkestufe wirkt sich auf den Batterieverbrauch aus.",
+                "fr": "Le niveau de volume le plus élevé affecte la consommation de la batterie."
+              },
+              "value": "1",
+              "values": [
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Low",
+                    "nl": "Laag",
+                    "de": "Niedrig",
+                    "fr": "Bas"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "High",
+                    "nl": "Hoog",
+                    "de": "Hoch",
+                    "fr": "Haute"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "backlight_level",
+              "type": "dropdown",
+              "label": {
+                "en": "Backlight level",
+                "nl": "Achtergrondverlichting",
+                "de": "Hintergrundbeleuchtung",
+                "fr": "Rétroéclairage"
+              },
+              "hint": {
+                "en": "The highest brightness level affects battery consumption.",
+                "nl": "Het hoogste helderheidsniveau heeft invloed op het batterijverbruik.",
+                "de": "Die höchste Helligkeitsstufe wirkt sich auf den Akkuverbrauch aus.",
+                "fr": "Le niveau de luminosité le plus élevé affecte la consommation de la batterie."
+              },
+              "value": "2",
+              "values": [
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Low",
+                    "nl": "Laag",
+                    "de": "Niedrig",
+                    "fr": "Bas"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "Medium",
+                    "nl": "Medium",
+                    "de": "Mittel",
+                    "fr": "Moyen"
+                  }
+                },
+                {
+                  "id": "3",
+                  "label": {
+                    "en": "High",
+                    "nl": "Hoog",
+                    "de": "Hoch",
+                    "fr": "Haute"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "bell_button_enabled",
+              "type": "checkbox",
+              "label": {
+                "en": "Call button enabled",
+                "nl": "Belknop ingeschakeld",
+                "de": "Anruftaste aktiviert",
+                "fr": "Bouton d'appel activé"
+              },
+              "hint": {
+                "en": "Send a push notification when the call button is pressed.",
+                "nl": "Stuur een push melding wanneer er op de belknop gedrukt wordt.",
+                "de": "Senden Sie eine Push-Benachrichtigung, wenn die Anruftaste gedrückt wird.",
+                "fr": "Envoyez une notification push lorsque vous appuyez sur le bouton d'appel."
+              },
+              "value": true
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Information",
+            "nl": "Informatie",
+            "de": "Information",
+            "fr": "Informations"
+          },
+          "children": [
+            {
+              "id": "tedee_id",
+              "type": "label",
+              "label": {
+                "en": "Device ID",
+                "nl": "Apparaat-ID",
+                "de": "Geräte ID",
+                "fr": "Reference de l'appareil"
+              },
+              "value": "-"
+            },
+            {
+              "id": "firmware_version",
+              "type": "label",
+              "label": {
+                "en": "Firmware Version",
+                "nl": "Firmwareversie",
+                "de": "Firmware Version",
+                "fr": "Version du firmware"
+              },
+              "value": "-"
+            },
+            {
+              "id": "serial_number",
+              "type": "label",
+              "label": {
+                "en": "Serial Number",
+                "nl": "Serienummer",
+                "de": "Seriennummer",
+                "fr": "Numéro de série"
+              },
+              "value": "-"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "images": {
         "small": "/drivers/lock/assets/images/small.png",
         "large": "/drivers/lock/assets/images/large.png",
         "xlarge": "/drivers/lock/assets/images/xlarge.png"
@@ -518,20 +728,20 @@
         {
           "type": "group",
           "label": {
-            "en": "Close button",
-            "nl": "Sluitknop",
-            "de": "Schließen-Button",
-            "fr": "Bouton Fermer"
+            "en": "Close button is pressed",
+            "nl": "Sluitknop wordt ingedrukt",
+            "de": "Schaltfläche Schließen wird gedrückt",
+            "fr": "Le bouton de fermeture est enfoncé"
           },
           "children": [
             {
               "id": "button_lock_enabled",
               "type": "checkbox",
               "label": {
-                "en": "Push to lock",
-                "nl": "Druk om te vergrendelen",
-                "de": "Zum Sperren drücken",
-                "fr": "Appuyez pour verrouiller"
+                "en": "Lock the lock",
+                "nl": "Vergrendel het slot",
+                "de": "Sperren Sie das Schloss",
+                "fr": "Verrouillez la serrure"
               },
               "hint": {
                 "en": "Lock the lock when the button is pressed.",
@@ -545,10 +755,10 @@
               "id": "button_unlock_enabled",
               "type": "checkbox",
               "label": {
-                "en": "Push to unlock",
-                "nl": "Druk om te ontgrendelen",
-                "de": "Drücke zum Entsperren",
-                "fr": "Appuyez pour déverrouiller"
+                "en": "Unlock the lock",
+                "nl": "Ontgrendel het slot",
+                "de": "Entriegeln Sie das Schloss",
+                "fr": "Déverrouiller la serrure"
               },
               "hint": {
                 "en": "Unlock the lock when the button is pressed.",
@@ -557,6 +767,59 @@
                 "fr": "Déverrouillez le verrou lorsque vous appuyez sur le bouton."
               },
               "value": false
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Close button is held",
+            "nl": "Sluitknop wordt vastgehouden",
+            "de": "Schließen-Taste wird gehalten",
+            "fr": "Le bouton de fermeture est maintenu"
+          },
+          "children": [
+            {
+              "id": "postponed_lock_enabled",
+              "type": "checkbox",
+              "label": {
+                "en": "Closing with delay",
+                "nl": "Sluiten met vertraging",
+                "de": "Schließung mit Verspätung",
+                "fr": "Fermeture avec retard"
+              },
+              "hint": {
+                "en": "Lock the lock with the set delay.",
+                "nl": "Vergrendel het slot met de ingestelde vertraging.",
+                "de": "Sperren Sie das Schloss mit der eingestellten Verzögerung.",
+                "fr": "Verrouillez la serrure avec le délai défini."
+              },
+              "value": false
+            },
+            {
+              "id": "postponed_lock_delay",
+              "type": "number",
+              "label": {
+                "en": "Delay time",
+                "nl": "Vertragingstijd",
+                "de": "Verzögerungszeit",
+                "fr": "Temporisation"
+              },
+              "hint": {
+                "en": "The time to wait for the lock to close automatically.",
+                "nl": "De tijd die gewacht wordt met het automatisch sluiten van het slot.",
+                "de": "Die Wartezeit bis zum automatischen Schließen des Schlosses.",
+                "fr": "Le temps d'attente pour que la serrure se ferme automatiquement."
+              },
+              "value": 10,
+              "min": 1,
+              "max": 60,
+              "units": {
+                "en": "seconds",
+                "nl": "seconden",
+                "de": "Sekunden",
+                "fr": "seconds"
+              }
             }
           ]
         },

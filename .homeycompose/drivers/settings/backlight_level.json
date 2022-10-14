@@ -1,0 +1,45 @@
+{
+  "type": "dropdown",
+  "label": {
+    "en": "Backlight level",
+    "nl": "Achtergrondverlichting",
+    "de": "Hintergrundbeleuchtung",
+    "fr": "Rétroéclairage"
+  },
+  "hint": {
+    "en": "The highest brightness level affects battery consumption.",
+    "nl": "Het hoogste helderheidsniveau heeft invloed op het batterijverbruik.",
+    "de": "Die höchste Helligkeitsstufe wirkt sich auf den Akkuverbrauch aus.",
+    "fr": "Le niveau de luminosité le plus élevé affecte la consommation de la batterie."
+  },
+  "value": "2",
+  "values": [
+    {
+      "id": "1",
+      "label": {
+        "en": "Low",
+        "nl": "Laag",
+        "de": "Niedrig",
+        "fr": "Bas"
+      }
+    },
+    {
+      "id": "2",
+      "label": {
+        "en": "Medium",
+        "nl": "Medium",
+        "de": "Mittel",
+        "fr": "Moyen"
+      }
+    },
+    {
+      "id": "3",
+      "label": {
+        "en": "High",
+        "nl": "Hoog",
+        "de": "Hoch",
+        "fr": "Haute"
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "type": "checkbox",
+  "label": {
+    "en": "Closing with delay",
+    "nl": "Sluiten met vertraging",
+    "de": "Schließung mit Verspätung",
+    "fr": "Fermeture avec retard"
+  },
+  "hint": {
+    "en": "Lock the lock with the set delay.",
+    "nl": "Vergrendel het slot met de ingestelde vertraging.",
+    "de": "Sperren Sie das Schloss mit der eingestellten Verzögerung.",
+    "fr": "Verrouillez la serrure avec le délai défini."
+  },
+  "value": false
+}

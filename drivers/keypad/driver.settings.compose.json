@@ -1,0 +1,42 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "General",
+      "nl": "Algemeen",
+      "de": "Allgemein",
+      "fr": "Général"
+    },
+    "children": [
+      {
+        "$extends": "sound_level"
+      },
+      {
+        "$extends": "backlight_level"
+      },
+      {
+        "$extends": "bell_button_enabled"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Information",
+      "nl": "Informatie",
+      "de": "Information",
+      "fr": "Informations"
+    },
+    "children": [
+      {
+        "$extends": "tedee_id"
+      },
+      {
+        "$extends": "firmware_version"
+      },
+      {
+        "$extends": "serial_number"
+      }
+    ]
+  }
+]
