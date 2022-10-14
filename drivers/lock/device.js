@@ -160,8 +160,6 @@ class LockDevice extends Device {
 
     // Check if lock is available
     if (!this.getAvailable()) {
-      await this.reset();
-
       throw new Error(this.homey.__('state.notAvailable'));
     }
 
