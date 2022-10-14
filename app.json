@@ -186,7 +186,8 @@
             "name": "device",
             "filter": "driver_id=lock"
           }
-        ]
+        ],
+        "deprecated": true
       },
       {
         "id": "update_available_true",

@@ -16,5 +16,6 @@
       "name": "device",
       "filter": "driver_id=lock"
     }
-  ]
+  ],
+  "deprecated": true
 }
