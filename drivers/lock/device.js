@@ -65,8 +65,12 @@ class LockDevice extends Device {
   }
 
   // Return data which need to be synced
-  async getSyncData() {
-    return this.oAuth2Client.getLock(this.getSetting('tedee_id'));
+  async getSyncData(full) {
+    if (full) {
+      return this.oAuth2Client.getLock(this.getSetting('tedee_id'));
+    }
+
+    return this.oAuth2Client.getSyncLock(this.getSetting('tedee_id'));
   }
 
   // Set device data
@@ -217,11 +221,7 @@ class LockDevice extends Device {
     this.log('----- Locking lock -----');
 
     // Check if lock is available
-    if (!this.getAvailable()) {
-      await this.reset();
-
-      return;
-    }
+    if (!this.getAvailable()) return;
 
     // Get and validate state
     const state = await this.getState();
@@ -230,15 +230,12 @@ class LockDevice extends Device {
     if (state === LockState.Locked) {
       this.log('Lock is already locked');
 
-      // Set device to idle state
-      await this.reset();
-
       return;
     }
 
     // Make sure the lock is in a valid state to lock
     if (state !== LockState.Unlocked && state !== LockState.SemiLocked) {
-      await this.errorIdle(`Not ready to lock, currently ${state}`, 'errors.notReadyToLock');
+      await this.errorIdle(`Not ready, currently ${state}`, 'errors.notReadyToLock');
     }
 
     // Send lock command to tedee API
@@ -252,12 +249,8 @@ class LockDevice extends Device {
   async open() {
     this.log('----- Unlocking and opening lock -----');
 
-    // Check if lock is available
-    if (!this.getAvailable()) {
-      await this.reset();
-
-      return;
-    }
+    // Check availability
+    if (!this.getAvailable()) return;
 
     // Check if pull spring is enabled
     if (!this.hasCapability('open')) {
@@ -283,12 +276,8 @@ class LockDevice extends Device {
   async unlock() {
     this.log('----- Unlocking lock -----');
 
-    // Check if lock is available
-    if (!this.getAvailable()) {
-      await this.reset();
-
-      return;
-    }
+    // Check availability
+    if (!this.getAvailable()) return;
 
     // Get and validate state
     const state = await this.getState();
@@ -296,9 +285,6 @@ class LockDevice extends Device {
     // Lock is already unlocked
     if (state === LockState.Unlocked) {
       this.log('Lock is already unlocked');
-
-      // Set device to idle state
-      await this.reset();
 
       return;
     }
@@ -335,6 +321,8 @@ class LockDevice extends Device {
     this.log(`Capability 'open' is now '${open}'`);
 
     if (open) {
+      this.setCapabilityValue('open', false).catch(this.error);
+
       await this.open();
     }
   }
@@ -359,33 +347,15 @@ class LockDevice extends Device {
 
     // Check if monitor is running
     if (this.monitor.isRunning()) {
-      this.error('Monitor is running, stopped');
-
-      throw new Error(this.homey.__('state.inUse'));
+      await this.errorIdle('Monitor is running', 'state.inUse');
     }
 
     // Fetch current lock state from tedee API
     const state = await this.oAuth2Client.getLockState(this.getSetting('tedee_id'));
 
-    // Unknown state
-    if (blank(state)) {
-      throw new Error(this.homey.__('state.unknown'));
-    }
-
     this.log(`Current state is ${LockStateNames[state]} (${state})`);
 
     return state;
-  }
-
-  // Set device to idle
-  async reset() {
-    // Reset open capability
-    if (this.hasCapability('open')) {
-      this.setCapabilityValue('open', false).catch(this.error);
-    }
-
-    // Refresh device
-    await this.sync();
   }
 
   // Remove or add "open" capability
@@ -412,12 +382,9 @@ class LockDevice extends Device {
     await this.driver.triggerOpened(device);
   }
 
-  // Log error, set device state to idle and throw error
+  // Log error and throw error
   async errorIdle(message, locale) {
     this.error(message);
-
-    // Set device to idle state
-    await this.reset();
 
     throw new Error(this.homey.__(locale));
   }

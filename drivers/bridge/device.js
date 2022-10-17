@@ -24,7 +24,7 @@ class BridgeDevice extends Device {
   }
 
   // Return data which need to be synced
-  async getSyncData() {
+  async getSyncData(full) {
     return this.oAuth2Client.getBridge(this.getSetting('tedee_id'));
   }
 
