@@ -55,12 +55,12 @@
       "sécurité"
     ]
   },
-  "permissions": [],
   "images": {
     "small": "/assets/images/small.png",
     "large": "/assets/images/large.png",
     "xlarge": "/assets/images/xlarge.png"
   },
+  "permissions": [],
   "author": {
     "name": "Edwin van de Pol",
     "email": "developer@edwinvandepol.nl"
@@ -80,16 +80,15 @@
       }
     }
   },
-  "homepage": "https://tedee.com",
-  "homeyCommunityTopicId": 47133,
-  "support": "mailto:support@tedee.com",
   "bugs": {
-    "url": "https://community.athom.com/t/47133"
+    "url": "https://community.homey.app/t/47133"
   },
+  "homeyCommunityTopicId": 47133,
+  "homepage": "https://tedee.com",
+  "support": "mailto:support@tedee.com",
   "flow": {
     "triggers": [
       {
-        "id": "charging_false",
         "title": {
           "en": "Is charged",
           "nl": "Is opgeladen",
@@ -106,10 +105,10 @@
             "name": "device",
             "filter": "driver_id=lock"
           }
-        ]
+        ],
+        "id": "charging_false"
       },
       {
-        "id": "charging_true",
         "title": {
           "en": "Is charging",
           "nl": "Wordt opgeladen",
@@ -126,10 +125,10 @@
             "name": "device",
             "filter": "driver_id=lock"
           }
-        ]
+        ],
+        "id": "charging_true"
       },
       {
-        "id": "connected_false",
         "title": {
           "en": "Connection was lost",
           "nl": "Verbinding werd verbroken",
@@ -146,10 +145,10 @@
             "name": "device",
             "filter": "driver_id=bridge|lock"
           }
-        ]
+        ],
+        "id": "connected_false"
       },
       {
-        "id": "connected_true",
         "title": {
           "en": "Connection was restored",
           "nl": "Verbinding werd hersteld",
@@ -166,10 +165,10 @@
             "name": "device",
             "filter": "driver_id=bridge|lock"
           }
-        ]
+        ],
+        "id": "connected_true"
       },
       {
-        "id": "opened",
         "title": {
           "en": "Opened",
           "nl": "Geopend",
@@ -187,10 +186,10 @@
             "filter": "driver_id=lock"
           }
         ],
-        "deprecated": true
+        "deprecated": true,
+        "id": "opened"
       },
       {
-        "id": "update_available_true",
         "title": {
           "en": "Update is available",
           "nl": "Update is beschikbaar",
@@ -207,12 +206,12 @@
             "name": "device",
             "filter": "driver_id=bridge|keypad|lock"
           }
-        ]
+        ],
+        "id": "update_available_true"
       }
     ],
     "conditions": [
       {
-        "id": "charging",
         "title": {
           "en": "!{{Is|Is not}} charging",
           "nl": "!{{Is|Is niet}} aan het opladen",
@@ -229,10 +228,10 @@
             "name": "device",
             "filter": "driver_id=lock"
           }
-        ]
+        ],
+        "id": "charging"
       },
       {
-        "id": "connected",
         "title": {
           "en": "!{{Is|Is not}} connected",
           "nl": "!{{Is|Is niet}} verbonden",
@@ -249,10 +248,10 @@
             "name": "device",
             "filter": "driver_id=bridge|lock"
           }
-        ]
+        ],
+        "id": "connected"
       },
       {
-        "id": "update_available",
         "title": {
           "en": "Update !{{is|is not}} available",
           "nl": "Update !{{is|is niet}} beschikbaar",
@@ -269,12 +268,12 @@
             "name": "device",
             "filter": "driver_id=bridge|keypad|lock"
           }
-        ]
+        ],
+        "id": "update_available"
       }
     ],
     "actions": [
       {
-        "id": "open",
         "title": {
           "en": "Open",
           "nl": "Openen",
@@ -291,7 +290,8 @@
             "name": "device",
             "filter": "driver_id=lock"
           }
-        ]
+        ],
+        "id": "open"
       }
     ]
   },
@@ -302,7 +302,13 @@
         "large": "/drivers/bridge/assets/images/large.png",
         "xlarge": "/drivers/bridge/assets/images/xlarge.png"
       },
-      "icon": "/drivers/bridge/assets/icon.svg",
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
       "pair": [
         {
           "id": "login_oauth2",
@@ -326,14 +332,6 @@
           "template": "login_oauth2"
         }
       ],
-      "connectivity": [
-        "cloud"
-      ],
-      "platforms": [
-        "local",
-        "cloud"
-      ],
-      "id": "bridge",
       "name": {
         "en": "Bridge"
       },
@@ -347,6 +345,7 @@
           "usageConstant": 0.8
         }
       },
+      "id": "bridge",
       "settings": [
         {
           "type": "group",
@@ -427,7 +426,13 @@
         "large": "/drivers/keypad/assets/images/large.png",
         "xlarge": "/drivers/keypad/assets/images/xlarge.png"
       },
-      "icon": "/drivers/keypad/assets/icon.svg",
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
       "pair": [
         {
           "id": "login_oauth2",
@@ -451,14 +456,6 @@
           "template": "login_oauth2"
         }
       ],
-      "connectivity": [
-        "cloud"
-      ],
-      "platforms": [
-        "local",
-        "cloud"
-      ],
-      "id": "keypad",
       "name": {
         "en": "Keypad"
       },
@@ -473,6 +470,7 @@
           "AAA"
         ]
       },
+      "id": "keypad",
       "settings": [
         {
           "type": "group",
@@ -637,7 +635,13 @@
         "large": "/drivers/lock/assets/images/large.png",
         "xlarge": "/drivers/lock/assets/images/xlarge.png"
       },
-      "icon": "/drivers/lock/assets/icon.svg",
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
       "pair": [
         {
           "id": "login_oauth2",
@@ -661,14 +665,6 @@
           "template": "login_oauth2"
         }
       ],
-      "connectivity": [
-        "cloud"
-      ],
-      "platforms": [
-        "local",
-        "cloud"
-      ],
-      "id": "lock",
       "name": {
         "en": "Lock",
         "nl": "Slot",
@@ -689,6 +685,7 @@
           "INTERNAL"
         ]
       },
+      "id": "lock",
       "settings": [
         {
           "type": "group",

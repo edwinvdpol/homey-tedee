@@ -4,7 +4,13 @@
     "large": "{{driverAssetsPath}}/images/large.png",
     "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
   },
-  "icon": "{{driverAssetsPath}}/icon.svg",
+  "platforms": [
+    "local",
+    "cloud"
+  ],
+  "connectivity": [
+    "cloud"
+  ],
   "pair": [
     {
       "id": "login_oauth2",
@@ -27,12 +33,5 @@
       "id": "login_oauth2",
       "template": "login_oauth2"
     }
-  ],
-  "connectivity": [
-    "cloud"
-  ],
-  "platforms": [
-    "local",
-    "cloud"
   ]
 }

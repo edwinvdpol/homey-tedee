@@ -54,12 +54,12 @@
       "sécurité"
     ]
   },
-  "permissions": [],
   "images": {
     "small": "/assets/images/small.png",
     "large": "/assets/images/large.png",
     "xlarge": "/assets/images/xlarge.png"
   },
+  "permissions": [],
   "author": {
     "name": "Edwin van de Pol",
     "email": "developer@edwinvandepol.nl"
@@ -79,10 +79,10 @@
       }
     }
   },
-  "homepage": "https://tedee.com",
-  "homeyCommunityTopicId": 47133,
-  "support": "mailto:support@tedee.com",
   "bugs": {
-    "url": "https://community.athom.com/t/47133"
-  }
+    "url": "https://community.homey.app/t/47133"
+  },
+  "homeyCommunityTopicId": 47133,
+  "homepage": "https://tedee.com",
+  "support": "mailto:support@tedee.com"
 }
