@@ -162,7 +162,7 @@ class LockDevice extends Device {
   async onSettings({ oldSettings, newSettings, changedKeys }) {
     const settings = {};
 
-    // Check if lock is available
+    // Check availability
     if (!this.getAvailable()) {
       throw new Error(this.homey.__('state.notAvailable'));
     }
@@ -220,7 +220,7 @@ class LockDevice extends Device {
   async lock() {
     this.log('----- Locking lock -----');
 
-    // Check if lock is available
+    // Check availability
     if (!this.getAvailable()) return;
 
     // Get and validate state
