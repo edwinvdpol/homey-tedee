@@ -235,7 +235,7 @@ class LockDevice extends Device {
 
     // Make sure the lock is in a valid state to lock
     if (state !== LockState.Unlocked && state !== LockState.SemiLocked) {
-      await this.errorIdle(`Not ready, currently ${state}`, 'errors.notReadyToLock');
+      await this.throwError(`Not ready, currently ${state}`, 'errors.notReadyToLock');
     }
 
     // Send lock command to tedee API
@@ -254,7 +254,7 @@ class LockDevice extends Device {
 
     // Check if pull spring is enabled
     if (!this.hasCapability('open')) {
-      await this.errorIdle('Open capability not found', 'errors.pullSpringDisabled');
+      await this.throwError('Open capability not found', 'errors.pullSpringDisabled');
     }
 
     // Get and validate state
@@ -262,7 +262,7 @@ class LockDevice extends Device {
 
     // Make sure the lock is in a valid state
     if (state !== LockState.Unlocked) {
-      await this.errorIdle(`Not in unlocked state, currently ${LockStateNames[state]} (${state})`, 'errors.firstUnLock');
+      await this.throwError(`Not in unlocked state, currently ${LockStateNames[state]} (${state})`, 'errors.firstUnLock');
     }
 
     // Send open command to tedee API
@@ -291,7 +291,7 @@ class LockDevice extends Device {
 
     // Make sure the lock is in a valid state
     if (state !== LockState.Locked && state !== LockState.SemiLocked) {
-      await this.errorIdle(`Not ready to unlock, currently ${LockStateNames[state]} (${state})`, 'errors.notReadyToUnlock');
+      await this.throwError(`Not ready to unlock, currently ${LockStateNames[state]} (${state})`, 'errors.notReadyToUnlock');
     }
 
     // Send unlock command to tedee API
@@ -347,7 +347,7 @@ class LockDevice extends Device {
 
     // Check if monitor is running
     if (this.monitor.isRunning()) {
-      await this.errorIdle('Monitor is running', 'state.inUse');
+      await this.throwError('Monitor is running', 'state.inUse');
     }
 
     // Fetch current lock state from tedee API
@@ -382,8 +382,8 @@ class LockDevice extends Device {
     await this.driver.triggerOpened(device);
   }
 
-  // Log error and throw error
-  async errorIdle(message, locale) {
+  // Log and throw error
+  async throwError(message, locale) {
     this.error(message);
 
     throw new Error(this.homey.__(locale));
