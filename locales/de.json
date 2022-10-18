@@ -9,7 +9,6 @@
     "50x": "Tedee-API ist nicht verfügbar.",
     "response": "Ungültige Antwort von Tedee API.",
     "unknown": "Ein unbekannter Fehler ist aufgetreten.",
-    "firstUnLock": "Schloss muss zuerst entriegelt werden.",
     "notReadyToLock": "Schloss ist nicht bereit zum Sperren.",
     "notReadyToUnlock": "Schloss ist nicht bereit zum Entsperren.",
     "pullSpringDisabled": "Die Türverriegelung ist aus."

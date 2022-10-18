@@ -9,7 +9,6 @@
     "50x": "Tedee API is not available.",
     "response": "Invalid response from Tedee API.",
     "unknown": "An unknown error has occurred.",
-    "firstUnLock": "Lock must be unlocked first.",
     "notReadyToLock": "Lock is not ready to lock.",
     "notReadyToUnlock": "Lock is not ready to unlock.",
     "pullSpringDisabled": "Pull spring is disabled."

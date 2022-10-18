@@ -9,7 +9,6 @@
     "50x": "L'API Tedee n'est pas disponible.",
     "response": "Réponse invalide de l'API Tedee.",
     "unknown": "Une erreur inconnue s'est produite.",
-    "firstUnLock": "La serrure doit d'abord être déverrouillée.",
     "notReadyToLock": "La serrure n'est pas prête à se verrouiller.",
     "notReadyToUnlock": "Le verrou n'est pas prêt à être déverrouillé.",
     "pullSpringDisabled": "Le ressort de traction est désactivé."

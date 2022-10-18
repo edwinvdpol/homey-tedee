@@ -261,8 +261,8 @@ class LockDevice extends Device {
     const state = await this.getState();
 
     // Make sure the lock is in a valid state
-    if (state !== LockState.Unlocked) {
-      await this.throwError(`Not in unlocked state, currently ${LockStateNames[state]} (${state})`, 'errors.firstUnLock');
+    if (state !== LockState.Unlocked && state !== LockState.Locked) {
+      await this.throwError(`Not in (un)locked state, currently ${LockStateNames[state]} (${state})`, 'errors.inUse');
     }
 
     // Send open command to tedee API
