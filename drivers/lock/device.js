@@ -247,7 +247,7 @@ class LockDevice extends Device {
 
   // Open action
   async open() {
-    this.log('----- Unlocking and opening lock -----');
+    this.log('----- Opening lock -----');
 
     // Check availability
     if (!this.getAvailable()) return;
@@ -257,13 +257,8 @@ class LockDevice extends Device {
       await this.throwError('Open capability not found', 'errors.pullSpringDisabled');
     }
 
-    // Get and validate state
-    const state = await this.getState();
-
-    // Make sure the lock is in a valid state
-    if (state !== LockState.Unlocked && state !== LockState.Locked) {
-      await this.throwError(`Not in (un)locked state, currently ${LockStateNames[state]} (${state})`, 'errors.inUse');
-    }
+    // Validate state
+    await this.getState();
 
     // Send open command to tedee API
     const operationId = await this.oAuth2Client.unlock(this.getSetting('tedee_id'), UnlockMode.UnlockOrPullSpring);
@@ -321,9 +316,9 @@ class LockDevice extends Device {
     this.log(`Capability 'open' is now '${open}'`);
 
     if (open) {
-      this.setCapabilityValue('open', false).catch(this.error);
-
       await this.open();
+
+      this.setCapabilityValue('open', false).catch(this.error);
     }
   }
 
