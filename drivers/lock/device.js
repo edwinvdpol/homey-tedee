@@ -73,7 +73,7 @@ class LockDevice extends Device {
     return this.oAuth2Client.getSyncLock(this.getSetting('tedee_id'));
   }
 
-  // Set device data
+  // Handle sync data
   async handleSyncData(data) {
     try {
       await this.setStore(data);
