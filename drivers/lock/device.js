@@ -91,32 +91,29 @@ class LockDevice extends Device {
       throw new Error(this.homey.__('state.disconnected'));
     }
 
-    if (blank(data.lockProperties)) return;
+    if (blank(data.state)) return;
 
-    // Lock state
-    const state = Number(data.lockProperties.state);
-
-    if (state === LockState.Uncalibrated) {
+    if (data.state === LockState.Uncalibrated) {
       throw new Error(this.homey.__('state.uncalibrated'));
     }
 
-    if (state === LockState.Calibrating) {
+    if (data.state === LockState.Calibrating) {
       throw new Error(this.homey.__('state.calibrating'));
     }
 
-    if (state === LockState.Unknown) {
+    if (data.state === LockState.Unknown) {
       throw new Error(this.homey.__('state.unknown'));
     }
 
-    if (state === LockState.Updating) {
+    if (data.state === LockState.Updating) {
       throw new Error(this.homey.__('state.updating'));
     }
 
     // Run monitor if needed
-    if (this.monitor.shouldRun(state)) {
+    if (this.monitor.shouldRun(data.state)) {
       await this.monitor.run();
     } else {
-      this.setCapabilityValue('locked', state === LockState.Locked).catch(this.error);
+      this.setCapabilityValue('locked', data.state === LockState.Locked).catch(this.error);
     }
   }
 
@@ -124,19 +121,14 @@ class LockDevice extends Device {
   async setCapabilities(data) {
     await super.setCapabilities(data);
 
-    // Return when properties are missing
-    if (blank(data.lockProperties)) return;
-
-    const lock = data.lockProperties;
-
-    // Measure battery
-    if (filled(lock.batteryLevel)) {
-      this.setCapabilityValue('measure_battery', Number(lock.batteryLevel)).catch(this.error);
+    // Battery level
+    if (filled(data.batteryLevel)) {
+      this.setCapabilityValue('measure_battery', data.batteryLevel).catch(this.error);
     }
 
     // Charging
-    if (filled(lock.isCharging)) {
-      this.setCapabilityValue('charging', !!lock.isCharging).catch(this.error);
+    if (filled(data.isCharging)) {
+      this.setCapabilityValue('charging', data.isCharging).catch(this.error);
     }
   }
 
