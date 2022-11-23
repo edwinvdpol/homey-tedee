@@ -35,11 +35,6 @@ class KeypadDevice extends Device {
     return settings;
   }
 
-  // Return data which need to be synced
-  async getSyncData(full) {
-    return this.oAuth2Client.getKeypad(this.getSetting('tedee_id'));
-  }
-
   // Set availability
   async setAvailability(data) {
     this.setAvailable().catch(this.error);
@@ -78,7 +73,7 @@ class KeypadDevice extends Device {
     const tedeeId = this.getSetting('tedee_id');
 
     if (filled(settings)) {
-      await this.oAuth2Client.updateKeypadSettings(tedeeId, settings);
+      await this.oAuth2Client.updateSettings('keypad', tedeeId, settings);
 
       this.log(`Keypad settings ${tedeeId} updated successfully!`);
     }

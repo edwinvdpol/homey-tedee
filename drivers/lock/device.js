@@ -3,7 +3,6 @@
 const Device = require('../../lib/Device');
 const { LockState, LockStateNames, UnlockMode } = require('../../lib/Enums');
 const { blank, filled } = require('../../lib/Utils');
-const Monitor = require('../../lib/Monitor');
 
 class LockDevice extends Device {
 
@@ -16,18 +15,7 @@ class LockDevice extends Device {
     // Register listeners
     this.registerCapabilityListeners();
 
-    const device = this;
-
-    this.monitor = new Monitor({ device });
-
     await super.onOAuth2Init();
-  }
-
-  // Device deleted
-  async onOAuth2Deleted() {
-    this.monitor = null;
-
-    await super.onOAuth2Deleted();
   }
 
   /*
@@ -62,15 +50,6 @@ class LockDevice extends Device {
     settings.postponed_lock_delay = device.postponedLockDelay || 10;
 
     return settings;
-  }
-
-  // Return data which need to be synced
-  async getSyncData(full) {
-    if (full) {
-      return this.oAuth2Client.getLock(this.getSetting('tedee_id'));
-    }
-
-    return this.oAuth2Client.getSyncLock(this.getSetting('tedee_id'));
   }
 
   // Handle sync data
@@ -109,12 +88,7 @@ class LockDevice extends Device {
       throw new Error(this.homey.__('state.updating'));
     }
 
-    // Run monitor if needed
-    if (this.monitor.shouldRun(data.state)) {
-      await this.monitor.run();
-    } else {
-      this.setCapabilityValue('locked', data.state === LockState.Locked).catch(this.error);
-    }
+    this.setCapabilityValue('locked', data.state === LockState.Locked).catch(this.error);
   }
 
   // Set capabilities
@@ -198,7 +172,7 @@ class LockDevice extends Device {
     const tedeeId = this.getSetting('tedee_id');
 
     if (filled(settings)) {
-      await this.oAuth2Client.updateLockSettings(tedeeId, settings);
+      await this.oAuth2Client.updateSettings('lock', tedeeId, settings);
 
       this.log(`Lock settings ${tedeeId} updated successfully!`);
     }
@@ -231,10 +205,7 @@ class LockDevice extends Device {
     }
 
     // Send lock command to tedee API
-    const operationId = await this.oAuth2Client.lock(this.getSetting('tedee_id'));
-
-    // Run monitor
-    await this.monitor.run(operationId);
+    await this.oAuth2Client.lock(this.getSetting('tedee_id'));
   }
 
   // Open action
@@ -253,10 +224,7 @@ class LockDevice extends Device {
     await this.getState();
 
     // Send open command to tedee API
-    const operationId = await this.oAuth2Client.unlock(this.getSetting('tedee_id'), UnlockMode.UnlockOrPullSpring);
-
-    // Run monitor
-    await this.monitor.run(operationId);
+    await this.oAuth2Client.unlock(this.getSetting('tedee_id'), UnlockMode.UnlockOrPullSpring);
   }
 
   // Unlock action
@@ -282,10 +250,7 @@ class LockDevice extends Device {
     }
 
     // Send unlock command to tedee API
-    const operationId = await this.oAuth2Client.unlock(this.getSetting('tedee_id'));
-
-    // Run monitor
-    await this.monitor.run(operationId);
+    await this.oAuth2Client.unlock(this.getSetting('tedee_id'));
   }
 
   /*
@@ -331,11 +296,6 @@ class LockDevice extends Device {
   // Validate and return state
   async getState() {
     this.log('Fetching state...');
-
-    // Check if monitor is running
-    if (this.monitor.isRunning()) {
-      await this.throwError('Monitor is running', 'state.inUse');
-    }
 
     // Fetch current lock state from tedee API
     const state = await this.oAuth2Client.getLockState(this.getSetting('tedee_id'));
