@@ -13,7 +13,7 @@ class LockDevice extends Device {
   // Device initialized
   async onOAuth2Init() {
     // Register listeners
-    this.registerCapabilityListeners();
+    await this.registerCapabilityListeners();
 
     await super.onOAuth2Init();
   }
@@ -169,9 +169,9 @@ class LockDevice extends Device {
     }
 
     // Device settings need to be updated
-    const tedeeId = this.getSetting('tedee_id');
-
     if (filled(settings)) {
+      const tedeeId = this.getSetting('tedee_id');
+
       await this.oAuth2Client.updateSettings('lock', tedeeId, settings);
 
       this.log(`Lock settings ${tedeeId} updated successfully!`);
@@ -284,7 +284,7 @@ class LockDevice extends Device {
   */
 
   // Register capability listeners
-  registerCapabilityListeners() {
+  async registerCapabilityListeners() {
     this.registerCapabilityListener('locked', this.onCapabilityLocked.bind(this));
     this.registerCapabilityListener('open', this.onCapabilityOpen.bind(this));
   }

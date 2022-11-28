@@ -70,9 +70,9 @@ class KeypadDevice extends Device {
     }
 
     // Device settings need to be updated
-    const tedeeId = this.getSetting('tedee_id');
-
     if (filled(settings)) {
+      const tedeeId = this.getSetting('tedee_id');
+
       await this.oAuth2Client.updateSettings('keypad', tedeeId, settings);
 
       this.log(`Keypad settings ${tedeeId} updated successfully!`);
