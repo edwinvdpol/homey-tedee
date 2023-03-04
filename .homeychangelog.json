@@ -1,4 +1,7 @@
 {
+  "1.5.1": {
+    "en": "Stability and performance improvements."
+  },
   "1.5.0": {
     "en": "Added webhook integration."
   },
