@@ -1,0 +1,76 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "General",
+      "nl": "Algemeen",
+      "de": "Allgemein",
+      "fr": "Général"
+    },
+    "children": [
+      {
+        "$extends": "status"
+      },
+      {
+        "$extends": "auto_lock_enabled"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Close button is pressed",
+      "nl": "Sluitknop wordt ingedrukt",
+      "de": "Schaltfläche Schließen wird gedrückt",
+      "fr": "Le bouton de fermeture est enfoncé"
+    },
+    "children": [
+      {
+        "$extends": "button_lock_enabled"
+      },
+      {
+        "$extends": "button_unlock_enabled"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Close button is held",
+      "nl": "Sluitknop wordt vastgehouden",
+      "de": "Schließen-Taste wird gehalten",
+      "fr": "Le bouton de fermeture est maintenu"
+    },
+    "children": [
+      {
+        "$extends": "postponed_lock_enabled"
+      },
+      {
+        "$extends": "postponed_lock_delay"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Information",
+      "nl": "Informatie",
+      "de": "Information",
+      "fr": "Informations"
+    },
+    "children": [
+      {
+        "$extends": "tedee_id"
+      },
+      {
+        "$extends": "firmware_version"
+      },
+      {
+        "$extends": "serial_number"
+      },
+      {
+        "$extends": "mac_address"
+      }
+    ]
+  }
+]
