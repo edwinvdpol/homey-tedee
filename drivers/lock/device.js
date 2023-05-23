@@ -53,10 +53,10 @@ class LockDevice extends Device {
   }
 
   // Handle sync data
-  async handleSyncData(data) {
+  async handleSyncData(data, trigger) {
     try {
       await this.setStore(data);
-      await super.handleSyncData(data);
+      await super.handleSyncData(data, trigger);
     } catch (err) {
       this.error(err.message);
       this.setUnavailable(err.message).catch(this.error);
@@ -172,9 +172,9 @@ class LockDevice extends Device {
     if (filled(settings)) {
       const tedeeId = this.getSetting('tedee_id');
 
-      await this.oAuth2Client.updateSettings('lock', tedeeId, settings);
+      this.log('Update settings:', JSON.stringify(settings));
 
-      this.log(`Lock settings ${tedeeId} updated successfully!`);
+      await this.oAuth2Client.updateSettings('lock', tedeeId, settings);
     }
   }
 
@@ -184,7 +184,7 @@ class LockDevice extends Device {
 
   // Lock action
   async lock() {
-    this.log('----- Locking lock -----');
+    this.log('Locking...');
 
     // Check availability
     if (!this.getAvailable()) return;
@@ -210,7 +210,7 @@ class LockDevice extends Device {
 
   // Open action
   async open() {
-    this.log('----- Opening lock -----');
+    this.log('Opening...');
 
     // Check availability
     if (!this.getAvailable()) return;
@@ -220,16 +220,13 @@ class LockDevice extends Device {
       await this.throwError('Open capability not found', 'errors.pullSpringDisabled');
     }
 
-    // Validate state
-    await this.getState();
-
     // Send open command to tedee API
     await this.oAuth2Client.unlock(this.getSetting('tedee_id'), UnlockMode.UnlockOrPullSpring);
   }
 
   // Unlock action
   async unlock() {
-    this.log('----- Unlocking lock -----');
+    this.log('Unlocking...');
 
     // Check availability
     if (!this.getAvailable()) return;
@@ -322,18 +319,28 @@ class LockDevice extends Device {
     }
   }
 
-  // Trigger opened capability
-  async triggerOpened() {
-    const device = this;
-
-    await this.driver.triggerOpened(device);
-  }
-
   // Log and throw error
   async throwError(message, locale) {
     this.error(message);
 
     throw new Error(this.homey.__(locale));
+  }
+
+  /*
+  | Trigger functions
+  */
+
+  async triggerFlows(data) {
+    let device;
+
+    // Trigger opened
+    if (filled(data.state) && data.state === LockState.Pulled) {
+      device = this;
+
+      await this.driver.triggerOpened(device);
+    }
+
+    device = null;
   }
 
 }
