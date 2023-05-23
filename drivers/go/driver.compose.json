@@ -1,0 +1,26 @@
+{
+  "name": {
+    "en": "Lock GO",
+    "nl": "Slot GO",
+    "de": "Schloss GO",
+    "fr": "Verrou GO"
+  },
+  "class": "lock",
+  "capabilities": [
+    "locked",
+    "open",
+    "connected",
+    "update_available",
+    "measure_battery"
+  ],
+  "energy": {
+    "batteries": [
+      "CR123A",
+      "CR123A",
+      "CR123A"
+    ]
+  },
+  "$extends": [
+    "defaults"
+  ]
+}

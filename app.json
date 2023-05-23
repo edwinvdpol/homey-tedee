@@ -422,6 +422,253 @@
     },
     {
       "images": {
+        "small": "/drivers/go/assets/images/small.png",
+        "large": "/drivers/go/assets/images/large.png",
+        "xlarge": "/drivers/go/assets/images/xlarge.png"
+      },
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "pair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "name": {
+        "en": "Lock GO",
+        "nl": "Slot GO",
+        "de": "Schloss GO",
+        "fr": "Verrou GO"
+      },
+      "class": "lock",
+      "capabilities": [
+        "locked",
+        "open",
+        "connected",
+        "update_available",
+        "measure_battery"
+      ],
+      "energy": {
+        "batteries": [
+          "CR123A",
+          "CR123A",
+          "CR123A"
+        ]
+      },
+      "id": "go",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "General",
+            "nl": "Algemeen",
+            "de": "Allgemein",
+            "fr": "Général"
+          },
+          "children": [
+            {
+              "id": "status",
+              "type": "label",
+              "label": {
+                "en": "Status"
+              },
+              "value": "-"
+            },
+            {
+              "id": "auto_lock_enabled",
+              "type": "checkbox",
+              "label": {
+                "en": "Auto-lock",
+                "nl": "Automatische vergrendeling",
+                "de": "Automatische Sperre",
+                "fr": "Verrouillage automatique"
+              },
+              "hint": {
+                "en": "Automatically close the door when the lock is in the open position.",
+                "nl": "Sluit de deur automatisch wanneer het slot in open positie staat.",
+                "de": "Schließt die Tür automatisch, wenn das Schloss in geöffneter Position befindet.",
+                "fr": "Fermer automatiquement la porte lorsque la serrure est en position ouverte."
+              },
+              "value": false
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Close button is pressed",
+            "nl": "Sluitknop wordt ingedrukt",
+            "de": "Schaltfläche Schließen wird gedrückt",
+            "fr": "Le bouton de fermeture est enfoncé"
+          },
+          "children": [
+            {
+              "id": "button_lock_enabled",
+              "type": "checkbox",
+              "label": {
+                "en": "Lock the lock",
+                "nl": "Vergrendel het slot",
+                "de": "Sperren Sie das Schloss",
+                "fr": "Verrouillez la serrure"
+              },
+              "hint": {
+                "en": "Lock the lock when the button is pressed.",
+                "nl": "Vergrendel het slot wanneer op de knop gedrukt wordt.",
+                "de": "Verriegeln Sie das Schloss, wenn die Taste gedrückt wird.",
+                "fr": "Verrouillez la serrure lorsque vous appuyez sur le bouton."
+              },
+              "value": false
+            },
+            {
+              "id": "button_unlock_enabled",
+              "type": "checkbox",
+              "label": {
+                "en": "Unlock the lock",
+                "nl": "Ontgrendel het slot",
+                "de": "Entriegeln Sie das Schloss",
+                "fr": "Déverrouiller la serrure"
+              },
+              "hint": {
+                "en": "Unlock the lock when the button is pressed.",
+                "nl": "Ontgrendel het slot wanneer op de knop gedrukt wordt.",
+                "de": "Entriegeln Sie das Schloss, wenn die Taste gedrückt wird.",
+                "fr": "Déverrouillez le verrou lorsque vous appuyez sur le bouton."
+              },
+              "value": false
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Close button is held",
+            "nl": "Sluitknop wordt vastgehouden",
+            "de": "Schließen-Taste wird gehalten",
+            "fr": "Le bouton de fermeture est maintenu"
+          },
+          "children": [
+            {
+              "id": "postponed_lock_enabled",
+              "type": "checkbox",
+              "label": {
+                "en": "Closing with delay",
+                "nl": "Sluiten met vertraging",
+                "de": "Schließung mit Verspätung",
+                "fr": "Fermeture avec retard"
+              },
+              "hint": {
+                "en": "Lock the lock with the set delay.",
+                "nl": "Vergrendel het slot met de ingestelde vertraging.",
+                "de": "Sperren Sie das Schloss mit der eingestellten Verzögerung.",
+                "fr": "Verrouillez la serrure avec le délai défini."
+              },
+              "value": false
+            },
+            {
+              "id": "postponed_lock_delay",
+              "type": "number",
+              "label": {
+                "en": "Delay time",
+                "nl": "Vertragingstijd",
+                "de": "Verzögerungszeit",
+                "fr": "Temporisation"
+              },
+              "hint": {
+                "en": "The time to wait for the lock to close automatically.",
+                "nl": "De tijd die gewacht wordt met het automatisch sluiten van het slot.",
+                "de": "Die Wartezeit bis zum automatischen Schließen des Schlosses.",
+                "fr": "Le temps d'attente pour que la serrure se ferme automatiquement."
+              },
+              "value": 10,
+              "min": 1,
+              "max": 60,
+              "units": {
+                "en": "seconds",
+                "nl": "seconden",
+                "de": "Sekunden",
+                "fr": "seconds"
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Information",
+            "nl": "Informatie",
+            "de": "Information",
+            "fr": "Informations"
+          },
+          "children": [
+            {
+              "id": "tedee_id",
+              "type": "label",
+              "label": {
+                "en": "Device ID",
+                "nl": "Apparaat-ID",
+                "de": "Geräte ID",
+                "fr": "Reference de l'appareil"
+              },
+              "value": "-"
+            },
+            {
+              "id": "firmware_version",
+              "type": "label",
+              "label": {
+                "en": "Firmware Version",
+                "nl": "Firmwareversie",
+                "de": "Firmware Version",
+                "fr": "Version du firmware"
+              },
+              "value": "-"
+            },
+            {
+              "id": "serial_number",
+              "type": "label",
+              "label": {
+                "en": "Serial Number",
+                "nl": "Serienummer",
+                "de": "Seriennummer",
+                "fr": "Numéro de série"
+              },
+              "value": "-"
+            },
+            {
+              "id": "mac_address",
+              "type": "label",
+              "label": {
+                "en": "MAC"
+              },
+              "value": "-"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "images": {
         "small": "/drivers/keypad/assets/images/small.png",
         "large": "/drivers/keypad/assets/images/large.png",
         "xlarge": "/drivers/keypad/assets/images/xlarge.png"
