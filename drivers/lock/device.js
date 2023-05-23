@@ -96,12 +96,12 @@ class LockDevice extends Device {
     await super.setCapabilities(data);
 
     // Battery level
-    if (filled(data.batteryLevel)) {
+    if (this.hasCapability('measure_battery') && filled(data.batteryLevel)) {
       this.setCapabilityValue('measure_battery', data.batteryLevel).catch(this.error);
     }
 
     // Charging
-    if (filled(data.isCharging)) {
+    if (this.hasCapability('charging') && filled(data.isCharging)) {
       this.setCapabilityValue('charging', data.isCharging).catch(this.error);
     }
   }
