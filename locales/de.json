@@ -4,11 +4,10 @@
   "disconnected": "Nicht verbunden",
   "errors": {
     "401": "Sie sind nicht berechtigt.",
-    "403": "Sie dürfen dieses Gerät nicht verwenden.",
+    "403": "Es ist Ihnen nicht gestattet, dieses Gerät zu verwenden.",
     "404": "Gerät nicht gefunden.",
-    "50x": "Tedee-API ist nicht verfügbar.",
-    "response": "Ungültige Antwort von Tedee API.",
-    "unknown": "Ein unbekannter Fehler ist aufgetreten.",
+    "50x": "Die Tedee-API ist nicht verfügbar.",
+    "response": "Ungültige Antwort von der API.",
     "notReadyToLock": "Schloss ist nicht bereit zum Sperren.",
     "notReadyToUnlock": "Schloss ist nicht bereit zum Entsperren.",
     "pullSpringDisabled": "Die Türverriegelung ist aus."

@@ -5,10 +5,9 @@
   "errors": {
     "401": "You are not authorized.",
     "403": "You are not allowed to use this device.",
-    "404": "Device is not found.",
-    "50x": "Tedee API is not available.",
-    "response": "Invalid response from Tedee API.",
-    "unknown": "An unknown error has occurred.",
+    "404": "Device not found.",
+    "50x": "Tedee API is unavailable.",
+    "response": "Invalid response from API.",
     "notReadyToLock": "Lock is not ready to lock.",
     "notReadyToUnlock": "Lock is not ready to unlock.",
     "pullSpringDisabled": "Pull spring is disabled."

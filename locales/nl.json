@@ -5,10 +5,9 @@
   "errors": {
     "401": "U bent niet geautoriseerd.",
     "403": "U mag dit apparaat niet gebruiken.",
-    "404": "Apparaat is niet gevonden.",
+    "404": "Apparaat niet gevonden.",
     "50x": "Tedee API is niet beschikbaar.",
-    "response": "Ongeldig antwoord van Tedee API.",
-    "unknown": "Er is een onbekende fout opgetreden.",
+    "response": "Ongeldig antwoord van API.",
     "notReadyToLock": "Slot is niet klaar om te vergrendelen.",
     "notReadyToUnlock": "Slot is niet klaar om te ontgrendelen.",
     "pullSpringDisabled": "De deurvergrending is uitgeschakeld."
