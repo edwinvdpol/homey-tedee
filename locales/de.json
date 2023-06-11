@@ -1,25 +1,28 @@
 {
-  "connected": "Verbunden",
-  "connectedViaBridge": "Verbunden über Bridge",
-  "disconnected": "Nicht verbunden",
   "errors": {
-    "401": "Sie sind nicht berechtigt.",
-    "403": "Es ist Ihnen nicht gestattet, dieses Gerät zu verwenden.",
-    "404": "Gerät nicht gefunden.",
-    "50x": "Die Tedee-API ist nicht verfügbar.",
-    "response": "Ungültige Antwort von der API.",
-    "notReadyToLock": "Schloss ist nicht bereit zum Sperren.",
-    "notReadyToUnlock": "Schloss ist nicht bereit zum Entsperren.",
-    "pullSpringDisabled": "Die Türverriegelung ist aus."
+    "401": "Die Tedee-API-Anmeldeinformationen sind falsch",
+    "403": "Die Tedee-API hat den Zugriff auf dieses Gerät verweigert",
+    "404": "Gerät im Tedee-Konto nicht gefunden",
+    "50x": "Die Tedee-API ist nicht verfügbar",
+    "network": "Die Tedee-API ist nicht erreichbar",
+    "notReadyToLock": "Schloss ist nicht bereit zum Sperren",
+    "notReadyToUnlock": "Schloss ist nicht bereit zum Entsperren",
+    "pullSpringDisabled": "Die Türverriegelung ist aus",
+    "unknown": "Ein unbekannter Fehler ist aufgetreten"
+  },
+  "settings": {
+    "connected": "Verbunden",
+    "connectedViaBridge": "Verbunden über Bridge",
+    "disconnected": "Nicht verbunden"
   },
   "state": {
-    "uncalibrated": "Schloss nicht kalibriert.",
+    "uncalibrated": "Schloss nicht kalibriert",
     "calibrating": "Schloss wird kalibriert...",
-    "inUse": "Schloss wird gerade verwendet.",
-    "notAvailable": "Sperre ist nicht verfügbar.",
-    "disconnected": "Schloss ist nicht verbunden.",
+    "inUse": "Schloss wird gerade verwendet",
+    "notAvailable": "Sperre ist nicht verfügbar",
+    "disconnected": "Schloss ist nicht verbunden",
     "updating": "Gerät wird aktualisiert...",
-    "unknown": "Schloss hat unbekannten Status.",
-    "updateAvailable": "Software-Update ist verfügbar."
+    "unknown": "Schloss hat unbekannten Status",
+    "updateAvailable": "Software-Update ist verfügbar"
   }
 }

@@ -6,42 +6,13 @@ const { filled, blank } = require('../../lib/Utils');
 class KeypadDevice extends Device {
 
   /*
-  | Synchronization functions
+  | Device events
   */
-
-  // Returns settings from given data
-  getSettingsData(data) {
-    const settings = {};
-
-    if (blank(data.deviceSettings)) {
-      return settings;
-    }
-
-    // Set device settings
-    const device = data.deviceSettings;
-
-    if (filled(device.soundLevel)) {
-      settings.sound_level = `${device.soundLevel}`;
-    }
-
-    if (filled(device.backlightLevel)) {
-      settings.backlight_level = `${device.backlightLevel}`;
-    }
-
-    if (filled(device.bellButtonEnabled)) {
-      settings.bell_button_enabled = device.bellButtonEnabled;
-    }
-
-    return settings;
-  }
-
-  // Set availability
-  async setAvailability(data) {
-    this.setAvailable().catch(this.error);
-  }
 
   // Settings changed
   async onSettings({ oldSettings, newSettings, changedKeys }) {
+    this.log('Updating settings...');
+
     const settings = {};
 
     // Sound level updated
@@ -73,10 +44,49 @@ class KeypadDevice extends Device {
     if (filled(settings)) {
       const tedeeId = this.getSetting('tedee_id');
 
-      await this.oAuth2Client.updateSettings('keypad', tedeeId, settings);
+      this.log('Update settings:', JSON.stringify(settings));
 
-      this.log(`Keypad settings ${tedeeId} updated successfully!`);
+      await this.oAuth2Client.updateSettings('keypad', tedeeId, settings);
     }
+  }
+
+  /*
+  | Synchronization functions
+  */
+
+  // Set availability
+  async setAvailability(data) {
+    // ...
+  }
+
+  /*
+  | Support functions
+  */
+
+  // Returns settings from given data
+  getSettingsData(data) {
+    const settings = {};
+
+    if (blank(data.deviceSettings)) {
+      return settings;
+    }
+
+    // Set device settings
+    const device = data.deviceSettings;
+
+    if (filled(device.soundLevel)) {
+      settings.sound_level = `${device.soundLevel}`;
+    }
+
+    if (filled(device.backlightLevel)) {
+      settings.backlight_level = `${device.backlightLevel}`;
+    }
+
+    if (filled(device.bellButtonEnabled)) {
+      settings.bell_button_enabled = device.bellButtonEnabled;
+    }
+
+    return settings;
   }
 
 }

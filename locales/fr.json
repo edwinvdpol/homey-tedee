@@ -1,25 +1,28 @@
 {
-  "connected": "Connecté",
-  "connectedViaBridge": "Connecté via bridge",
-  "disconnected": "Déconnectée",
   "errors": {
-    "401": "Vous n'êtes pas autorisé.",
-    "403": "Vous n'êtes pas autorisé à utiliser cet appareil.",
-    "404": "Appareil non trouvé.",
-    "50x": "L'API Tedee n'est pas disponible.",
-    "response": "Réponse non valide de l'API.",
-    "notReadyToLock": "La serrure n'est pas prête à se verrouiller.",
-    "notReadyToUnlock": "Le verrou n'est pas prêt à être déverrouillé.",
-    "pullSpringDisabled": "Le ressort de traction est désactivé."
+    "401": "Les informations d'identification de l'API Tedee sont incorrectes",
+    "403": "L'API Tedee a refusé l'accès à cet appareil",
+    "404": "Appareil introuvable dans le compte Tedee",
+    "50x": "L'API Tedee n'est pas disponible",
+    "network": "L'API Tedee est inaccessible",
+    "notReadyToLock": "La serrure n'est pas prête à se verrouiller",
+    "notReadyToUnlock": "Le verrou n'est pas prêt à être déverrouillé",
+    "pullSpringDisabled": "Le ressort de traction est désactivé",
+    "unknown": "Une erreur inconnue s'est produite"
+  },
+  "settings": {
+    "connected": "Connecté",
+    "connectedViaBridge": "Connecté via bridge",
+    "disconnected": "Déconnectée"
   },
   "state": {
-    "uncalibrated": "La serrure n'est pas calibrée.",
+    "uncalibrated": "La serrure n'est pas calibrée",
     "calibrating": "La serrure est en cours de calibrage...",
-    "inUse": "Le verrou est actuellement utilisé.",
-    "notAvailable": "Le verrouillage n'est pas disponible.",
-    "disconnected": "L'appareil n'est pas connecté.",
+    "inUse": "Le verrou est actuellement utilisé",
+    "notAvailable": "Le verrouillage n'est pas disponible",
+    "disconnected": "L'appareil n'est pas connecté",
     "updating": "L'appareil est en cours de mise à jour...",
-    "unknown": "La serrure a un statut inconnu.",
-    "updateAvailable": "La mise à jour du logiciel est disponible."
+    "unknown": "La serrure a un statut inconnu",
+    "updateAvailable": "La mise à jour du logiciel est disponible"
   }
 }

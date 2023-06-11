@@ -1,25 +1,28 @@
 {
-  "connected": "Connected",
-  "connectedViaBridge": "Connected via bridge",
-  "disconnected": "Disconnected",
   "errors": {
-    "401": "You are not authorized.",
-    "403": "You are not allowed to use this device.",
-    "404": "Device not found.",
-    "50x": "Tedee API is unavailable.",
-    "response": "Invalid response from API.",
-    "notReadyToLock": "Lock is not ready to lock.",
-    "notReadyToUnlock": "Lock is not ready to unlock.",
-    "pullSpringDisabled": "Pull spring is disabled."
+    "401": "Tedee API credentials are incorrect",
+    "403": "Tedee API has denied access to this device",
+    "404": "Device not found in Tedee account",
+    "50x": "Tedee API is unavailable",
+    "network": "Tedee API is unreachable",
+    "notReadyToLock": "Lock is not ready to lock",
+    "notReadyToUnlock": "Lock is not ready to unlock",
+    "pullSpringDisabled": "Pull spring is disabled",
+    "unknown": "An unknown error has occurred"
+  },
+  "settings": {
+    "connected": "Connected",
+    "connectedViaBridge": "Connected via bridge",
+    "disconnected": "Disconnected"
   },
   "state": {
-    "uncalibrated": "Lock is not calibrated.",
+    "uncalibrated": "Lock is not calibrated",
     "calibrating": "Lock is being calibrated...",
-    "inUse": "Lock is currently in use.",
-    "notAvailable": "Lock is not available.",
-    "disconnected": "Device is not connected.",
+    "inUse": "Lock is currently in use",
+    "notAvailable": "Lock is not available",
+    "disconnected": "Device is not connected",
     "updating": "Device is being updated...",
-    "unknown": "Lock has unknown status.",
-    "updateAvailable": "Software update is available."
+    "unknown": "Lock has unknown status",
+    "updateAvailable": "Software update is available"
   }
 }

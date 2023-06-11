@@ -18,39 +18,65 @@ class LockDevice extends Device {
     await super.onOAuth2Init();
   }
 
+  // Settings changed
+  async onSettings({ oldSettings, newSettings, changedKeys }) {
+    this.log('Updating settings...');
+
+    const settings = {};
+
+    // Check availability
+    if (!this.getAvailable()) {
+      throw new Error(this.homey.__('state.notAvailable'));
+    }
+
+    // Auto lock enabled updated
+    if (changedKeys.includes('auto_lock_enabled')) {
+      this.log(`Auto-lock enabled is now '${newSettings.auto_lock_enabled}'`);
+
+      settings.autoLockEnabled = newSettings.auto_lock_enabled;
+    }
+
+    // Button lock enabled updated
+    if (changedKeys.includes('button_lock_enabled')) {
+      this.log(`Button lock enabled is now '${newSettings.button_lock_enabled}'`);
+
+      settings.buttonLockEnabled = newSettings.button_lock_enabled;
+    }
+
+    // Button unlock enabled updated
+    if (changedKeys.includes('button_unlock_enabled')) {
+      this.log(`Button unlock enabled is now '${newSettings.button_unlock_enabled}'`);
+
+      settings.buttonUnlockEnabled = newSettings.button_unlock_enabled;
+    }
+
+    // Postponed lock enabled updated
+    if (changedKeys.includes('postponed_lock_enabled')) {
+      this.log(`Postponed lock enabled is now '${newSettings.postponed_lock_enabled}'`);
+
+      settings.postponedLockEnabled = newSettings.postponed_lock_enabled;
+    }
+
+    // Postponed lock delay updated
+    if (changedKeys.includes('postponed_lock_delay')) {
+      this.log(`Postponed lock delay is now '${newSettings.postponed_lock_delay}' seconds`);
+
+      settings.postponedLockDelay = newSettings.postponed_lock_delay;
+    }
+
+    // Device settings need to be updated
+    if (filled(settings)) {
+      const tedeeId = this.getSetting('tedee_id');
+
+      this.log('Update settings:', JSON.stringify(settings));
+
+      await this.oAuth2Client.updateSettings('lock', tedeeId, settings);
+    }
+  }
+
   /*
   | Synchronization functions
   */
-
-  // Returns settings from given data
-  getSettingsData(data) {
-    const settings = {};
-
-    // Set connected status
-    if (filled(data.isConnected)) {
-      settings.status = data.isConnected
-        ? this.homey.__('connected')
-        : this.homey.__('disconnected');
-
-      if (this.getStoreValue('connected_via_bridge') && data.isConnected) {
-        settings.status = this.homey.__('connectedViaBridge');
-      }
-    }
-
-    if (blank(data.deviceSettings)) {
-      return settings;
-    }
-
-    const device = data.deviceSettings;
-
-    settings.auto_lock_enabled = device.autoLockEnabled || false;
-    settings.button_lock_enabled = device.buttonLockEnabled || false;
-    settings.button_unlock_enabled = device.buttonUnlockEnabled || false;
-    settings.postponed_lock_enabled = device.postponedLockEnabled || false;
-    settings.postponed_lock_delay = device.postponedLockDelay || 10;
-
-    return settings;
-  }
 
   // Handle sync data
   async handleSyncData(data, trigger) {
@@ -60,6 +86,8 @@ class LockDevice extends Device {
     } catch (err) {
       this.error(err.message);
       this.setUnavailable(err.message).catch(this.error);
+    } finally {
+      data = null;
     }
   }
 
@@ -67,6 +95,10 @@ class LockDevice extends Device {
   async setAvailability(data) {
     // Disconnected
     if (filled(data.isConnected) && !data.isConnected) {
+      if (this.getAvailable()) {
+        this.log('[Availability] Disconnected');
+      }
+
       throw new Error(this.homey.__('state.disconnected'));
     }
 
@@ -124,57 +156,29 @@ class LockDevice extends Device {
     this.toggleOpenCapability(pullSpringEnabled);
   }
 
-  // Settings changed
-  async onSettings({ oldSettings, newSettings, changedKeys }) {
-    const settings = {};
+  /*
+  | Capabilities
+  */
 
-    // Check availability
-    if (!this.getAvailable()) {
-      throw new Error(this.homey.__('state.notAvailable'));
+  // Locked capability changed
+  async onCapabilityLocked(lock) {
+    this.log(`Capability 'locked' is now '${lock}'`);
+
+    if (lock) {
+      await this.lock();
+    } else {
+      await this.unlock();
     }
+  }
 
-    // Auto lock enabled updated
-    if (changedKeys.includes('auto_lock_enabled')) {
-      this.log(`Auto-lock enabled is now '${newSettings.auto_lock_enabled}'`);
+  // Open capability changed
+  async onCapabilityOpen(open) {
+    this.log(`Capability 'open' is now '${open}'`);
 
-      settings.autoLockEnabled = newSettings.auto_lock_enabled;
-    }
+    if (open) {
+      await this.open();
 
-    // Button lock enabled updated
-    if (changedKeys.includes('button_lock_enabled')) {
-      this.log(`Button lock enabled is now '${newSettings.button_lock_enabled}'`);
-
-      settings.buttonLockEnabled = newSettings.button_lock_enabled;
-    }
-
-    // Button unlock enabled updated
-    if (changedKeys.includes('button_unlock_enabled')) {
-      this.log(`Button unlock enabled is now '${newSettings.button_unlock_enabled}'`);
-
-      settings.buttonUnlockEnabled = newSettings.button_unlock_enabled;
-    }
-
-    // Postponed lock enabled updated
-    if (changedKeys.includes('postponed_lock_enabled')) {
-      this.log(`Postponed lock enabled is now '${newSettings.postponed_lock_enabled}'`);
-
-      settings.postponedLockEnabled = newSettings.postponed_lock_enabled;
-    }
-
-    // Postponed lock delay updated
-    if (changedKeys.includes('postponed_lock_delay')) {
-      this.log(`Postponed lock delay is now '${newSettings.postponed_lock_delay}' seconds`);
-
-      settings.postponedLockDelay = newSettings.postponed_lock_delay;
-    }
-
-    // Device settings need to be updated
-    if (filled(settings)) {
-      const tedeeId = this.getSetting('tedee_id');
-
-      this.log('Update settings:', JSON.stringify(settings));
-
-      await this.oAuth2Client.updateSettings('lock', tedeeId, settings);
+      this.setCapabilityValue('open', false).catch(this.error);
     }
   }
 
@@ -251,32 +255,6 @@ class LockDevice extends Device {
   }
 
   /*
-  | Capabilities
-  */
-
-  // Locked capability changed
-  async onCapabilityLocked(lock) {
-    this.log(`Capability 'locked' is now '${lock}'`);
-
-    if (lock) {
-      await this.lock();
-    } else {
-      await this.unlock();
-    }
-  }
-
-  // Open capability changed
-  async onCapabilityOpen(open) {
-    this.log(`Capability 'open' is now '${open}'`);
-
-    if (open) {
-      await this.open();
-
-      this.setCapabilityValue('open', false).catch(this.error);
-    }
-  }
-
-  /*
   | Listener functions
   */
 
@@ -289,6 +267,36 @@ class LockDevice extends Device {
   /*
   | Support functions
   */
+
+  // Returns settings from given data
+  getSettingsData(data) {
+    const settings = {};
+
+    // Set connected status
+    if (filled(data.isConnected)) {
+      settings.status = data.isConnected
+        ? this.homey.__('settings.connected')
+        : this.homey.__('settings.disconnected');
+
+      if (this.getStoreValue('connected_via_bridge') && data.isConnected) {
+        settings.status = this.homey.__('settings.connectedViaBridge');
+      }
+    }
+
+    if (blank(data.deviceSettings)) {
+      return settings;
+    }
+
+    const device = data.deviceSettings;
+
+    settings.auto_lock_enabled = device.autoLockEnabled || false;
+    settings.button_lock_enabled = device.buttonLockEnabled || false;
+    settings.button_unlock_enabled = device.buttonUnlockEnabled || false;
+    settings.postponed_lock_enabled = device.postponedLockEnabled || false;
+    settings.postponed_lock_delay = device.postponedLockDelay || 10;
+
+    return settings;
+  }
 
   // Validate and return state
   async getState() {
@@ -319,17 +327,7 @@ class LockDevice extends Device {
     }
   }
 
-  // Log and throw error
-  async throwError(message, locale) {
-    this.error(message);
-
-    throw new Error(this.homey.__(locale));
-  }
-
-  /*
-  | Trigger functions
-  */
-
+  // Trigger flows
   async triggerFlows(data) {
     let device;
 

@@ -9,20 +9,6 @@ class BridgeDevice extends Device {
   | Synchronization functions
   */
 
-  // Returns settings from given data
-  getSettingsData(data) {
-    const settings = {};
-
-    // Set connected status
-    if (filled(data.isConnected)) {
-      settings.status = data.isConnected
-        ? this.homey.__('connected')
-        : this.homey.__('disconnected');
-    }
-
-    return settings;
-  }
-
   // Set availability
   async setAvailability(data) {
     // Updating
@@ -32,10 +18,30 @@ class BridgeDevice extends Device {
 
     // Disconnected
     if (filled(data.isConnected) && !data.isConnected) {
+      if (this.getAvailable()) {
+        this.log('[Availability] Disconnected');
+      }
+
       throw new Error(this.homey.__('state.disconnected'));
     }
+  }
 
-    this.setAvailable().catch(this.error);
+  /*
+  | Support functions
+  */
+
+  // Returns settings from given data
+  getSettingsData(data) {
+    const settings = {};
+
+    // Set connected status
+    if (filled(data.isConnected)) {
+      settings.status = data.isConnected
+        ? this.homey.__('settings.connected')
+        : this.homey.__('settings.disconnected');
+    }
+
+    return settings;
   }
 
 }

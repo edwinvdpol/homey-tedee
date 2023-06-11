@@ -25,7 +25,7 @@ class LockDriver extends Driver {
   // Return settings value while pairing
   getPairSettings(device) {
     return {
-      status: device.isConnected ? this.homey.__('connected') : this.homey.__('disconnected'),
+      status: device.isConnected ? this.homey.__('settings.connected') : this.homey.__('settings.disconnected'),
       tedee_id: `${device.id}`,
       firmware_version: device.softwareVersions[0].version,
       serial_number: device.serialNumber,
