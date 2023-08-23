@@ -331,11 +331,16 @@ class LockDevice extends Device {
   async triggerFlows(data) {
     if (blank(data.state)) return;
 
+    let state = this.getStoreValue('state');
+
     // State not changed
-    if (data.state === this.getStoreValue('state')) return;
+    if (data.state === state) return;
 
     // Update store value
     this.setStoreValue('state', data.state).catch(this.error);
+
+    // Initial state was empty
+    if (blank(state)) return;
 
     let device = this;
 
@@ -344,6 +349,7 @@ class LockDevice extends Device {
       await this.driver.triggerPulled(device);
     }
 
+    state = null;
     device = null;
   }
 
