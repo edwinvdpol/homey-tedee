@@ -329,13 +329,19 @@ class LockDevice extends Device {
 
   // Trigger flows
   async triggerFlows(data) {
-    let device;
+    if (blank(data.state)) return;
 
-    // Trigger opened
-    if (filled(data.state) && data.state === LockState.Pulled) {
-      device = this;
+    // State not changed
+    if (data.state === this.getStoreValue('state')) return;
 
-      await this.driver.triggerOpened(device);
+    // Update store value
+    this.setStoreValue('state', data.state).catch(this.error);
+
+    let device = this;
+
+    // Trigger pulled
+    if (data.state === LockState.Pulled) {
+      await this.driver.triggerPulled(device);
     }
 
     device = null;

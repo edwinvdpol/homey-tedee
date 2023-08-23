@@ -52,15 +52,15 @@ class LockDriver extends Driver {
 
   // Register device flow cards
   registerDeviceFlowCards() {
-    // When lock was opened ...
-    this.lockOpened = this.homey.flow.getDeviceTriggerCard('opened');
+    // When lock was pulled ...
+    this.lockPulled = this.homey.flow.getDeviceTriggerCard('pulled');
   }
 
-  // Opened flow trigger
-  triggerOpened(lock) {
+  // Pulled flow trigger
+  triggerPulled(lock) {
     if (!lock.hasCapability('open')) return;
 
-    this.lockOpened.trigger(lock, {}).then().catch(lock.error);
+    this.lockPulled.trigger(lock, {}).then().catch(lock.error);
   }
 
 }
