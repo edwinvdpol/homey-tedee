@@ -1,11 +1,11 @@
 {
+  "type": "boolean",
   "title": {
     "en": "Charging",
     "nl": "Opladen",
     "de": "Aufladen",
     "fr": "Charger"
   },
-  "type": "boolean",
   "getable": true,
   "setable": false,
   "insights": true,

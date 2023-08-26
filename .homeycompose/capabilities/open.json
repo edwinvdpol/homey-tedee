@@ -1,11 +1,11 @@
 {
+  "type": "boolean",
   "title": {
     "en": "Open",
     "nl": "Openen",
     "de": "Öffnen",
     "fr": "Ouvrir"
   },
-  "type": "boolean",
   "getable": true,
   "setable": true,
   "insights": true,

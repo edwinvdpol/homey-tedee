@@ -1,11 +1,11 @@
 {
+  "type": "boolean",
   "title": {
     "en": "Connected",
     "nl": "Verbonden",
     "de": "Verbunden",
     "fr": "Connectée"
   },
-  "type": "boolean",
   "getable": true,
   "setable": false,
   "uiComponent": null

@@ -186,8 +186,7 @@
             "filter": "driver_id=lock"
           }
         ],
-        "deprecated": true,
-        "id": "opened"
+        "id": "pulled"
       },
       {
         "title": {
@@ -1125,13 +1124,13 @@
   ],
   "capabilities": {
     "charging": {
+      "type": "boolean",
       "title": {
         "en": "Charging",
         "nl": "Opladen",
         "de": "Aufladen",
         "fr": "Charger"
       },
-      "type": "boolean",
       "getable": true,
       "setable": false,
       "insights": true,
@@ -1150,38 +1149,25 @@
       "uiComponent": null
     },
     "connected": {
+      "type": "boolean",
       "title": {
         "en": "Connected",
         "nl": "Verbonden",
         "de": "Verbunden",
         "fr": "Connectée"
       },
-      "type": "boolean",
       "getable": true,
       "setable": false,
-      "insights": true,
-      "insightsTitleTrue": {
-        "en": "Connected",
-        "nl": "Verbonden",
-        "de": "Verbunden",
-        "fr": "Connectée"
-      },
-      "insightsTitleFalse": {
-        "en": "Disconnected",
-        "nl": "Verbroken",
-        "de": "Getrennt",
-        "fr": "Déconnectée"
-      },
       "uiComponent": null
     },
     "open": {
+      "type": "boolean",
       "title": {
         "en": "Open",
         "nl": "Openen",
         "de": "Öffnen",
         "fr": "Ouvrir"
       },
-      "type": "boolean",
       "getable": true,
       "setable": true,
       "insights": true,
@@ -1201,13 +1187,13 @@
       "uiQuickAction": false
     },
     "update_available": {
+      "type": "boolean",
       "title": {
         "en": "Update available",
         "nl": "Update beschikbaar",
         "de": "Update verfügbar",
         "fr": "Mise à jour disponible"
       },
-      "type": "boolean",
       "getable": true,
       "setable": false,
       "uiComponent": null

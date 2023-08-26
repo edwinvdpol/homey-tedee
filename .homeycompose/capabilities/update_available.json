@@ -1,11 +1,11 @@
 {
+  "type": "boolean",
   "title": {
     "en": "Update available",
     "nl": "Update beschikbaar",
     "de": "Update verfügbar",
     "fr": "Mise à jour disponible"
   },
-  "type": "boolean",
   "getable": true,
   "setable": false,
   "uiComponent": null
