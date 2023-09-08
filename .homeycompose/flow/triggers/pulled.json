@@ -13,7 +13,7 @@
     {
       "type": "device",
       "name": "device",
-      "filter": "driver_id=lock"
+      "filter": "driver_id=lock&capabilities=open"
     }
   ]
 }

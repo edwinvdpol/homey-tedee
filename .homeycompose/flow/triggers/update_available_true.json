@@ -13,7 +13,7 @@
     {
       "type": "device",
       "name": "device",
-      "filter": "driver_id=bridge|keypad|lock"
+      "filter": "driver_id=bridge|keypad|lock&capabilities=update_available"
     }
   ]
 }
