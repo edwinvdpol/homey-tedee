@@ -11,7 +11,7 @@ class KeypadDevice extends Device {
 
   // Settings changed
   async onSettings({ oldSettings, newSettings, changedKeys }) {
-    this.log('Updating settings...');
+    this.log('[Settings] Updating');
 
     const settings = {};
 
@@ -44,9 +44,9 @@ class KeypadDevice extends Device {
     if (filled(settings)) {
       const tedeeId = this.getSetting('tedee_id');
 
-      this.log('Update settings:', JSON.stringify(settings));
-
       await this.oAuth2Client.updateSettings('keypad', tedeeId, settings);
+
+      this.log('[Settings] Updated');
     }
   }
 
