@@ -1,6 +1,6 @@
 {
   "id": "com.tedee",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
