@@ -94,7 +94,7 @@ class LockDevice extends Device {
   // Set availability
   async setAvailability(data) {
     // Disconnected
-    if (filled(data.isConnected) && !data.isConnected) {
+    if ('isConnected' in data && !data.isConnected) {
       if (this.getAvailable()) {
         this.log('[Availability] Disconnected');
       }
@@ -128,12 +128,12 @@ class LockDevice extends Device {
     await super.setCapabilities(data);
 
     // Battery level
-    if (this.hasCapability('measure_battery') && filled(data.batteryLevel)) {
+    if (this.hasCapability('measure_battery') && 'batteryLevel' in data) {
       this.setCapabilityValue('measure_battery', data.batteryLevel).catch(this.error);
     }
 
     // Charging
-    if (this.hasCapability('charging') && filled(data.isCharging)) {
+    if (this.hasCapability('charging') && 'isCharging' in data) {
       this.setCapabilityValue('charging', data.isCharging).catch(this.error);
     }
   }
@@ -273,7 +273,7 @@ class LockDevice extends Device {
     const settings = {};
 
     // Set connected status
-    if (filled(data.isConnected)) {
+    if ('isConnected' in data) {
       settings.status = data.isConnected
         ? this.homey.__('settings.connected')
         : this.homey.__('settings.disconnected');

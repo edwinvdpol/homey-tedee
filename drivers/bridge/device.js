@@ -1,7 +1,6 @@
 'use strict';
 
 const Device = require('../../lib/Device');
-const { filled } = require('../../lib/Utils');
 
 class BridgeDevice extends Device {
 
@@ -12,12 +11,12 @@ class BridgeDevice extends Device {
   // Set availability
   async setAvailability(data) {
     // Updating
-    if (filled(data.isUpdating) && data.isUpdating) {
+    if ('isUpdating' in data && data.isUpdating) {
       throw new Error(this.homey.__('state.updating'));
     }
 
     // Disconnected
-    if (filled(data.isConnected) && !data.isConnected) {
+    if ('isConnected' in data && !data.isConnected) {
       if (this.getAvailable()) {
         this.log('[Availability] Disconnected');
       }
@@ -35,7 +34,7 @@ class BridgeDevice extends Device {
     const settings = {};
 
     // Set connected status
-    if (filled(data.isConnected)) {
+    if ('isConnected' in data) {
       settings.status = data.isConnected
         ? this.homey.__('settings.connected')
         : this.homey.__('settings.disconnected');

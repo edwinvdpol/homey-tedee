@@ -74,15 +74,15 @@ class KeypadDevice extends Device {
     // Set device settings
     const device = data.deviceSettings;
 
-    if (filled(device.soundLevel)) {
+    if ('soundLevel' in device) {
       settings.sound_level = `${device.soundLevel}`;
     }
 
-    if (filled(device.backlightLevel)) {
+    if ('backlightLevel' in device) {
       settings.backlight_level = `${device.backlightLevel}`;
     }
 
-    if (filled(device.bellButtonEnabled)) {
+    if ('bellButtonEnabled' in device) {
       settings.bell_button_enabled = device.bellButtonEnabled;
     }
 
