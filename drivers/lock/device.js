@@ -12,8 +12,8 @@ class LockDevice extends Device {
 
   // Device initialized
   async onOAuth2Init() {
-    // Register listeners
-    await this.registerCapabilityListeners();
+    // Register capability listeners
+    this.registerCapabilityListeners();
 
     await super.onOAuth2Init();
   }
@@ -259,9 +259,11 @@ class LockDevice extends Device {
   */
 
   // Register capability listeners
-  async registerCapabilityListeners() {
+  registerCapabilityListeners() {
     this.registerCapabilityListener('locked', this.onCapabilityLocked.bind(this));
     this.registerCapabilityListener('open', this.onCapabilityOpen.bind(this));
+
+    this.log('Capability listeners registered');
   }
 
   /*
