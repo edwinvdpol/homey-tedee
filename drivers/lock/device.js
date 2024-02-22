@@ -84,7 +84,7 @@ class LockDevice extends Device {
       await this.setStore(data);
       await super.handleSyncData(data, trigger);
     } catch (err) {
-      this.error(err.message);
+      this.error('[Sync]', err.toString());
       this.setUnavailable(err.message).catch(this.error);
     } finally {
       data = null;
