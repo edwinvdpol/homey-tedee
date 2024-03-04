@@ -5,27 +5,6 @@ const Device = require('../../lib/Device');
 class BridgeDevice extends Device {
 
   /*
-  | Synchronization functions
-  */
-
-  // Set availability
-  async setAvailability(data) {
-    // Updating
-    if ('isUpdating' in data && data.isUpdating) {
-      throw new Error(this.homey.__('state.updating'));
-    }
-
-    // Disconnected
-    if ('isConnected' in data && !data.isConnected) {
-      if (this.getAvailable()) {
-        this.log('[Availability] Disconnected');
-      }
-
-      throw new Error(this.homey.__('state.disconnected'));
-    }
-  }
-
-  /*
   | Support functions
   */
 

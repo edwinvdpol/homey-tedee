@@ -42,21 +42,10 @@ class KeypadDevice extends Device {
 
     // Device settings need to be updated
     if (filled(settings)) {
-      const tedeeId = this.getSetting('tedee_id');
-
-      await this.oAuth2Client.updateSettings('keypad', tedeeId, settings);
+      await this.oAuth2Client.updateSettings('keypad', this.tid, settings);
 
       this.log('[Settings] Updated');
     }
-  }
-
-  /*
-  | Synchronization functions
-  */
-
-  // Set availability
-  async setAvailability(data) {
-    // ...
   }
 
   /*

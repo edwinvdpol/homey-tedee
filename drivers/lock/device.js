@@ -66,41 +66,15 @@ class LockDevice extends Device {
 
     // Device settings need to be updated
     if (filled(settings)) {
-      const tedeeId = this.getSetting('tedee_id');
-
-      await this.oAuth2Client.updateSettings('lock', tedeeId, settings);
+      await this.oAuth2Client.updateSettings('lock', this.tid, settings);
 
       this.log('[Settings] Updated');
     }
   }
 
-  /*
-  | Synchronization functions
-  */
-
-  // Handle sync data
-  async handleSyncData(data, trigger) {
-    try {
-      await this.setStore(data);
-      await super.handleSyncData(data, trigger);
-    } catch (err) {
-      this.error('[Sync]', err.toString());
-      this.setUnavailable(err.message).catch(this.error);
-    } finally {
-      data = null;
-    }
-  }
-
   // Set availability
   async setAvailability(data) {
-    // Disconnected
-    if ('isConnected' in data && !data.isConnected) {
-      if (this.getAvailable()) {
-        this.log('[Availability] Disconnected');
-      }
-
-      throw new Error(this.homey.__('state.disconnected'));
-    }
+    await super.setAvailability(data);
 
     if (blank(data.state)) return;
 
@@ -136,24 +110,6 @@ class LockDevice extends Device {
     if (this.hasCapability('charging') && 'isCharging' in data) {
       this.setCapabilityValue('charging', data.isCharging).catch(this.error);
     }
-  }
-
-  // Set store values
-  async setStore(data) {
-    if ('connectedToId' in data) {
-      this.setStoreValue('connected_via_bridge', filled(data.connectedToId)).catch(this.error);
-    }
-
-    if (blank(data.deviceSettings)) return;
-    if (blank(data.deviceSettings.pullSpringEnabled)) return;
-
-    const { pullSpringEnabled } = data.deviceSettings;
-
-    // Set store values
-    this.setStoreValue('pull_spring_enabled', pullSpringEnabled).catch(this.error);
-
-    // Remove or add "open" capability
-    this.toggleOpenCapability(pullSpringEnabled);
   }
 
   /*
@@ -209,7 +165,7 @@ class LockDevice extends Device {
     }
 
     // Send lock command to tedee API
-    await this.oAuth2Client.lock(this.getSetting('tedee_id'));
+    await this.oAuth2Client.lock(this.tid);
   }
 
   // Open action
@@ -225,7 +181,7 @@ class LockDevice extends Device {
     }
 
     // Send open command to tedee API
-    await this.oAuth2Client.unlock(this.getSetting('tedee_id'), UnlockMode.UnlockOrPullSpring);
+    await this.oAuth2Client.unlock(this.tid, UnlockMode.UnlockOrPullSpring);
   }
 
   // Unlock action
@@ -251,7 +207,7 @@ class LockDevice extends Device {
     }
 
     // Send unlock command to tedee API
-    await this.oAuth2Client.unlock(this.getSetting('tedee_id'));
+    await this.oAuth2Client.unlock(this.tid);
   }
 
   /*
@@ -305,11 +261,29 @@ class LockDevice extends Device {
     this.log('Fetch state');
 
     // Fetch current lock state from tedee API
-    const state = await this.oAuth2Client.getLockState(this.getSetting('tedee_id'));
+    const state = await this.oAuth2Client.getLockState(this.tid);
 
     this.log(`Current state is ${LockStateNames[state]} (${state})`);
 
     return state;
+  }
+
+  // Set store values
+  async setStore(data) {
+    if ('connectedToId' in data) {
+      this.setStoreValue('connected_via_bridge', filled(data.connectedToId)).catch(this.error);
+    }
+
+    if (!('deviceSettings' in data)) return;
+    const settings = data.deviceSettings;
+
+    if (!('pullSpringEnabled' in settings)) return;
+
+    // Set store values
+    this.setStoreValue('pull_spring_enabled', settings.pullSpringEnabled).catch(this.error);
+
+    // Remove or add "open" capability
+    this.toggleOpenCapability(settings.pullSpringEnabled);
   }
 
   // Remove or add "open" capability
