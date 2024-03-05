@@ -20,9 +20,11 @@
     "calibrating": "Slot wordt gekalibreerd...",
     "inUse": "Slot is op dit moment in gebruik",
     "notAvailable": "Slot is niet beschikbaar",
-    "disconnected": "Slot is niet verbonden",
+    "disconnected": "Apparaat is niet verbonden",
     "updating": "Apparaat wordt bijgewerkt...",
-    "unknown": "Slot heeft onbekende status",
-    "updateAvailable": "Software update is beschikbaar"
+    "unknown": "Slot heeft onbekende status"
+  },
+  "warning": {
+    "updateAvailable": "Voor dit apparaat is een software-update beschikbaar."
   }
 }

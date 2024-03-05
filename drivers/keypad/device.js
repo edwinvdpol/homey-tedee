@@ -15,37 +15,40 @@ class KeypadDevice extends Device {
 
     const settings = {};
 
-    // Sound level updated
-    if (changedKeys.includes('sound_level')) {
-      const level = Number(newSettings.sound_level);
-
-      this.log(`Sound level is now '${level}'`);
-
-      settings.soundLevel = level;
+    // Check availability
+    if (!this.getAvailable()) {
+      throw new Error(this.homey.__('state.notAvailable'));
     }
 
-    // Backlight level updated
-    if (changedKeys.includes('backlight_level')) {
-      const level = Number(newSettings.backlight_level);
+    for (const name of changedKeys) {
+      const newValue = newSettings[name];
 
-      this.log(`Backlight level is now '${level}'`);
+      this.log(`[Settings] '${name}' is now '${newValue}'`);
 
-      settings.backlightLevel = level;
-    }
+      // Sound level
+      if (name === 'sound_level') {
+        settings.soundLevel = Number(newValue);
+      }
 
-    // Bell button enabled updated
-    if (changedKeys.includes('bell_button_enabled')) {
-      this.log(`Bell button enabled is now '${newSettings.bell_button_enabled}'`);
+      // Backlight level
+      if (name === 'backlight_level') {
+        settings.backlightLevel = Number(newValue);
+      }
 
-      settings.bellButtonEnabled = newSettings.bell_button_enabled;
+      // Bell button enabled
+      if (name === 'bell_button_enabled') {
+        settings.bellButtonEnabled = newValue;
+      }
     }
 
     // Device settings need to be updated
     if (filled(settings)) {
-      await this.oAuth2Client.updateSettings('keypad', this.tid, settings);
+      this.log('[Settings] Updating device');
 
-      this.log('[Settings] Updated');
+      await this.oAuth2Client.updateSettings('keypad', this.tid, settings);
     }
+
+    this.log('[Settings] Updated');
   }
 
   /*

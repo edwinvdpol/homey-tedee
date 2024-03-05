@@ -12,6 +12,8 @@ class LockDevice extends Device {
 
   // Device initialized
   async onOAuth2Init() {
+    this.state = this.getStoreValue('state');
+
     // Register capability listeners
     this.registerCapabilityListeners();
 
@@ -29,87 +31,116 @@ class LockDevice extends Device {
       throw new Error(this.homey.__('state.notAvailable'));
     }
 
-    // Auto lock enabled updated
-    if (changedKeys.includes('auto_lock_enabled')) {
-      this.log(`Auto-lock enabled is now '${newSettings.auto_lock_enabled}'`);
+    for (const name of changedKeys) {
+      const newValue = newSettings[name];
 
-      settings.autoLockEnabled = newSettings.auto_lock_enabled;
-    }
+      this.log(`[Settings] '${name}' is now '${newValue}'`);
 
-    // Button lock enabled updated
-    if (changedKeys.includes('button_lock_enabled')) {
-      this.log(`Button lock enabled is now '${newSettings.button_lock_enabled}'`);
+      // Auto lock enabled
+      if (name === 'auto_lock_enabled') {
+        settings.autoLockEnabled = newValue;
+      }
 
-      settings.buttonLockEnabled = newSettings.button_lock_enabled;
-    }
+      // Button lock enabled
+      if (name === 'button_lock_enabled') {
+        settings.buttonLockEnabled = newValue;
+      }
 
-    // Button unlock enabled updated
-    if (changedKeys.includes('button_unlock_enabled')) {
-      this.log(`Button unlock enabled is now '${newSettings.button_unlock_enabled}'`);
+      // Button unlock enabled
+      if (name === 'button_unlock_enabled') {
+        settings.buttonUnlockEnabled = newValue;
+      }
 
-      settings.buttonUnlockEnabled = newSettings.button_unlock_enabled;
-    }
+      // Postponed lock enabled
+      if (name === 'postponed_lock_enabled') {
+        settings.postponedLockEnabled = newValue;
+      }
 
-    // Postponed lock enabled updated
-    if (changedKeys.includes('postponed_lock_enabled')) {
-      this.log(`Postponed lock enabled is now '${newSettings.postponed_lock_enabled}'`);
-
-      settings.postponedLockEnabled = newSettings.postponed_lock_enabled;
-    }
-
-    // Postponed lock delay updated
-    if (changedKeys.includes('postponed_lock_delay')) {
-      this.log(`Postponed lock delay is now '${newSettings.postponed_lock_delay}' seconds`);
-
-      settings.postponedLockDelay = newSettings.postponed_lock_delay;
+      // Postponed lock delay
+      if (name === 'postponed_lock_delay') {
+        settings.postponedLockDelay = newValue;
+      }
     }
 
     // Device settings need to be updated
     if (filled(settings)) {
-      await this.oAuth2Client.updateSettings('lock', this.tid, settings);
+      this.log('[Settings] Updating device');
 
-      this.log('[Settings] Updated');
+      await this.oAuth2Client.updateSettings('lock', this.tid, settings);
     }
+
+    this.log('[Settings] Updated');
   }
+
+  /*
+  | Synchronization functions
+  */
 
   // Set availability
   async setAvailability(data) {
     await super.setAvailability(data);
 
-    if (blank(data.state)) return;
-
-    if (data.state === LockState.Uncalibrated) {
+    if (this.isUncalibrated()) {
       throw new Error(this.homey.__('state.uncalibrated'));
     }
 
-    if (data.state === LockState.Calibrating) {
+    if (this.isCalibrating()) {
       throw new Error(this.homey.__('state.calibrating'));
     }
 
-    if (data.state === LockState.Unknown) {
-      throw new Error(this.homey.__('state.unknown'));
-    }
-
-    if (data.state === LockState.Updating) {
+    if (this.isUpdating()) {
       throw new Error(this.homey.__('state.updating'));
     }
 
-    this.setCapabilityValue('locked', data.state === LockState.Locked).catch(this.error);
+    if (this.hasUnknownState()) {
+      throw new Error(this.homey.__('state.unknown'));
+    }
   }
 
   // Set capabilities
   async setCapabilities(data) {
+    // Lock state
+    if ('state' in data) {
+      this.state = data.state;
+
+      this.setCapabilityValue('locked', this.isLocked()).catch(this.error);
+    }
+
     await super.setCapabilities(data);
+  }
 
-    // Battery level
-    if (this.hasCapability('measure_battery') && 'batteryLevel' in data) {
-      this.setCapabilityValue('measure_battery', data.batteryLevel).catch(this.error);
+  // Set state
+  async setState() {
+    this.log('Set state from API');
+
+    // Fetch current lock state from tedee API
+    this.state = await this.oAuth2Client.getLockState(this.tid);
+
+    this.log(`Current state is ${LockStateNames[this.state]} (${this.state})`);
+  }
+
+  // Set store values
+  async setStore(data) {
+    // Lock state
+    if ('state' in data) {
+      this.setStoreValue('state', data.state).catch(this.error);
     }
 
-    // Charging
-    if (this.hasCapability('charging') && 'isCharging' in data) {
-      this.setCapabilityValue('charging', data.isCharging).catch(this.error);
+    // Connected via bridge
+    if ('connectedToId' in data) {
+      this.setStoreValue('connected_via_bridge', filled(data.connectedToId)).catch(this.error);
     }
+
+    if (!('deviceSettings' in data)) return;
+    const settings = data.deviceSettings;
+
+    if (!('pullSpringEnabled' in settings)) return;
+
+    // Pull spring enabled
+    this.setStoreValue('pull_spring_enabled', settings.pullSpringEnabled).catch(this.error);
+
+    // Remove or add "open" capability
+    this.toggleOpenCapability(settings.pullSpringEnabled);
   }
 
   /*
@@ -131,83 +162,119 @@ class LockDevice extends Device {
   async onCapabilityOpen(open) {
     this.log(`Capability 'open' is now '${open}'`);
 
-    if (open) {
-      await this.open();
-
-      this.setCapabilityValue('open', false).catch(this.error);
-    }
+    await this.open();
   }
 
   /*
-  | API commands
+  | Lock actions
   */
 
-  // Lock action
+  // Lock
   async lock() {
-    this.log('Locking');
-
     // Check availability
     if (!this.getAvailable()) return;
 
-    // Get and validate state
-    const state = await this.getState();
+    // Set state from API
+    await this.setState();
 
     // Lock is already locked
-    if (state === LockState.Locked) {
-      this.log('Lock is already locked');
+    if (this.isLocked()) return;
 
-      return;
-    }
+    this.log('Locking');
 
     // Make sure the lock is in a valid state to lock
-    if (state !== LockState.Unlocked && state !== LockState.SemiLocked) {
-      await this.throwError(`Not ready, currently ${state}`, 'errors.notReadyToLock');
+    if (!this.isLockable()) {
+      this.throwError(`Not ready, currently ${LockStateNames[this.state]} (${this.state})`, 'errors.notReadyToLock');
     }
 
     // Send lock command to tedee API
     await this.oAuth2Client.lock(this.tid);
   }
 
-  // Open action
+  // Open
   async open() {
-    this.log('Opening');
-
     // Check availability
     if (!this.getAvailable()) return;
 
+    this.log('Opening');
+
     // Check if pull spring is enabled
     if (!this.hasCapability('open')) {
-      await this.throwError('Open capability not found', 'errors.pullSpringDisabled');
+      this.throwError('Capability \'open\' not found', 'errors.pullSpringDisabled');
     }
 
     // Send open command to tedee API
     await this.oAuth2Client.unlock(this.tid, UnlockMode.UnlockOrPullSpring);
   }
 
-  // Unlock action
+  // Unlock
   async unlock() {
-    this.log('Unlocking');
-
     // Check availability
     if (!this.getAvailable()) return;
 
-    // Get and validate state
-    const state = await this.getState();
+    // Set state from API
+    await this.setState();
 
     // Lock is already unlocked
-    if (state === LockState.Unlocked) {
-      this.log('Lock is already unlocked');
+    if (this.isUnlocked()) return;
 
-      return;
-    }
+    this.log('Unlocking');
 
     // Make sure the lock is in a valid state
-    if (state !== LockState.Locked && state !== LockState.SemiLocked) {
-      await this.throwError(`Not ready to unlock, currently ${LockStateNames[state]} (${state})`, 'errors.notReadyToUnlock');
+    if (!this.isUnlockable()) {
+      this.throwError(`Not ready, currently ${LockStateNames[this.state]} (${this.state})`, 'errors.notReadyToUnlock');
     }
 
     // Send unlock command to tedee API
     await this.oAuth2Client.unlock(this.tid);
+  }
+
+  /*
+  | Lock states
+  */
+
+  hasState(stateId) {
+    return this.state === stateId;
+  }
+
+  hasUnknownState() {
+    return this.hasState(LockState.Unknown);
+  }
+
+  isCalibrating() {
+    return this.hasState(LockState.Calibrating);
+  }
+
+  isLockable() {
+    return this.isUnlocked() || this.isSemiLocked();
+  }
+
+  isLocked() {
+    return this.hasState(LockState.Locked);
+  }
+
+  isPulled() {
+    return this.hasState(LockState.Pulled);
+  }
+
+  isUncalibrated() {
+    return this.hasState(LockState.Uncalibrated);
+  }
+
+  isSemiLocked() {
+    return this.hasState(LockState.SemiLocked);
+  }
+
+  isUnlockable() {
+    return this.isLocked() || this.isSemiLocked();
+  }
+
+  isUnlocked() {
+    return this.hasState(LockState.Unlocked);
+  }
+
+  isUpdating() {
+    return this.hasState(LockState.Updating);
   }
 
   /*
@@ -241,7 +308,7 @@ class LockDevice extends Device {
       }
     }
 
-    if (blank(data.deviceSettings)) {
+    if (!('deviceSettings' in data)) {
       return settings;
     }
 
@@ -254,36 +321,6 @@ class LockDevice extends Device {
     settings.postponed_lock_delay = device.postponedLockDelay || 10;
 
     return settings;
-  }
-
-  // Validate and return state
-  async getState() {
-    this.log('Fetch state');
-
-    // Fetch current lock state from tedee API
-    const state = await this.oAuth2Client.getLockState(this.tid);
-
-    this.log(`Current state is ${LockStateNames[state]} (${state})`);
-
-    return state;
-  }
-
-  // Set store values
-  async setStore(data) {
-    if ('connectedToId' in data) {
-      this.setStoreValue('connected_via_bridge', filled(data.connectedToId)).catch(this.error);
-    }
-
-    if (!('deviceSettings' in data)) return;
-    const settings = data.deviceSettings;
-
-    if (!('pullSpringEnabled' in settings)) return;
-
-    // Set store values
-    this.setStoreValue('pull_spring_enabled', settings.pullSpringEnabled).catch(this.error);
-
-    // Remove or add "open" capability
-    this.toggleOpenCapability(settings.pullSpringEnabled);
   }
 
   // Remove or add "open" capability
@@ -305,15 +342,12 @@ class LockDevice extends Device {
 
   // Trigger flows
   async triggerFlows(data) {
-    if (blank(data.state)) return;
+    if (!('state' in data)) return;
 
     let state = this.getStoreValue('state');
 
     // State not changed
     if (data.state === state) return;
-
-    // Update store value
-    this.setStoreValue('state', data.state).catch(this.error);
 
     // Initial state was empty
     if (blank(state)) return;
@@ -322,7 +356,7 @@ class LockDevice extends Device {
 
     // Trigger pulled
     if (data.state === LockState.Pulled) {
-      await this.driver.triggerPulled(device);
+      this.driver.triggerPulled(device).catch(this.error);
     }
 
     state = null;

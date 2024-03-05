@@ -22,7 +22,9 @@
     "notAvailable": "Le verrouillage n'est pas disponible",
     "disconnected": "L'appareil n'est pas connecté",
     "updating": "L'appareil est en cours de mise à jour...",
-    "unknown": "La serrure a un statut inconnu",
-    "updateAvailable": "La mise à jour du logiciel est disponible"
+    "unknown": "La serrure a un statut inconnu"
+  },
+  "warning": {
+    "updateAvailable": "Une mise à jour logicielle est disponible pour cet appareil."
   }
 }

@@ -1168,7 +1168,7 @@
         "de": "Öffnen",
         "fr": "Ouvrir"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "insights": true,
       "insightsTitleTrue": {

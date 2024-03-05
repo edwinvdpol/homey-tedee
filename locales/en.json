@@ -22,7 +22,9 @@
     "notAvailable": "Lock is not available",
     "disconnected": "Device is not connected",
     "updating": "Device is being updated...",
-    "unknown": "Lock has unknown status",
-    "updateAvailable": "Software update is available"
+    "unknown": "Lock has unknown status"
+  },
+  "warning": {
+    "updateAvailable": "A software update is available for this device."
   }
 }
