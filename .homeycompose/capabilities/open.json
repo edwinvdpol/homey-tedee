@@ -8,19 +8,6 @@
   },
   "getable": false,
   "setable": true,
-  "insights": true,
-  "insightsTitleTrue": {
-    "en": "Opened",
-    "nl": "Geopend",
-    "de": "Geöffnet",
-    "fr": "Ouvert"
-  },
-  "insightsTitleFalse": {
-    "en": "Closed",
-    "nl": "Gesloten",
-    "de": "Abgeschlossen",
-    "fr": "Fermé"
-  },
   "uiComponent": "button",
   "uiQuickAction": false
 }

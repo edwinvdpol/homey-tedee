@@ -253,10 +253,6 @@ class LockDevice extends Device {
     return this.hasState(LockState.Locked);
   }
 
-  isPulled() {
-    return this.hasState(LockState.Pulled);
-  }
-
   isUncalibrated() {
     return this.hasState(LockState.Uncalibrated);
   }
@@ -327,14 +323,14 @@ class LockDevice extends Device {
   toggleOpenCapability(pullSpringEnabled) {
     // Remove capability
     if (this.hasCapability('open') && !pullSpringEnabled) {
-      this.log('Pull spring disabled, removing "open" capability');
+      this.log('Pull spring is disabled, removing "open" capability');
 
       this.removeCapability('open').catch(this.error);
     }
 
     // Add capability
     if (!this.hasCapability('open') && pullSpringEnabled) {
-      this.log('Pull spring enabled, adding "open" capability');
+      this.log('Pull spring is enabled, adding "open" capability');
 
       this.addCapability('open').catch(this.error);
     }
