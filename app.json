@@ -912,10 +912,10 @@
         }
       ],
       "name": {
-        "en": "Lock Pro",
-        "nl": "Slot Pro",
-        "de": "Schloss Pro",
-        "fr": "Verrou Pro"
+        "en": "Lock PRO",
+        "nl": "Slot PRO",
+        "de": "Schloss PRO",
+        "fr": "Verrou PRO"
       },
       "class": "lock",
       "capabilities": [
