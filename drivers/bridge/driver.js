@@ -13,6 +13,7 @@ class BridgeDriver extends Driver {
     return {
       tedee_id: `${device.id}`,
       status: device.isConnected ? this.homey.__('settings.connected') : this.homey.__('settings.disconnected'),
+      local_api_enabled: device.localApiEnabled,
       firmware_version: device.softwareVersions[0].version,
       serial_number: device.serialNumber,
       mac_address: device.macAddress,

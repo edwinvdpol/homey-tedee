@@ -10,6 +10,9 @@
     "children": [
       {
         "$extends": "status"
+      },
+      {
+        "$extends": "local_api_enabled"
       }
     ]
   },

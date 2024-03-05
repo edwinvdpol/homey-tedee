@@ -362,6 +362,17 @@
                 "en": "Status"
               },
               "value": "-"
+            },
+            {
+              "id": "local_api_enabled",
+              "type": "checkbox",
+              "label": {
+                "en": "Local API enabled",
+                "nl": "Lokale API ingeschakeld",
+                "de": "Lokale API aktiviert",
+                "fr": "API locale activée"
+              },
+              "value": false
             }
           ]
         },
