@@ -1,9 +1,9 @@
 # Tedee for Homey
 
-Unlock your door with Homey.
+Unlock your keyless life.
 
-To integrate your Tedee Smart Lock with Homey, you will need Tedee Bridge which must be connected to the internet.
+Say goodbye to traditional keys and welcome new ways to access, protect, and share your home. Open your door with just a smartphone, smartwatch, or PIN.
 
-This app allows you to unlock or lock your lock, get device details like battery status and update certain device settings. You also will be able to create flows based on lock state and more.
+It's time to redefine your front door's purpose. Install a Tedee GO or Tedee PRO smart lock on the interior side of your door lock, making it invisible from the outside.
 
-This app was created thanks to the great work of Edwin van de Pol (@edwinvdpol). Thank you.
+Connect it to a Wi-Fi-enabled Tedee Bridge for seamless integration with Homey. Welcome to a new era of convenience, security, and smart automation, synchronized with your comings and goings as though your home had an on/off switch.

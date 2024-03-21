@@ -1,5 +1,5 @@
-Pour intégrer votre Tedee Smart Lock à Homey, vous aurez besoin de Tedee Bridge qui doit être connecté à internet.
+Dites adieu aux clés traditionnelles et accueillez de nouvelles façons d'accéder, de protéger et de partager votre maison. Ouvrez votre porte avec simplement un smartphone, une montre intelligente ou un code PIN.
 
-Cette application vous permet de déverrouiller ou de verrouiller votre serrure, d'obtenir des détails sur l'appareil comme l'état de la batterie et de mettre à jour certains paramètres de l'appareil. Vous pourrez également créer des flows basés sur l'état du verrou et plus encore.
+Il est temps de redéfinir la fonction de votre porte d'entrée. Installez une serrure intelligente Tedee GO ou Tedee PRO sur le côté intérieur de votre serrure de porte, la rendant invisible de l'extérieur.
 
-Cette application a été créée grâce à l'excellent travail d'Edwin van de Pol (@edwinvdpol). Merci.
+Connectez-le à un pont Tedee compatible Wi-Fi pour une intégration transparente avec Homey. Bienvenue dans une nouvelle ère de commodité, de sécurité et d’automatisation intelligente, synchronisée avec vos allées et venues comme si votre maison disposait d’un interrupteur marche/arrêt.
