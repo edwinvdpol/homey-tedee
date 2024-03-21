@@ -9,13 +9,13 @@
   "sdk": 3,
   "brandColor": "#3BD5FD",
   "name": {
-    "en": "tedee"
+    "en": "Tedee"
   },
   "description": {
-    "en": "Unlock your door with Homey",
-    "nl": "Open je deur met Homey",
-    "de": "Öffne deine Tür mit Homey",
-    "fr": "Déverrouillez votre porte avec Homey"
+    "en": "Unlock your keyless life",
+    "nl": "Ontgrendel uw sleutelloze leven",
+    "de": "Schalten Sie Ihr schlüsselloses Leben frei",
+    "fr": "Débloquez votre vie sans clé"
   },
   "category": [
     "security"
@@ -25,6 +25,7 @@
       "tedee",
       "smart",
       "door",
+      "keypad",
       "lock",
       "home",
       "security"
@@ -33,6 +34,7 @@
       "tedee",
       "slim",
       "deur",
+      "keypad",
       "slot",
       "thuis",
       "beveiliging"
@@ -41,6 +43,7 @@
       "tedee",
       "Clever",
       "Tür",
+      "Keypad",
       "Schloss",
       "Heim",
       "Sicherheit"
@@ -49,6 +52,7 @@
       "tedee",
       "intelligent",
       "porte",
+      "keypad",
       "verrou",
       "accueil",
       "sécurité"

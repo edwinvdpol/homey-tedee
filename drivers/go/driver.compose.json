@@ -1,9 +1,6 @@
 {
   "name": {
-    "en": "Lock GO",
-    "nl": "Slot GO",
-    "de": "Schloss GO",
-    "fr": "Verrou GO"
+    "en": "Tedee GO"
   },
   "class": "lock",
   "capabilities": [

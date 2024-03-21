@@ -1,9 +1,6 @@
 {
   "name": {
-    "en": "Lock PRO",
-    "nl": "Slot PRO",
-    "de": "Schloss PRO",
-    "fr": "Verrou PRO"
+    "en": "Tedee PRO"
   },
   "class": "lock",
   "capabilities": [
