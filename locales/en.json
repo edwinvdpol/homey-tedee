@@ -19,7 +19,7 @@
     "uncalibrated": "Lock is not calibrated",
     "calibrating": "Lock is being calibrated...",
     "inUse": "Lock is currently in use",
-    "notAvailable": "Lock is not available",
+    "notAvailable": "Device is not available",
     "disconnected": "Device is not connected",
     "updating": "Device is being updated...",
     "unknown": "Lock has unknown status"

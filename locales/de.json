@@ -20,7 +20,7 @@
     "calibrating": "Schloss wird kalibriert...",
     "inUse": "Schloss wird gerade verwendet",
     "disconnected": "Schloss ist nicht verbunden",
-    "notAvailable": "Schloss ist nicht verfügbar",
+    "notAvailable": "Gerät ist nicht verfügbar",
     "updating": "Gerät wird aktualisiert...",
     "unknown": "Schloss hat unbekannten Status"
   },

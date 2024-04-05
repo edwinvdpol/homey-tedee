@@ -19,7 +19,7 @@
     "uncalibrated": "La serrure n'est pas calibrée",
     "calibrating": "La serrure est en cours de calibrage...",
     "inUse": "Le verrou est actuellement utilisé",
-    "notAvailable": "Le verrouillage n'est pas disponible",
+    "notAvailable": "L'appareil n'est pas disponible",
     "disconnected": "L'appareil n'est pas connecté",
     "updating": "L'appareil est en cours de mise à jour...",
     "unknown": "La serrure a un statut inconnu"
