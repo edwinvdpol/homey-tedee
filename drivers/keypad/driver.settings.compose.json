@@ -9,13 +9,13 @@
     },
     "children": [
       {
-        "$extends": "status"
-      },
-      {
         "$extends": "sound_level"
       },
       {
         "$extends": "backlight_level"
+      },
+      {
+        "$extends": "battery_type"
       },
       {
         "$extends": "bell_button_enabled"

@@ -740,14 +740,6 @@
           },
           "children": [
             {
-              "id": "status",
-              "type": "label",
-              "label": {
-                "en": "Status"
-              },
-              "value": "-"
-            },
-            {
               "id": "sound_level",
               "type": "dropdown",
               "label": {
@@ -826,6 +818,43 @@
                     "nl": "Hoog",
                     "de": "Hoch",
                     "fr": "Haute"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "battery_type",
+              "type": "dropdown",
+              "label": {
+                "en": "Battery type",
+                "nl": "Batterij type",
+                "de": "Akku-Typ",
+                "fr": "Type de batterie"
+              },
+              "hint": {
+                "en": "Select the correct battery type installed in your keyboard.",
+                "nl": "Selecteer het juiste batterij type dat in uw toetsenbord is geïnstalleerd.",
+                "de": "Wählen Sie den richtigen Batterietyp aus, der in Ihrer Tastatur installiert ist.",
+                "fr": "Sélectionnez le type de batterie correct installé sur votre clavier."
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Standard (1,5V)",
+                    "nl": "Standaard (1,5V)",
+                    "de": "Standard (1,5V)",
+                    "fr": "Standard (1,5V)"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Rechargeable Ni-MH (1,2V)",
+                    "nl": "Oplaadbare Ni-MH (1,2V)",
+                    "de": "Wiederaufladbarer Ni-MH (1,2V)",
+                    "fr": "Ni-MH rechargeables (1,2V)"
                   }
                 }
               ]

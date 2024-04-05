@@ -25,6 +25,11 @@ class KeypadDevice extends Device {
 
       this.log(`[Settings] '${name}' is now '${newValue}'`);
 
+      // Battery type
+      if (name === 'battery_type') {
+        settings.batteryType = Number(newValue);
+      }
+
       // Sound level
       if (name === 'sound_level') {
         settings.soundLevel = Number(newValue);
@@ -64,19 +69,16 @@ class KeypadDevice extends Device {
   getSettingsData(data) {
     const settings = {};
 
-    // Set connected status
-    if ('isConnected' in data) {
-      settings.status = data.isConnected
-        ? this.homey.__('settings.connected')
-        : this.homey.__('settings.disconnected');
-    }
-
     if (!('deviceSettings' in data)) {
       return settings;
     }
 
     // Set device settings
     const device = data.deviceSettings;
+
+    if ('batteryType' in device) {
+      settings.battery_type = `${device.batteryType}`;
+    }
 
     if ('soundLevel' in device) {
       settings.sound_level = `${device.soundLevel}`;
