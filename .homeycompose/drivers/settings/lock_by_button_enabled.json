@@ -1,0 +1,16 @@
+{
+  "type": "checkbox",
+  "label": {
+    "en": "Lock without PIN code",
+    "nl": "Vergrendelen zonder pincode",
+    "de": "Sperren ohne PIN-Code",
+    "fr": "Verrouiller sans code PIN"
+  },
+  "hint": {
+    "en": "Lock the paired tedee lock by long pressing the \"Padlock\" key on the keyboard.",
+    "nl": "Vergrendel het gekoppelde tedee-slot door lang op de \"Padlock\"-toets op het toetsenbord te drukken.",
+    "de": "Sperren Sie das gekoppelte tedee-Schloss, indem Sie lange auf die \"Padlock\"-Taste auf der Tastatur drücken.",
+    "fr": "Verrouillez le cadenas tedee couplé en appuyant longuement sur la touche \"Padlock\" du clavier."
+  },
+  "value": false
+}

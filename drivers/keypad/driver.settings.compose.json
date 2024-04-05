@@ -9,6 +9,9 @@
     },
     "children": [
       {
+        "$extends": "status"
+      },
+      {
         "$extends": "sound_level"
       },
       {
@@ -16,6 +19,9 @@
       },
       {
         "$extends": "bell_button_enabled"
+      },
+      {
+        "$extends": "lock_by_button_enabled"
       }
     ]
   },

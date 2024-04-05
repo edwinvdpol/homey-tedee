@@ -310,11 +310,25 @@ class LockDevice extends Device {
 
     const device = data.deviceSettings;
 
-    settings.auto_lock_enabled = device.autoLockEnabled || false;
-    settings.button_lock_enabled = device.buttonLockEnabled || false;
-    settings.button_unlock_enabled = device.buttonUnlockEnabled || false;
-    settings.postponed_lock_enabled = device.postponedLockEnabled || false;
-    settings.postponed_lock_delay = device.postponedLockDelay || 10;
+    if ('autoLockEnabled' in device) {
+      settings.auto_lock_enabled = device.autoLockEnabled;
+    }
+
+    if ('buttonLockEnabled' in device) {
+      settings.button_lock_enabled = device.buttonLockEnabled;
+    }
+
+    if ('buttonUnlockEnabled' in device) {
+      settings.button_unlock_enabled = device.buttonUnlockEnabled;
+    }
+
+    if ('postponedLockEnabled' in device) {
+      settings.postponed_lock_enabled = device.postponedLockEnabled;
+    }
+
+    if ('postponedLockDelay' in device) {
+      settings.postponed_lock_delay = device.postponedLockDelay;
+    }
 
     return settings;
   }

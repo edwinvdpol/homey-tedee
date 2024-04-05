@@ -39,6 +39,11 @@ class KeypadDevice extends Device {
       if (name === 'bell_button_enabled') {
         settings.bellButtonEnabled = newValue;
       }
+
+      // Lock by button enabled
+      if (name === 'lock_by_button_enabled') {
+        settings.lockByButtonEnabled = newValue;
+      }
     }
 
     // Device settings need to be updated
@@ -59,7 +64,14 @@ class KeypadDevice extends Device {
   getSettingsData(data) {
     const settings = {};
 
-    if (blank(data.deviceSettings)) {
+    // Set connected status
+    if ('isConnected' in data) {
+      settings.status = data.isConnected
+        ? this.homey.__('settings.connected')
+        : this.homey.__('settings.disconnected');
+    }
+
+    if (!('deviceSettings' in data)) {
       return settings;
     }
 
@@ -76,6 +88,10 @@ class KeypadDevice extends Device {
 
     if ('bellButtonEnabled' in device) {
       settings.bell_button_enabled = device.bellButtonEnabled;
+    }
+
+    if ('lockByButtonEnabled' in device) {
+      settings.lock_by_button_enabled = device.lockByButtonEnabled;
     }
 
     return settings;
