@@ -73,7 +73,7 @@ class KeypadDevice extends Device {
       return settings;
     }
 
-    // Set device settings
+    // Device settings
     const device = data.deviceSettings;
 
     if ('batteryType' in device) {

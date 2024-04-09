@@ -26,5 +26,11 @@
   },
   "warning": {
     "updateAvailable": "Voor dit apparaat is een software-update beschikbaar."
+  },
+  "accessLevel": {
+    "0": "Gast",
+    "1": "Beheerder",
+    "2": "Eigenaar",
+    "3": "Geen"
   }
 }

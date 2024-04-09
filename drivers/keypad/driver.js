@@ -12,7 +12,9 @@ class KeypadDriver extends Driver {
   getPairSettings(device) {
     return {
       tedee_id: `${device.id}`,
+      firmware_version: device.softwareVersions[0].version,
       serial_number: device.serialNumber,
+      access_level: this.homey.__(`accessLevel.${device.accessLevel}`) || '-',
     };
   }
 

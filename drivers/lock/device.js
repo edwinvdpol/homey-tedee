@@ -293,13 +293,11 @@ class LockDevice extends Device {
   getSettingsData(data) {
     const settings = {};
 
-    // Set connected status
-    if ('isConnected' in data) {
-      settings.status = data.isConnected
-        ? this.homey.__('settings.connected')
-        : this.homey.__('settings.disconnected');
+    // Status
+    if ('status' in data) {
+      settings.status = data.status;
 
-      if (this.getStoreValue('connected_via_bridge') && data.isConnected) {
+      if (this.getStoreValue('connected_via_bridge')) {
         settings.status = this.homey.__('settings.connectedViaBridge');
       }
     }
@@ -308,6 +306,7 @@ class LockDevice extends Device {
       return settings;
     }
 
+    // Device settings
     const device = data.deviceSettings;
 
     if ('autoLockEnabled' in device) {

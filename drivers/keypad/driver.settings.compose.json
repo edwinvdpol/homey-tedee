@@ -42,6 +42,9 @@
       },
       {
         "$extends": "serial_number"
+      },
+      {
+        "$extends": "access_level"
       }
     ]
   }

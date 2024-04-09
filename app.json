@@ -404,7 +404,7 @@
               "id": "firmware_version",
               "type": "label",
               "label": {
-                "en": "Firmware Version",
+                "en": "Firmware version",
                 "nl": "Firmwareversie",
                 "de": "Firmware Version",
                 "fr": "Version du firmware"
@@ -415,7 +415,7 @@
               "id": "serial_number",
               "type": "label",
               "label": {
-                "en": "Serial Number",
+                "en": "Serial number",
                 "nl": "Serienummer",
                 "de": "Seriennummer",
                 "fr": "Numéro de série"
@@ -427,6 +427,23 @@
               "type": "label",
               "label": {
                 "en": "MAC"
+              },
+              "value": "-"
+            },
+            {
+              "id": "access_level",
+              "type": "label",
+              "label": {
+                "en": "Access level",
+                "nl": "Toegangsniveau",
+                "de": "Zugriffsebene",
+                "fr": "Niveau d'accès"
+              },
+              "hint": {
+                "en": "Access level to the device.",
+                "nl": "Toegangsniveau tot het apparaat.",
+                "de": "Zugriffsebene für das Gerät.",
+                "fr": "Niveau d'accès à l'appareil."
               },
               "value": "-"
             }
@@ -648,7 +665,7 @@
               "id": "firmware_version",
               "type": "label",
               "label": {
-                "en": "Firmware Version",
+                "en": "Firmware version",
                 "nl": "Firmwareversie",
                 "de": "Firmware Version",
                 "fr": "Version du firmware"
@@ -659,7 +676,7 @@
               "id": "serial_number",
               "type": "label",
               "label": {
-                "en": "Serial Number",
+                "en": "Serial number",
                 "nl": "Serienummer",
                 "de": "Seriennummer",
                 "fr": "Numéro de série"
@@ -671,6 +688,23 @@
               "type": "label",
               "label": {
                 "en": "MAC"
+              },
+              "value": "-"
+            },
+            {
+              "id": "access_level",
+              "type": "label",
+              "label": {
+                "en": "Access level",
+                "nl": "Toegangsniveau",
+                "de": "Zugriffsebene",
+                "fr": "Niveau d'accès"
+              },
+              "hint": {
+                "en": "Access level to the device.",
+                "nl": "Toegangsniveau tot het apparaat.",
+                "de": "Zugriffsebene für das Gerät.",
+                "fr": "Niveau d'accès à l'appareil."
               },
               "value": "-"
             }
@@ -919,7 +953,7 @@
               "id": "firmware_version",
               "type": "label",
               "label": {
-                "en": "Firmware Version",
+                "en": "Firmware version",
                 "nl": "Firmwareversie",
                 "de": "Firmware Version",
                 "fr": "Version du firmware"
@@ -930,10 +964,27 @@
               "id": "serial_number",
               "type": "label",
               "label": {
-                "en": "Serial Number",
+                "en": "Serial number",
                 "nl": "Serienummer",
                 "de": "Seriennummer",
                 "fr": "Numéro de série"
+              },
+              "value": "-"
+            },
+            {
+              "id": "access_level",
+              "type": "label",
+              "label": {
+                "en": "Access level",
+                "nl": "Toegangsniveau",
+                "de": "Zugriffsebene",
+                "fr": "Niveau d'accès"
+              },
+              "hint": {
+                "en": "Access level to the device.",
+                "nl": "Toegangsniveau tot het apparaat.",
+                "de": "Zugriffsebene für das Gerät.",
+                "fr": "Niveau d'accès à l'appareil."
               },
               "value": "-"
             }
@@ -1154,7 +1205,7 @@
               "id": "firmware_version",
               "type": "label",
               "label": {
-                "en": "Firmware Version",
+                "en": "Firmware version",
                 "nl": "Firmwareversie",
                 "de": "Firmware Version",
                 "fr": "Version du firmware"
@@ -1165,7 +1216,7 @@
               "id": "serial_number",
               "type": "label",
               "label": {
-                "en": "Serial Number",
+                "en": "Serial number",
                 "nl": "Serienummer",
                 "de": "Seriennummer",
                 "fr": "Numéro de série"
@@ -1177,6 +1228,23 @@
               "type": "label",
               "label": {
                 "en": "MAC"
+              },
+              "value": "-"
+            },
+            {
+              "id": "access_level",
+              "type": "label",
+              "label": {
+                "en": "Access level",
+                "nl": "Toegangsniveau",
+                "de": "Zugriffsebene",
+                "fr": "Niveau d'accès"
+              },
+              "hint": {
+                "en": "Access level to the device.",
+                "nl": "Toegangsniveau tot het apparaat.",
+                "de": "Zugriffsebene für das Gerät.",
+                "fr": "Niveau d'accès à l'appareil."
               },
               "value": "-"
             }

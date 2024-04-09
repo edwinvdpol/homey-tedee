@@ -36,6 +36,9 @@
       },
       {
         "$extends": "mac_address"
+      },
+      {
+        "$extends": "access_level"
       }
     ]
   }

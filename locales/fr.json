@@ -26,5 +26,11 @@
   },
   "warning": {
     "updateAvailable": "Une mise à jour logicielle est disponible pour cet appareil."
+  },
+  "accessLevel": {
+    "0": "Invité",
+    "1": "Administrateur",
+    "2": "Propriétaire",
+    "3": "Aucun"
   }
 }

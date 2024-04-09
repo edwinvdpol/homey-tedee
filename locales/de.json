@@ -26,5 +26,11 @@
   },
   "warning": {
     "updateAvailable": "Für dieses Gerät ist ein Software-Update verfügbar."
+  },
+  "accessLevel": {
+    "0": "Gast",
+    "1": "Administrator",
+    "2": "Eigentümer",
+    "3": "Keiner"
   }
 }

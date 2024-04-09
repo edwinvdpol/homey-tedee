@@ -1,0 +1,16 @@
+{
+  "type": "label",
+  "label": {
+    "en": "Access level",
+    "nl": "Toegangsniveau",
+    "de": "Zugriffsebene",
+    "fr": "Niveau d'accès"
+  },
+  "hint": {
+    "en": "Access level to the device.",
+    "nl": "Toegangsniveau tot het apparaat.",
+    "de": "Zugriffsebene für das Gerät.",
+    "fr": "Niveau d'accès à l'appareil."
+  },
+  "value": "-"
+}

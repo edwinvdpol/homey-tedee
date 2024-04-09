@@ -17,6 +17,7 @@ class BridgeDriver extends Driver {
       firmware_version: device.softwareVersions[0].version,
       serial_number: device.serialNumber,
       mac_address: device.macAddress,
+      access_level: this.homey.__(`accessLevel.${device.accessLevel}`) || '-',
     };
   }
 
