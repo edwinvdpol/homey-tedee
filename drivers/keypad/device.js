@@ -1,7 +1,7 @@
 'use strict';
 
 const Device = require('../../lib/Device');
-const { filled, blank } = require('../../lib/Utils');
+const { filled } = require('../../lib/Utils');
 
 class KeypadDevice extends Device {
 
