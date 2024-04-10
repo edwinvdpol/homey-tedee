@@ -17,7 +17,7 @@ class KeypadDevice extends Device {
 
     // Check availability
     if (!this.getAvailable()) {
-      throw new Error(this.homey.__('state.notAvailable'));
+      throw new Error(this.homey.__('state.unavailable'));
     }
 
     for (const name of changedKeys) {

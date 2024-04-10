@@ -1,36 +1,35 @@
 {
-  "errors": {
+  "access_level": {
+    "0": "Gast",
+    "1": "Beheerder",
+    "2": "Eigenaar",
+    "3": "Geen"
+  },
+  "error": {
     "401": "Inloggegevens van de Tedee API zijn onjuist",
     "403": "Tedee API heeft de toegang tot dit apparaat geweigerd",
     "404": "Apparaat is niet gevonden in Tedee account",
     "50x": "Tedee API is niet beschikbaar",
     "network": "Tedee API is niet bereikbaar",
-    "notReadyToLock": "Slot is niet klaar om te vergrendelen",
-    "notReadyToUnlock": "Slot is niet klaar om te ontgrendelen",
-    "pullSpringDisabled": "De deurvergrending is uitgeschakeld",
+    "not_ready_to_lock": "Slot is niet klaar om te vergrendelen",
+    "not_ready_to_unlock": "Slot is niet klaar om te ontgrendelen",
+    "pull_spring_disabled": "De deurvergrending is uitgeschakeld",
     "unknown": "Er is een onbekende fout opgetreden"
   },
-  "settings": {
+  "setting": {
     "connected": "Verbonden",
-    "connectedViaBridge": "Verbonden via bridge",
+    "connected_via_bridge": "Verbonden via bridge",
     "disconnected": "Niet verbonden"
   },
   "state": {
-    "uncalibrated": "Slot is niet gekalibreerd",
     "calibrating": "Slot wordt gekalibreerd...",
-    "inUse": "Slot is op dit moment in gebruik",
-    "notAvailable": "Apparaat is niet beschikbaar",
     "disconnected": "Apparaat is niet verbonden",
-    "updating": "Apparaat wordt bijgewerkt...",
-    "unknown": "Slot heeft onbekende status"
+    "unavailable": "Apparaat is niet beschikbaar",
+    "uncalibrated": "Slot is niet gekalibreerd",
+    "unknown": "Slot heeft onbekende status",
+    "updating": "Apparaat wordt bijgewerkt..."
   },
   "warning": {
-    "updateAvailable": "Voor dit apparaat is een software-update beschikbaar."
-  },
-  "accessLevel": {
-    "0": "Gast",
-    "1": "Beheerder",
-    "2": "Eigenaar",
-    "3": "Geen"
+    "update_available": "Voor dit apparaat is een software-update beschikbaar."
   }
 }

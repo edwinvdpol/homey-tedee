@@ -28,7 +28,7 @@ class LockDevice extends Device {
 
     // Check availability
     if (!this.getAvailable()) {
-      throw new Error(this.homey.__('state.notAvailable'));
+      throw new Error(this.homey.__('state.unavailable'));
     }
 
     for (const name of changedKeys) {
@@ -184,7 +184,7 @@ class LockDevice extends Device {
 
     // Make sure the lock is in a valid state to lock
     if (!this.isLockable()) {
-      this.throwError(`Not ready, currently ${LockStateNames[this.state]} (${this.state})`, 'errors.notReadyToLock');
+      this.throwError(`Not ready, currently ${LockStateNames[this.state]} (${this.state})`, 'error.not_ready_to_lock');
     }
 
     // Send lock command to tedee API
@@ -200,7 +200,7 @@ class LockDevice extends Device {
 
     // Check if pull spring is enabled
     if (!this.hasCapability('open')) {
-      this.throwError('Capability \'open\' not found', 'errors.pullSpringDisabled');
+      this.throwError('Capability \'open\' not found', 'error.pull_spring_disabled');
     }
 
     // Send open command to tedee API
@@ -222,7 +222,7 @@ class LockDevice extends Device {
 
     // Make sure the lock is in a valid state
     if (!this.isUnlockable()) {
-      this.throwError(`Not ready, currently ${LockStateNames[this.state]} (${this.state})`, 'errors.notReadyToUnlock');
+      this.throwError(`Not ready, currently ${LockStateNames[this.state]} (${this.state})`, 'error.not_ready_to_unlock');
     }
 
     // Send unlock command to tedee API
@@ -298,7 +298,7 @@ class LockDevice extends Device {
       settings.status = data.status;
 
       if (this.getStoreValue('connected_via_bridge')) {
-        settings.status = this.homey.__('settings.connectedViaBridge');
+        settings.status = this.homey.__('setting.connected_via_bridge');
       }
     }
 

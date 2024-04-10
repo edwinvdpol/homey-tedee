@@ -1,36 +1,35 @@
 {
-  "errors": {
+  "access_level": {
+    "0": "Guest",
+    "1": "Administrator",
+    "2": "Owner",
+    "3": "None"
+  },
+  "error": {
     "401": "Tedee API credentials are incorrect",
     "403": "Tedee API has denied access to this device",
     "404": "Device not found in Tedee account",
     "50x": "Tedee API is unavailable",
     "network": "Tedee API is unreachable",
-    "notReadyToLock": "Lock is not ready to lock",
-    "notReadyToUnlock": "Lock is not ready to unlock",
-    "pullSpringDisabled": "Pull spring is disabled",
+    "not_ready_to_lock": "Lock is not ready to lock",
+    "not_ready_to_unlock": "Lock is not ready to unlock",
+    "pull_spring_disabled": "Pull spring is disabled",
     "unknown": "An unknown error has occurred"
   },
-  "settings": {
+  "setting": {
     "connected": "Connected",
-    "connectedViaBridge": "Connected via bridge",
+    "connected_via_bridge": "Connected via bridge",
     "disconnected": "Disconnected"
   },
   "state": {
-    "uncalibrated": "Lock is not calibrated",
     "calibrating": "Lock is being calibrated...",
-    "inUse": "Lock is currently in use",
-    "notAvailable": "Device is not available",
     "disconnected": "Device is not connected",
-    "updating": "Device is being updated...",
-    "unknown": "Lock has unknown status"
+    "unavailable": "Device is not available",
+    "uncalibrated": "Lock is not calibrated",
+    "unknown": "Lock has unknown status",
+    "updating": "Device is being updated..."
   },
   "warning": {
-    "updateAvailable": "A software update is available for this device."
-  },
-  "accessLevel": {
-    "0": "Guest",
-    "1": "Administrator",
-    "2": "Owner",
-    "3": "None"
+    "update_available": "A software update is available for this device."
   }
 }

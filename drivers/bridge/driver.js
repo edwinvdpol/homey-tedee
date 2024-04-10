@@ -12,12 +12,12 @@ class BridgeDriver extends Driver {
   getPairSettings(device) {
     return {
       tedee_id: `${device.id}`,
-      status: device.isConnected ? this.homey.__('settings.connected') : this.homey.__('settings.disconnected'),
+      status: device.isConnected ? this.homey.__('setting.connected') : this.homey.__('setting.disconnected'),
       local_api_enabled: device.localApiEnabled,
       firmware_version: device.softwareVersions[0].version,
       serial_number: device.serialNumber,
       mac_address: device.macAddress,
-      access_level: this.homey.__(`accessLevel.${device.accessLevel}`) || '-',
+      access_level: this.homey.__(`access_level.${device.accessLevel}`) || '-',
     };
   }
 

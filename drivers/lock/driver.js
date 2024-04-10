@@ -26,7 +26,7 @@ class LockDriver extends Driver {
   getPairSettings(device) {
     return {
       tedee_id: `${device.id}`,
-      status: device.isConnected ? this.homey.__('settings.connected') : this.homey.__('settings.disconnected'),
+      status: device.isConnected ? this.homey.__('setting.connected') : this.homey.__('setting.disconnected'),
       firmware_version: device.softwareVersions[0].version,
       serial_number: device.serialNumber,
       mac_address: device.macAddress,
@@ -35,7 +35,7 @@ class LockDriver extends Driver {
       button_unlock_enabled: device.deviceSettings.buttonUnlockEnabled,
       postponed_lock_enabled: device.deviceSettings.postponedLockEnabled,
       postponed_lock_delay: device.deviceSettings.postponedLockDelay,
-      access_level: this.homey.__(`accessLevel.${device.accessLevel}`) || '-',
+      access_level: this.homey.__(`access_level.${device.accessLevel}`) || '-',
     };
   }
 

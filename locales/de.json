@@ -1,36 +1,35 @@
 {
-  "errors": {
+  "access_level": {
+    "0": "Gast",
+    "1": "Administrator",
+    "2": "Eigentümer",
+    "3": "Keiner"
+  },
+  "error": {
     "401": "Die Tedee-API-Anmeldeinformationen sind falsch",
     "403": "Die Tedee-API hat den Zugriff auf dieses Gerät verweigert",
     "404": "Gerät im Tedee-Konto nicht gefunden",
     "50x": "Die Tedee-API ist nicht verfügbar",
     "network": "Die Tedee-API ist nicht erreichbar",
-    "notReadyToLock": "Schloss ist nicht bereit zum Sperren",
-    "notReadyToUnlock": "Schloss ist nicht bereit zum Entsperren",
-    "pullSpringDisabled": "Die Türverriegelung ist aus",
+    "not_ready_to_lock": "Schloss ist nicht bereit zum Sperren",
+    "not_ready_to_unlock": "Schloss ist nicht bereit zum Entsperren",
+    "pull_spring_disabled": "Die Türverriegelung ist aus",
     "unknown": "Ein unbekannter Fehler ist aufgetreten"
   },
-  "settings": {
+  "setting": {
     "connected": "Verbunden",
-    "connectedViaBridge": "Verbunden über Bridge",
+    "connected_via_bridge": "Verbunden über Bridge",
     "disconnected": "Nicht verbunden"
   },
   "state": {
-    "uncalibrated": "Schloss nicht kalibriert",
     "calibrating": "Schloss wird kalibriert...",
-    "inUse": "Schloss wird gerade verwendet",
     "disconnected": "Schloss ist nicht verbunden",
-    "notAvailable": "Gerät ist nicht verfügbar",
-    "updating": "Gerät wird aktualisiert...",
-    "unknown": "Schloss hat unbekannten Status"
+    "unavailable": "Gerät ist nicht verfügbar",
+    "uncalibrated": "Schloss nicht kalibriert",
+    "unknown": "Schloss hat unbekannten Status",
+    "updating": "Gerät wird aktualisiert..."
   },
   "warning": {
-    "updateAvailable": "Für dieses Gerät ist ein Software-Update verfügbar."
-  },
-  "accessLevel": {
-    "0": "Gast",
-    "1": "Administrator",
-    "2": "Eigentümer",
-    "3": "Keiner"
+    "update_available": "Für dieses Gerät ist ein Software-Update verfügbar."
   }
 }

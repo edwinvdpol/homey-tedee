@@ -14,7 +14,7 @@ class KeypadDriver extends Driver {
       tedee_id: `${device.id}`,
       firmware_version: device.softwareVersions[0].version,
       serial_number: device.serialNumber,
-      access_level: this.homey.__(`accessLevel.${device.accessLevel}`) || '-',
+      access_level: this.homey.__(`access_level.${device.accessLevel}`) || '-',
     };
   }
 

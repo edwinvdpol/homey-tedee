@@ -1,36 +1,35 @@
 {
-  "errors": {
+  "access_level": {
+    "0": "Invité",
+    "1": "Administrateur",
+    "2": "Propriétaire",
+    "3": "Aucun"
+  },
+  "error": {
     "401": "Les informations d'identification de l'API Tedee sont incorrectes",
     "403": "L'API Tedee a refusé l'accès à cet appareil",
     "404": "Appareil introuvable dans le compte Tedee",
     "50x": "L'API Tedee n'est pas disponible",
     "network": "L'API Tedee est inaccessible",
-    "notReadyToLock": "La serrure n'est pas prête à se verrouiller",
-    "notReadyToUnlock": "Le verrou n'est pas prêt à être déverrouillé",
-    "pullSpringDisabled": "Le ressort de traction est désactivé",
+    "not_ready_to_lock": "La serrure n'est pas prête à se verrouiller",
+    "not_ready_to_unlock": "Le verrou n'est pas prêt à être déverrouillé",
+    "pull_spring_disabled": "Le ressort de traction est désactivé",
     "unknown": "Une erreur inconnue s'est produite"
   },
-  "settings": {
+  "setting": {
     "connected": "Connecté",
-    "connectedViaBridge": "Connecté via bridge",
+    "connected_via_bridge": "Connecté via bridge",
     "disconnected": "Déconnectée"
   },
   "state": {
-    "uncalibrated": "La serrure n'est pas calibrée",
     "calibrating": "La serrure est en cours de calibrage...",
-    "inUse": "Le verrou est actuellement utilisé",
-    "notAvailable": "L'appareil n'est pas disponible",
     "disconnected": "L'appareil n'est pas connecté",
-    "updating": "L'appareil est en cours de mise à jour...",
-    "unknown": "La serrure a un statut inconnu"
+    "unavailable": "L'appareil n'est pas disponible",
+    "uncalibrated": "La serrure n'est pas calibrée",
+    "unknown": "La serrure a un statut inconnu",
+    "updating": "L'appareil est en cours de mise à jour..."
   },
   "warning": {
-    "updateAvailable": "Une mise à jour logicielle est disponible pour cet appareil."
-  },
-  "accessLevel": {
-    "0": "Invité",
-    "1": "Administrateur",
-    "2": "Propriétaire",
-    "3": "Aucun"
+    "update_available": "Une mise à jour logicielle est disponible pour cet appareil."
   }
 }
