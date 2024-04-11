@@ -21,11 +21,6 @@ class BridgeDriver extends Driver {
     };
   }
 
-  // Return store value while pairing
-  getPairStore(device) {
-    return {};
-  }
-
 }
 
 module.exports = BridgeDriver;

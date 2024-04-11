@@ -18,11 +18,6 @@ class KeypadDriver extends Driver {
     };
   }
 
-  // Return store value while pairing
-  getPairStore(device) {
-    return {};
-  }
-
 }
 
 module.exports = KeypadDriver;
