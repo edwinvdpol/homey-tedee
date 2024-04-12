@@ -1,7 +1,7 @@
 {
   "id": "com.tedee",
   "version": "1.7.0",
-  "compatibility": ">=5.0.0",
+  "compatibility": ">=7.4.0",
   "platforms": [
     "local",
     "cloud"
