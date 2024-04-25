@@ -13,7 +13,7 @@
     {
       "type": "device",
       "name": "device",
-      "filter": "driver_id=bridge|lock&capabilities=connected"
+      "filter": "driver_id=bridge|go|lock&capabilities=connected"
     }
   ]
 }

@@ -147,7 +147,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=bridge|lock&capabilities=connected"
+            "filter": "driver_id=bridge|go|lock&capabilities=connected"
           }
         ],
         "id": "connected_false"
@@ -167,7 +167,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=bridge|lock&capabilities=connected"
+            "filter": "driver_id=bridge|go|lock&capabilities=connected"
           }
         ],
         "id": "connected_true"
@@ -187,7 +187,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=lock&capabilities=open"
+            "filter": "driver_id=go|lock&capabilities=open"
           }
         ],
         "id": "pulled"
@@ -207,7 +207,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=bridge|keypad|lock&capabilities=update_available"
+            "filter": "driver_id=bridge|go|keypad|lock&capabilities=update_available"
           }
         ],
         "id": "update_available_true"
@@ -249,7 +249,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=bridge|lock&capabilities=connected"
+            "filter": "driver_id=bridge|go|lock&capabilities=connected"
           }
         ],
         "id": "connected"
@@ -269,7 +269,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=bridge|keypad|lock&capabilities=update_available"
+            "filter": "driver_id=bridge|go|keypad|lock&capabilities=update_available"
           }
         ],
         "id": "update_available"
@@ -291,7 +291,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=lock&capabilities=open"
+            "filter": "driver_id=go|lock&capabilities=open"
           }
         ],
         "id": "open"
