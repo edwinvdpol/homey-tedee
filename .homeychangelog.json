@@ -1,4 +1,7 @@
 {
+  "1.7.1": {
+    "en": "Updated Tedee GO flows. Improved open capability flow."
+  },
   "1.7.0": {
     "en": "Updated store- and driver information. Added multiple device settings."
   },
