@@ -24,6 +24,7 @@
   "state": {
     "calibrating": "Slot wordt gekalibreerd...",
     "disconnected": "Apparaat is niet verbonden",
+    "semilocked": "Slot staat in de halfopen stand",
     "unavailable": "Apparaat is niet beschikbaar",
     "uncalibrated": "Slot is niet gekalibreerd",
     "unknown": "Slot heeft onbekende status",

@@ -24,6 +24,7 @@
   "state": {
     "calibrating": "Schloss wird kalibriert...",
     "disconnected": "Schloss ist nicht verbunden",
+    "semilocked": "Schloss befindet sich in der halboffenen Position",
     "unavailable": "Gerät ist nicht verfügbar",
     "uncalibrated": "Schloss nicht kalibriert",
     "unknown": "Schloss hat unbekannten Status",

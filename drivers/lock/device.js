@@ -143,6 +143,18 @@ class LockDevice extends Device {
     this.toggleOpenCapability(settings.pullSpringEnabled);
   }
 
+  // Set warning message
+  async setWarningMessage(data) {
+    // Half open state
+    if ('state' in data && this.state === LockState.SemiLocked) {
+      this.setWarning(this.homey.__('state.semilocked')).catch(this.error);
+
+      return;
+    }
+
+    await super.setWarningMessage(data);
+  }
+
   /*
   | Capabilities
   */
@@ -197,11 +209,6 @@ class LockDevice extends Device {
     if (!this.getAvailable()) return;
 
     this.log('Opening');
-
-    // Check if pull spring is enabled
-    if (!this.hasCapability('open')) {
-      this.throwError('Capability \'open\' not found', 'error.pull_spring_disabled');
-    }
 
     // Send open command to tedee API
     await this.oAuth2Client.unlock(this.tid, UnlockMode.UnlockOrPullSpring);
@@ -353,7 +360,7 @@ class LockDevice extends Device {
   async triggerFlows(data) {
     if (!('state' in data)) return;
 
-    let state = this.getStoreValue('state');
+    const state = this.getStoreValue('state');
 
     // State not changed
     if (data.state === state) return;
@@ -361,14 +368,18 @@ class LockDevice extends Device {
     // Initial state was empty
     if (blank(state)) return;
 
+    // Trigger pulled (open)
+    if (data.state !== LockState.Pulled) return;
+
     let device = this;
 
-    // Trigger pulled
-    if (data.state === LockState.Pulled) {
-      this.driver.triggerPulled(device).catch(this.error);
-    }
+    // Wait for driver
+    await this.driver.ready();
 
-    state = null;
+    this.log('Trigger pulled');
+
+    this.driver.lockPulled.trigger(device).catch(this.error);
+
     device = null;
   }
 

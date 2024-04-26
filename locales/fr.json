@@ -24,6 +24,7 @@
   "state": {
     "calibrating": "La serrure est en cours de calibrage...",
     "disconnected": "L'appareil n'est pas connecté",
+    "semilocked": "La serrure est en position semi-ouverte",
     "unavailable": "L'appareil n'est pas disponible",
     "uncalibrated": "La serrure n'est pas calibrée",
     "unknown": "La serrure a un statut inconnu",

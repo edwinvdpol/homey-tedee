@@ -57,13 +57,6 @@ class LockDriver extends Driver {
     this.lockPulled = this.homey.flow.getDeviceTriggerCard('pulled');
   }
 
-  // Pulled flow trigger
-  triggerPulled(lock) {
-    if (!lock.hasCapability('open')) return;
-
-    this.lockPulled.trigger(lock, {}).then().catch(lock.error);
-  }
-
 }
 
 module.exports = LockDriver;

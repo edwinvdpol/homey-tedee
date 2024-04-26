@@ -24,6 +24,7 @@
   "state": {
     "calibrating": "Lock is being calibrated...",
     "disconnected": "Device is not connected",
+    "semilocked": "Lock is in the half-open position",
     "unavailable": "Device is not available",
     "uncalibrated": "Lock is not calibrated",
     "unknown": "Lock has unknown status",
