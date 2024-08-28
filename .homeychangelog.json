@@ -1,47 +1,47 @@
 {
-  "1.7.1": {
-    "en": "Updated Tedee GO flows. Improved open capability flow."
+  "1.0.0": {
+    "en": "Initial release."
   },
-  "1.7.0": {
-    "en": "Updated store- and driver information. Added multiple device settings."
+  "1.0.1": {
+    "en": "Updated App Store image."
   },
-  "1.6.1": {
-    "en": "Updated store information. Improved flow cards and logging."
+  "1.0.2": {
+    "en": "Updated App Store information."
   },
-  "1.6.0": {
-    "en": "Tedee GO support. Stability and performance improvements."
+  "1.1.0": {
+    "en": "Fixed memory leak and optimized code."
   },
-  "1.5.1": {
-    "en": "Stability and performance improvements."
+  "1.1.1": {
+    "en": "Added French and German translations."
   },
-  "1.5.0": {
-    "en": "Added webhook integration."
+  "1.2.0": {
+    "en": "Updated tedee API to v1.21 and added Homey Cloud compatibility."
+  },
+  "1.3.0": {
+    "en": "Fixed Homey Cloud compatibility."
+  },
+  "1.3.1": {
+    "en": "Improved error handling."
   },
   "1.4.0": {
     "en": "Added keypad support. Updated / added lock settings. Improved (cloud) stability. Deprecated lock opened trigger. Updated tedee API to v1.28. Bug fixes."
   },
-  "1.3.1": {
-    "en": "Improved error handling"
+  "1.5.0": {
+    "en": "Added webhook integration."
   },
-  "1.3.0": {
-    "en": "Fixed Homey Cloud compatibility"
+  "1.5.1": {
+    "en": "Stability and performance improvements."
   },
-  "1.2.0": {
-    "en": "Updated tedee API to v1.21 and added Homey Cloud compatibility"
+  "1.6.0": {
+    "en": "Tedee GO support. Stability and performance improvements."
   },
-  "1.1.1": {
-    "en": "Added French and German translations"
+  "1.6.1": {
+    "en": "Updated store information. Improved flow cards and logging."
   },
-  "1.1.0": {
-    "en": "Fixed memory leak and optimized code"
+  "1.7.0": {
+    "en": "Updated store- and driver information. Added multiple device settings."
   },
-  "1.0.2": {
-    "en": "Updated App Store information"
-  },
-  "1.0.1": {
-    "en": "Updated App Store image"
-  },
-  "1.0.0": {
-    "en": "Initial release"
+  "1.7.1": {
+    "en": "Updated Tedee GO flows. Improved open capability flow."
   }
 }
