@@ -1,5 +1,7 @@
 # Tedee for Homey
 
+![Homey App Validation](https://github.com/edwinvdpol/homey-tedee/actions/workflows/validate.yml/badge.svg)
+
 Unlock your keyless life.
 
 Say goodbye to traditional keys and welcome new ways to access, protect, and share your home. Open your door with just a smartphone, smartwatch, or PIN.
