@@ -5,6 +5,9 @@
     "2": "Eigenaar",
     "3": "Geen"
   },
+  "authentication": {
+    "connecting": "Bezig met verbinden..."
+  },
   "error": {
     "401": "Inloggegevens van de Tedee API zijn onjuist",
     "403": "Tedee API heeft de toegang tot dit apparaat geweigerd",

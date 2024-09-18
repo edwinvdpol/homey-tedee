@@ -5,6 +5,9 @@
     "2": "Eigentümer",
     "3": "Keiner"
   },
+  "authentication": {
+    "connecting": "Verbinden..."
+  },
   "error": {
     "401": "Die Tedee-API-Anmeldeinformationen sind falsch",
     "403": "Die Tedee-API hat den Zugriff auf dieses Gerät verweigert",

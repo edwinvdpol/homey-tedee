@@ -5,6 +5,9 @@
     "2": "Propriétaire",
     "3": "Aucun"
   },
+  "authentication": {
+    "connecting": "De liaison..."
+  },
   "error": {
     "401": "Les informations d'identification de l'API Tedee sont incorrectes",
     "403": "L'API Tedee a refusé l'accès à cet appareil",

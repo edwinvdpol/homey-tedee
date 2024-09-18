@@ -5,6 +5,9 @@
     "2": "Owner",
     "3": "None"
   },
+  "authentication": {
+    "connecting": "Connecting..."
+  },
   "error": {
     "401": "Tedee API credentials are incorrect",
     "403": "Tedee API has denied access to this device",
