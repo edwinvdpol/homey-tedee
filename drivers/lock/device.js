@@ -160,10 +160,10 @@ class LockDevice extends Device {
   */
 
   // Locked capability changed
-  async onCapabilityLocked(lock) {
-    this.log(`Capability 'locked' is now '${lock}'`);
+  async onCapabilityLocked(value) {
+    this.log(`User changed capability 'locked' to '${value}'`);
 
-    if (lock) {
+    if (value) {
       await this.lock();
     } else {
       await this.unlock();
@@ -171,8 +171,8 @@ class LockDevice extends Device {
   }
 
   // Open capability changed
-  async onCapabilityOpen(open) {
-    this.log(`Capability 'open' is now '${open}'`);
+  async onCapabilityOpen(value) {
+    this.log(`User changed capability 'open' to '${value}'`);
 
     await this.open();
   }
@@ -286,7 +286,10 @@ class LockDevice extends Device {
 
   // Register capability listeners
   registerCapabilityListeners() {
-    this.registerCapabilityListener('locked', this.onCapabilityLocked.bind(this));
+    if (this.hasCapability('locked')) {
+      this.registerCapabilityListener('locked', this.onCapabilityLocked.bind(this));
+    }
+
     this.registerCapabilityListener('open', this.onCapabilityOpen.bind(this));
 
     this.log('Capability listeners registered');
