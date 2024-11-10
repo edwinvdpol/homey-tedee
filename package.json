@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "homey-log": "^2.1.0",
-    "homey-oauth2app": "^3.5.7"
+    "homey-oauth2app": "^3.6.0"
   },
   "devDependencies": {
     "@types/homey": "npm:homey-apps-sdk-v3-types@^0.3.5",
