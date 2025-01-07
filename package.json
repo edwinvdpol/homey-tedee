@@ -22,7 +22,7 @@
     "lint": "eslint --ext .js,.ts --ignore-path .gitignore ."
   },
   "dependencies": {
-    "homey-log": "^2.1.0",
+    "@drenso/homey-log": "^8.47.0",
     "homey-oauth2app": "^3.7.0"
   },
   "devDependencies": {
